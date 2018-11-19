@@ -5,12 +5,13 @@
 
 /* G�n�rateur al�atoire */
 
+//Coucou de vincent
+
 #include <stdlib.h>
 #include <time.h>
 
 void InitAlea()
 {
-  
   int g;
   time_t t;
 
