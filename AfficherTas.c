@@ -3,12 +3,19 @@
    d'apres les algorithmes de Pierre-Claude Scholl              */
 /*--------------------------------------------------------------*/
 
+//commit marjorie
+/* ICI JEAN MICHEL T AS VU*/
+
 #include "AfficherTas.h"
 #include "graphlib_w.h"
 
 #include "cards.bm"
 #include "back.bm"
 #include "vide.bm"
+
+//commit master
+
+
 
 /* Tableau de correspondance ;
    indice dans le tableau card_bits <-> indice dans le tableau CodeCarte */
