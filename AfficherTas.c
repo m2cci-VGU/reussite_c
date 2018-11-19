@@ -2,7 +2,7 @@
 /* Reussites. Michel Bonin, Catherine Parent, octobre 2005, 
    d'apres les algorithmes de Pierre-Claude Scholl              */
 /*--------------------------------------------------------------*/
-/* ICI JEAN MICHEL T AS VU*/
+
 #include "AfficherTas.h"
 #include "graphlib_w.h"
 

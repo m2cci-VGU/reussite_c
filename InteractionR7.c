@@ -27,8 +27,6 @@
 
 typedef enum {SIMULR7, ANALYSER7, FIN}     CodeCommande ;
 
-//ajout marjo
-
 /* -------------------------------------------------------------------
  *      INTERACTION
  *
