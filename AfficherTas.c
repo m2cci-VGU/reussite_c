@@ -88,15 +88,15 @@ void AfficherCarte(Carte C, int x, int y)
     {
       Code = (C.CC - 1)*13 + C.RC - 2;
       if ((C.CC == Trefle)||(C.CC == Pique))
-	{
-	  CreerImage(card_width, card_height, card_bits[CodeCarte[Code]], &ImCarte);
-	  ajout_image_noire(FenetreParDefaut, ImCarte, x, y, card_width, card_height);
-	}
-      else
-	{
-	  CreerImage(card_width, card_height, card_bits[CodeCarte[Code]], &ImCarte);
-	  ajout_image_rouge(FenetreParDefaut, ImCarte, x, y, card_width, card_height);
-	}
+				{
+				  CreerImage(card_width, card_height, card_bits[CodeCarte[Code]], &ImCarte);
+				  ajout_image_noire(FenetreParDefaut, ImCarte, x, y, card_width, card_height);
+				}
+			else
+				{
+				  CreerImage(card_width, card_height, card_bits[CodeCarte[Code]], &ImCarte);
+				  ajout_image_rouge(FenetreParDefaut, ImCarte, x, y, card_width, card_height);
+				}
     }
 }
 
