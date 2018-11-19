@@ -5,7 +5,7 @@
 /* ICI JEAN MICHEL T AS VU*/
 #include "AfficherTas.h"
 #include "graphlib_w.h"
-//hello de la part de marco//
+//hello de la part de marco////
 #include "cards.bm"
 #include "back.bm"
 #include "vide.bm"
