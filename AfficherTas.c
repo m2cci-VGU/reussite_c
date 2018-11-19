@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------*/
-/* Reussites. Michel Bonin, Catherine Parent, octobre 2005, 
+/* Reussites. Michel Bonin, Catherine Parent, octobre 2005,
    d'apres les algorithmes de Pierre-Claude Scholl              */
 /*--------------------------------------------------------------*/
 /* ICI JEAN MICHEL T AS VU*/
@@ -9,6 +9,10 @@
 #include "cards.bm"
 #include "back.bm"
 #include "vide.bm"
+
+//commit master
+
+
 
 /* Tableau de correspondance ;
    indice dans le tableau card_bits <-> indice dans le tableau CodeCarte */
@@ -50,7 +54,7 @@ void OuvrirGraphique(char nom[])
 }
 
 void FermerGraphique()
-{  
+{
   cliquer(FenetreParDefaut);
   gr_close(&FenetreParDefaut);
 }
@@ -76,7 +80,7 @@ void AfficherCarte(Carte C, int x, int y)
       CreerImage(back_width, back_height, back_bits, &ImCarte);
       ajout_image_noire(FenetreParDefaut, ImCarte, x, y, back_width, back_height);
     }
-  else /* La carte est découverte */
+  else /* La carte est dï¿½couverte */
     {
       Code = (C.CC - 1)*13 + C.RC - 2;
       if ((C.CC == Trefle)||(C.CC == Pique))
@@ -105,10 +109,10 @@ void AfficherTas(Tas T, char message[])
   int i;
   Localisation L;
   int H;
-  
+
   L.NC = (LaPlace(T)).NC;
   L.NL = (LaPlace(T)).NL;
-  
+
   if (TasVide(T)) {
       AfficherTasVide(L);
       overwrite_gr(FenetreParDefaut, EspX*(L.NC-1), EspY*L.NL+ DecY/2, message);
@@ -116,10 +120,10 @@ void AfficherTas(Tas T, char message[])
     if (TasEmpile(T)) {
       AfficherCarte(CarteSur(T), EspX*(L.NC-1), EspY*(L.NL-1));
       overwrite_gr(FenetreParDefaut,EspX*(L.NC-1), EspY*L.NL+ DecY/2, message);
-    } else	/* tas étalé */ {
+    } else	/* tas ï¿½talï¿½ */ {
     	H = LaHauteur(T);
     	for (i = 1; i <= H; i++)
 	      AfficherCarte(IemeCarte(T, i), EspX*(L.NC-1), EspY*(L.NL-1) + DecY*(i-1));
-    	overwrite_gr(FenetreParDefaut,EspX*(L.NC-1), 350, message);	
+    	overwrite_gr(FenetreParDefaut,EspX*(L.NC-1), 350, message);
    }
 }
