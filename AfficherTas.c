@@ -3,9 +3,7 @@
    d'apres les algorithmes de Pierre-Claude Scholl              */
 /*--------------------------------------------------------------*/
 
-
 //commit marjorie
-
 /* ICI JEAN MICHEL T AS VU*/
 
 #include "AfficherTas.h"
