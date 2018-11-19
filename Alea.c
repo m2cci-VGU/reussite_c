@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------*/
-/* Reussites. Michel Bonin, Catherine Parent, octobre 2005, 
+/* Reussites. Michel Bonin, Catherine Parent, octobre 2005,
    d'apres les algorithmes de Pierre-Claude Scholl              */
 /*--------------------------------------------------------------*/
 
@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <time.h>
+///salut de la part de Marco//
 
 void InitAlea()
 {
@@ -20,7 +21,7 @@ void InitAlea()
 int UnEntier(int n)
 {
   /* tirage aléatoire d'un entier entre 1 et n */
-  
+
   return rand()%n + 1;
 }
 
