@@ -1,11 +1,12 @@
 /*--------------------------------------------------------------*/
-/* Reussites. Michel Bonin, Catherine Parent, octobre 2005, 
+/* Reussites. Michel Bonin, Catherine Parent, octobre 2005,
    d'apres les algorithmes de Pierre-Claude Scholl              */
 /*--------------------------------------------------------------*/
 /* ICI JEAN MICHEL T AS VU*/
 #include "AfficherTas.h"
 #include "graphlib_w.h"
-//hello de la part de marco////
+//hello de la part de marco ////
+/////////////
 #include "cards.bm"
 #include "back.bm"
 #include "vide.bm"
@@ -50,7 +51,7 @@ void OuvrirGraphique(char nom[])
 }
 
 void FermerGraphique()
-{  
+{
   cliquer(FenetreParDefaut);
   gr_close(&FenetreParDefaut);
 }
@@ -105,10 +106,10 @@ void AfficherTas(Tas T, char message[])
   int i;
   Localisation L;
   int H;
-  
+
   L.NC = (LaPlace(T)).NC;
   L.NL = (LaPlace(T)).NL;
-  
+
   if (TasVide(T)) {
       AfficherTasVide(L);
       overwrite_gr(FenetreParDefaut, EspX*(L.NC-1), EspY*L.NL+ DecY/2, message);
@@ -120,6 +121,6 @@ void AfficherTas(Tas T, char message[])
     	H = LaHauteur(T);
     	for (i = 1; i <= H; i++)
 	      AfficherCarte(IemeCarte(T, i), EspX*(L.NC-1), EspY*(L.NL-1) + DecY*(i-1));
-    	overwrite_gr(FenetreParDefaut,EspX*(L.NC-1), 350, message);	
+    	overwrite_gr(FenetreParDefaut,EspX*(L.NC-1), 350, message);
    }
 }
