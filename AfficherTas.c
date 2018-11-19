@@ -3,7 +3,7 @@
    d'apres les algorithmes de Pierre-Claude Scholl              */
 /*--------------------------------------------------------------*/
 
-//commit marjorie
+//commit marjorie c'est encore moi
 
 #include "AfficherTas.h"
 #include "graphlib_w.h"
