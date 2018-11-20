@@ -1,14 +1,14 @@
-DIR=/u/c/carrierf/LIB_REUSSITES/
+DIR=..
 LIB=${DIR}/lib
 INCL=${DIR}/include
 
 .%.o: %.c
-	gcc -I${INCL} -c -g $<
+	gcc -I${INCL} -fPIC -c -g $<
 #	chgrp dsu-ens *.o
 #	chmod g+w *.o
 
 %.o: %.c ${INCL}/%.h
-	gcc -I${INCL} -c -g $<
+	gcc -I${INCL} -fPIC -c -g $<
 #	chgrp dsu-ens *.o
 #	chmod g+w *.o
 
