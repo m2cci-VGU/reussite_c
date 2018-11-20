@@ -70,6 +70,42 @@ void AfficherMD()
 	AttendreCliquer();
 }
 
+/* Créer une carte invisible de Rang Six et de couleur donnée. Créer une structure adresse pour cette carte et fixe le précédent et le suivant à NULL*/
+void CreerCarteFictiveMD(Carte* carteFictive, Couleur V, adCarte* adCarteFictive){
+	
+	carteFictive->CC= V;
+	carteFictive->RC= Six;
+	carteFictive->VC= Cachee;
+	
+	adCarteFictive->elt= carteFictive;
+	adCarteFictive->suiv=NULL;
+	adCarteFictive->prec=NULL;
+}
+
+
+void InitialisationMD(){
+	
+	Carte SixTrefle;
+	Carte SixCarreau;
+	Carte SixCoeur;
+	Carte SixPique;
+	
+	adCarte adSixTrefle;
+	adCarte adSixCarreau;
+	adCarte adSixCoeur;
+	adCarte adSixPique;
+	
+	CreerCarteFictiveMD(&SixTrefle, Trefle, &adSixTrefle);
+	CreerCarteFictiveMD(&SixCarreau, Carreau, &adSixCarreau);
+	CreerCarteFictiveMD(&SixCoeur, Coeur, &adSixCoeur);
+	CreerCarteFictiveMD(&SixPique, Pique, &adSixPique);
+	
+	AjouterCarteSurTas(&SixTrefle, &LigneMD[1]);
+	AjouterCarteSurTas(&SixCarreau, &LigneMD[2]);   
+	AjouterCarteSurTas(&SixCoeur, &LigneMD[3]);  
+	AjouterCarteSurTas(&SixPique, &LigneMD[4]);  
+}
+/*
 void JouerTasMD(Tas *T, booleen *OK)
 {
   Couleur Co;
@@ -80,10 +116,7 @@ void JouerTasMD(Tas *T, booleen *OK)
   RSur = LeRang(CarteSur(LigneMD[Co]));
 
   *OK = vrai;
-  if (RT == 7){
-  	DeplacerHautSur(T, &(LigneMD[Co]));
-  }
-  else if (RT == RangSuivant(RSur)){
+  	if (RT == RangSuivant(RSur)){
   	 DeplacerHautSur(T, &(LigneMD[Co]));
   }
    
@@ -92,3 +125,4 @@ void JouerTasMD(Tas *T, booleen *OK)
   else 
     *OK = faux;
 }
+*/
