@@ -79,7 +79,11 @@ booleen MemeCouleur(Carte C1, Carte C2) {
 	return LaCouleur(C1) == LaCouleur(C2);
 }
 
-booleen EstCarteAvant(Carte C1, Carte C2) {
+booleen EstCarteAvant(Carte C1, Carte C2)
+if (!MemeCouleur(C1,C2)) {return CouleurInferieure(C1,C2);
+}
+else {return RangInferieur(C1,C2);
+}
 }
 
 /* Representation des tas */
