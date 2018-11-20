@@ -148,7 +148,7 @@ Donne leur valeur aux variables globales NbCartes et PremierRang.
 Pr�-condition : l'emplacement L est libre
                 N==52 ou N==32
 **************************************************************** */
-void CreerJeuNeuf(int N, Localisation L, Tas *T) {
+void CreerJeuNeuf(int N, Localisation L, Tas *T) {	/* marjo en cours */
 }
 
 	/* Consultation des cartes d'un tas: ne deplace pas la carte */
