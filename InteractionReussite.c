@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#include "MD.h"
 
 /* Interaction avec l'utilisateur */
 
@@ -234,9 +235,9 @@ void runSimulerMD()
 
     /* todo ANTOINE */
 
-    /*OuvrirGraphique("Montée-Descente");
-    ObserverMD(nbparties, NBMAXT);
-    FermerGraphique();*/
+    OuvrirGraphique("Montée-Descente");
+    ObserverMD(nbparties);
+    FermerGraphique();
 }
 
 void runAnalyserMD()
@@ -248,8 +249,5 @@ void runAnalyserMD()
 
     /* todo ANTOINE */
 
-    /*AnalyserMD(nbparties,NBMAXT);*/
+    AnalyserMD(nbparties);
 }
-
-
-
