@@ -64,6 +64,7 @@ Visibilite EstDecouverte(Carte C) {
 	/* Comparaison de cartes */
 
 booleen RangInferieur(Carte C1, Carte C2) {
+    return LeRang(C1) < LeRang(C2);
 }
 
 booleen MemeRang(Carte C1, Carte C2) {
@@ -71,6 +72,7 @@ booleen MemeRang(Carte C1, Carte C2) {
 }
 
 booleen CouleurInferieure(Carte C1, Carte C2) {
+    return LaCouleur(C1) < LaCouleur(C2);
 }
 
 booleen MemeCouleur(Carte C1, Carte C2) {
