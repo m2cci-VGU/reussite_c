@@ -149,7 +149,7 @@ void JouerUnTourR7(ModeTrace MT)
   while (!TasVide(TalonR7));
 }
 
-void JouerUneR7(int NMaxT, ModeTrace MT)
+int JouerUneR7(int NMaxT, ModeTrace MT)
 {
   JouerUnTourR7(MT);
   /* Jeu d'au plus NMaxT tours */
@@ -163,11 +163,16 @@ void JouerUneR7(int NMaxT, ModeTrace MT)
     }
   if (TasVide(RebutR7))
     {
-      printf("Vous avez gagné en %d tours !\n",NumTourR7);
+	if (MT == AvecTrace){printf("Vous avez gagné en %d tours !\n",NumTourR7);
+	}
+	else  {return NumTourR7;
+	}
     }
-  else
-    {
-      printf("Vous avez perdu !\n");
+  else {
+  if (MT == AvecTrace) { printf("Vous avez perdu\n");
+	}
+	else { return 0;
+	}
     }
 }
 
@@ -219,26 +224,28 @@ void AnalyserR7(int NP, int NMaxT) /*procedure qui stocke les resultats dans un 
 
 
   CreerTableauInitialR7();
-  AnalyserUneR7(NMaxT, SansTrace,&resultat);
+  resultat=JouerUneR7(NMaxT, SansTrace);
   stats[resultat]+=1;
     for (i = 1; i <= NP-1; i++)
     {
         ReformerTableauInitialR7();
-        AnalyserUneR7(NMaxT, SansTrace, &resultat);
+        resultat=JouerUneR7(NMaxT, SansTrace);
         stats[resultat]+=1;
     }
-
-    int totparties=0;
-    for (k=0;k < NMaxT+1;k++){
-    totparties=totparties+stats[k];
-    }
     printf("\nStatistiques de ce jeu de Reussite sur %d parties, chacune avec %d tours au maximum:\n", NP, NMaxT);
-    printf("vous avez perdu %d %% des fois\n",100*stats[0]/totparties);
-    for (i = 1; i < NMaxT+1; i++)
-    {
-    printf("vous avez gagne %d %% des fois apres %d tours \n",100*stats[i]/totparties,i);
+    printf("vous avez perdu %d %% des fois\n",100*stats[0]/NP);
+    i=1;int counter=stats[0];
+    while (i<NMaxT && counter<NP) {
+    counter+=stats[i];
+    printf("vous avez gagne %d %% des fois apres %d tours \n",100*stats[i]/NP,i);
+    i++;
     }
-
+    printf("\nStatistiques avancées:\n");
+    i=1; counter=stats[0];
+    while (i<NMaxT && counter<NP) {
+    counter+=stats[i];
+    printf("votre probabilite de gagner est %d %% apres %d tours \n",100*counter/NP,i);
+    i++;
 }
-
+}
 
