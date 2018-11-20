@@ -71,7 +71,7 @@ void AfficherMD()
 }
 
 /* Créer une carte invisible de Rang Six et de couleur donnée. Créer une structure adresse pour cette carte et fixe le précédent et le suivant à NULL*/
-void CreerCarteFictiveMD(Carte* carteFictive, Couleur V, adCarte* adCarteFictive){
+void CreerCarteFictiveMD(Carte* carteFictive, Couleur V, struct adCarte* adCarteFictive){
 	
 	carteFictive->CC= V;
 	carteFictive->RC= Six;
@@ -90,10 +90,10 @@ void InitialisationMD(){
 	Carte SixCoeur;
 	Carte SixPique;
 	
-	adCarte adSixTrefle;
-	adCarte adSixCarreau;
-	adCarte adSixCoeur;
-	adCarte adSixPique;
+	struct adCarte adSixTrefle;
+	struct adCarte adSixCarreau;
+	struct adCarte adSixCoeur;
+	struct adCarte adSixPique;
 	
 	CreerCarteFictiveMD(&SixTrefle, Trefle, &adSixTrefle);
 	CreerCarteFictiveMD(&SixCarreau, Carreau, &adSixCarreau);
@@ -105,7 +105,7 @@ void InitialisationMD(){
 	AjouterCarteSurTas(&SixCoeur, &LigneMD[3]);  
 	AjouterCarteSurTas(&SixPique, &LigneMD[4]);  
 }
-/*
+
 void JouerTasMD(Tas *T, booleen *OK)
 {
   Couleur Co;
@@ -125,4 +125,3 @@ void JouerTasMD(Tas *T, booleen *OK)
   else 
     *OK = faux;
 }
-*/
