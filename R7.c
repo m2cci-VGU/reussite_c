@@ -46,12 +46,12 @@ void CreerTableauInitialR7()
   SaisirLocTasR7();
   NumTourR7 = 1;
 
-  /* Crï¿½ation du talon avec un jeu de 52 cartes et du rebut avec un tas vide */
+  /* Création du talon avec un jeu de 52 cartes et du rebut avec un tas vide */
   CreerJeuNeuf(52, LocTalonR7, &TalonR7);
   BattreTas(&TalonR7);
   CreerTasVide(LocRebutR7, empile, &RebutR7);
 
-  /* Crï¿½ation des sï¿½ries de chaque couleur et initialisation avec le sept */
+  /* Création des séries de chaque couleur et initialisation avec le sept */
 
   for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
     {
@@ -78,7 +78,7 @@ void ReformerTableauInitialR7()
 
   NumTourR7 = 1;
 
-  /* Initialisation des sï¿½ries de chaque couleur avec le sept */
+  /* Initialisation des séries de chaque couleur avec le sept */
 
   for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
     {
@@ -87,7 +87,7 @@ void ReformerTableauInitialR7()
     }
 }
 
-/* Visualisation des ï¿½tats du jeu */
+/* Visualisation des états du jeu */
 
 void AfficherR7()
 {
@@ -130,7 +130,7 @@ void JouerUnTourR7(ModeTrace MT)
 
   if (MT == AvecTrace)
     AfficherR7();
-  do	/* Jeu du talon, puis ï¿½ventuellement du rebut */ {
+  do	/* Jeu du talon, puis éventuellement du rebut */ {
       /* On sait qu'on ne peut pas jouer le rebut et que le talon n'est pas vide */
       /* Jouer le talon */
       RetournerCarteSur(&TalonR7);
@@ -140,15 +140,16 @@ void JouerUnTourR7(ModeTrace MT)
       if (MT == AvecTrace)
 	      AfficherR7();
       while (OK && !TasVide(RebutR7))	{
-	      /* On a jouï¿½ le talon ou le rebut. Le rebut n'est pas vide: on joue le rebut */
+	      /* On a joué le talon ou le rebut. Le rebut n'est pas vide: on joue le rebut */
 	      JouerTasR7(&RebutR7, &OK);
 	      if (OK && (MT == AvecTrace))
 	         AfficherR7();
 	   }
-  } while (!TasVide(TalonR7));
+  }
+  while (!TasVide(TalonR7));
 }
 
-void JouerUneR7(int NMaxT, ModeTrace MT)
+int JouerUneR7(int NMaxT, ModeTrace MT)
 {
   JouerUnTourR7(MT);
   /* Jeu d'au plus NMaxT tours */
@@ -162,11 +163,39 @@ void JouerUneR7(int NMaxT, ModeTrace MT)
     }
   if (TasVide(RebutR7))
     {
-      printf("Vous avez gagne en %d tours !\n",NumTourR7);
+	if (MT == AvecTrace){printf("Vous avez gagné en %d tours !\n",NumTourR7);
+	}
+	else  {return NumTourR7;
+	}
+    }
+  else {
+  if (MT == AvecTrace) { printf("Vous avez perdu\n");
+	}
+	else { return 0;
+	}
+    }
+}
+
+void AnalyserUneR7(int NMaxT, ModeTrace MT, int*c) /*procedure qui a le but d'extraire le tour auquel la partie est terminée et son resultat*/
+{
+
+  JouerUnTourR7(MT);
+  /* Jeu d'au plus NMaxT tours */
+
+  while (!(TasVide(RebutR7)) && (NumTourR7 < NMaxT))
+    {
+      RetournerTas(&RebutR7);
+      PoserTasSurTas(&RebutR7, &TalonR7);
+      JouerUnTourR7(MT);
+      NumTourR7 = NumTourR7 + 1;
+    }
+  if (TasVide(RebutR7)) {
+
+    *c=NumTourR7;
     }
   else
     {
-      printf("Vous avez perdu !\n");
+    *c=0; /*convention:si perdu, c=0*/
     }
 }
 
@@ -183,7 +212,40 @@ void ObserverR7(int NP, int NMaxT)
     }
 }
 
-void AnalyserR7(int NP, int NMaxT)
+void AnalyserR7(int NP, int NMaxT) /*procedure qui stocke les resultats dans un tableau et permet de faire les statistiques*/
 {
-  /* A COMPLETER */
+   int i;
+   int resultat;
+   int stats[NMaxT+1];
+    int k;
+   for (k=0;k < NMaxT+1;k++){
+   stats[k]=0;
+   }
+
+
+  CreerTableauInitialR7();
+  resultat=JouerUneR7(NMaxT, SansTrace);
+  stats[resultat]+=1;
+    for (i = 1; i <= NP-1; i++)
+    {
+        ReformerTableauInitialR7();
+        resultat=JouerUneR7(NMaxT, SansTrace);
+        stats[resultat]+=1;
+    }
+    printf("\nStatistiques de ce jeu de Reussite sur %d parties, chacune avec %d tours au maximum:\n", NP, NMaxT);
+    printf("vous avez perdu %d %% des fois\n",100*stats[0]/NP);
+    i=1;int counter=stats[0];
+    while (i<NMaxT && counter<NP) {
+    counter+=stats[i];
+    printf("vous avez gagne %d %% des fois apres %d tours \n",100*stats[i]/NP,i);
+    i++;
+    }
+    printf("\nStatistiques avancées:\n");
+    i=1; counter=stats[0];
+    while (i<NMaxT && counter<NP) {
+    counter+=stats[i];
+    printf("votre probabilite de gagner est %d %% apres %d tours \n",100*counter/NP,i);
+    i++;
 }
+}
+
