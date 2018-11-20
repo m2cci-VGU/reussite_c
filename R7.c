@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------*/
-/* Reussites. Michel Bonin, Catherine Parent, octobre 2005, 
+/* Reussites. Michel Bonin, Catherine Parent, octobre 2005,
    d'apres les algorithmes de Pierre-Claude Scholl              */
 /*--------------------------------------------------------------*/
 
@@ -46,12 +46,12 @@ void CreerTableauInitialR7()
   SaisirLocTasR7();
   NumTourR7 = 1;
 
-  /* Création du talon avec un jeu de 52 cartes et du rebut avec un tas vide */
+  /* Crï¿½ation du talon avec un jeu de 52 cartes et du rebut avec un tas vide */
   CreerJeuNeuf(52, LocTalonR7, &TalonR7);
   BattreTas(&TalonR7);
   CreerTasVide(LocRebutR7, empile, &RebutR7);
 
-  /* Création des séries de chaque couleur et initialisation avec le sept */
+  /* Crï¿½ation des sï¿½ries de chaque couleur et initialisation avec le sept */
 
   for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
     {
@@ -71,14 +71,14 @@ void ReformerTableauInitialR7()
     {
       EmpilerTas(&(LigneR7[Co]));
       PoserTasSurTas(&(LigneR7[Co]), &TalonR7);
-      EtalerTas(&(LigneR7[Co])); 
+      EtalerTas(&(LigneR7[Co]));
     }
   RetournerTas(&TalonR7);
   BattreTas(&TalonR7);
 
   NumTourR7 = 1;
 
-  /* Initialisation des séries de chaque couleur avec le sept */
+  /* Initialisation des sï¿½ries de chaque couleur avec le sept */
 
   for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
     {
@@ -87,7 +87,7 @@ void ReformerTableauInitialR7()
     }
 }
 
-/* Visualisation des états du jeu */
+/* Visualisation des ï¿½tats du jeu */
 
 void AfficherR7()
 {
@@ -99,7 +99,7 @@ void AfficherR7()
 
   for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
     AfficherTas(LigneR7[Co], TexteCouleurR7[Co]);
-	
+
   AttendreCliquer();
 }
 
@@ -120,17 +120,17 @@ void JouerTasR7(Tas *T, booleen *OK)
     DeplacerHautSur(T, &(LigneR7[Co]));
   else if (RSous == RangSuivant(RT))
     DeplacerHautSous(T, &(LigneR7[Co]));
-  else 
+  else
     *OK = faux;
 }
 
 void JouerUnTourR7(ModeTrace MT)
 {
   booleen OK;
-  
+
   if (MT == AvecTrace)
     AfficherR7();
-  do	/* Jeu du talon, puis éventuellement du rebut */ {
+  do	/* Jeu du talon, puis ï¿½ventuellement du rebut */ {
       /* On sait qu'on ne peut pas jouer le rebut et que le talon n'est pas vide */
       /* Jouer le talon */
       RetournerCarteSur(&TalonR7);
@@ -140,13 +140,12 @@ void JouerUnTourR7(ModeTrace MT)
       if (MT == AvecTrace)
 	      AfficherR7();
       while (OK && !TasVide(RebutR7))	{
-	      /* On a joué le talon ou le rebut. Le rebut n'est pas vide: on joue le rebut */
+	      /* On a jouï¿½ le talon ou le rebut. Le rebut n'est pas vide: on joue le rebut */
 	      JouerTasR7(&RebutR7, &OK);
 	      if (OK && (MT == AvecTrace))
 	         AfficherR7();
 	   }
-  }
-  while (!TasVide(TalonR7));
+  } while (!TasVide(TalonR7));
 }
 
 void JouerUneR7(int NMaxT, ModeTrace MT)
@@ -154,7 +153,7 @@ void JouerUneR7(int NMaxT, ModeTrace MT)
   JouerUnTourR7(MT);
   /* Jeu d'au plus NMaxT tours */
 
-  while (!(TasVide(RebutR7)) && (NumTourR7 < NMaxT))  
+  while (!(TasVide(RebutR7)) && (NumTourR7 < NMaxT))
     {
       RetournerTas(&RebutR7);
       PoserTasSurTas(&RebutR7, &TalonR7);
@@ -163,14 +162,14 @@ void JouerUneR7(int NMaxT, ModeTrace MT)
     }
   if (TasVide(RebutR7))
     {
-      printf("Vous avez gagné en %d tours !\n",NumTourR7);
+      printf("Vous avez gagne en %d tours !\n",NumTourR7);
     }
   else
     {
       printf("Vous avez perdu !\n");
     }
 }
-		
+
 void ObserverR7(int NP, int NMaxT)
 {
   int i;
@@ -188,4 +187,3 @@ void AnalyserR7(int NP, int NMaxT)
 {
   /* A COMPLETER */
 }
-	
