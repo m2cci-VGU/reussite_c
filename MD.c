@@ -205,17 +205,17 @@ void RemonterCarteStock(Tas *Stock1, Tas *Stock2, Tas *Stock3, Tas *Stock4){
 	booleen OKStock4;
 	
 	do {
-		if(!TasVide(Stock1)){
-			JouerTasSurLigneMD(&Stock1, &OKStock1);
+		if(!(TasVide(*Stock1))){
+			JouerTasSurLigneMD(Stock1, &OKStock1);
 		}
-		if(!TasVide(Stock2)){
-			JouerTasSurLigneMD(&Stock2, &OKStock2);
+		if(!(TasVide(*Stock2))){
+			JouerTasSurLigneMD(Stock2, &OKStock2);
 		}
-		if(!TasVide(Stock3)){
-			JouerTasSurLigneMD(&Stock3, &OKStock3);
+		if(!(TasVide(*Stock3))){
+			JouerTasSurLigneMD(Stock3, &OKStock3);
 		}
-		if(!TasVide(Stock4)){
-			JouerTasSurLigneMD(&Stock4, &OKStock4);
+		if(!(TasVide(*Stock4))){
+			JouerTasSurLigneMD(Stock4, &OKStock4);
 		}
 	}
 	while (OKStock1 || OKStock2 || OKStock3 || OKStock4);
@@ -247,7 +247,7 @@ void JouerUneMD(ModeTrace MT){
 			}
 		}
 	}
-	while (!TasVide(TalonMD) || (!poserStock && !poserLigne));
+	while (!(TasVide(TalonMD)) || (!poserStock && !poserLigne));
   
 	if (TasVide(TalonMD) && (poserStock || poserLigne)){
 		printf("Bravo c'est gagné!\n");
@@ -267,7 +267,7 @@ void ObserverMD(int NP)
 	for (i = 1; i <= NP-1; i++)
 	{
 		ReformerTableauInitialMD();
-		JouerUnemd(AvecTrace);
+		JouerUneMD(AvecTrace);
 	}
 }
 
