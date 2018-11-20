@@ -20,7 +20,7 @@
 
 Couleur CouleurSuivante(Couleur C) {
 	if(C == DerniereCouleur){
-		return C;
+		return PremiereCouleur;
 	} else {
 		return C+1;
 	}
@@ -90,22 +90,28 @@ else {return RangInferieur(C1,C2);
 
 	/* Testeurs et selecteurs */
 
-booleen TasActif(Tas T) {
+booleen TasActif(Tas T)
+return T.RT==actif;
 }
 
 booleen TasVide(Tas T) {
+return T.HT==0;
 }
 
 booleen TasEmpile(Tas T) {
+return T.MT==empile;
 }
 
 booleen TasEtale(Tas T) {
+return T.MT==etale;
 }
 
 int LaHauteur(Tas T) {
+return T.HT;
 }
 
 Localisation LaPlace(Tas T) {
+    return T.LT;
 }
 
 	/* Constructeurs */
@@ -116,6 +122,10 @@ associe � T un tas vide actif plac� en L et de mode d'�talement M.
 Pr�-condition : l'emplacement L est disponible
 **************************************************************** */
 void CreerTasVide(Localisation L, Mode M, Tas *T) {
+(*T).LT=L
+(*T).RT=actif;
+(*T).MT=M;
+(*T).HT=0;
 }
 
 /* *************************************************************
@@ -124,7 +134,10 @@ rend le tas vide inactif. En particulier, la place qu'il occupait
 devient libre pour un autre tas.
 Pr�-condition : le tas T est vide et actif
 **************************************************************** */
-void SupprimerTasVide(Tas *T) {
+void SupprimerTasVide(Tas *T) {  /*en cours-Marco*/
+if ((*T).HT==0) {(*T).RT=inactif;
+
+}
 }
 
 /* *************************************************************
