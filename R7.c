@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------*/
-/* Reussites. Michel Bonin, Catherine Parent, octobre 2005, 
+/* Reussites. Michel Bonin, Catherine Parent, octobre 2005,
    d'apres les algorithmes de Pierre-Claude Scholl              */
 /*--------------------------------------------------------------*/
 
@@ -71,7 +71,7 @@ void ReformerTableauInitialR7()
     {
       EmpilerTas(&(LigneR7[Co]));
       PoserTasSurTas(&(LigneR7[Co]), &TalonR7);
-      EtalerTas(&(LigneR7[Co])); 
+      EtalerTas(&(LigneR7[Co]));
     }
   RetournerTas(&TalonR7);
   BattreTas(&TalonR7);
@@ -99,7 +99,7 @@ void AfficherR7()
 
   for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
     AfficherTas(LigneR7[Co], TexteCouleurR7[Co]);
-	
+
   AttendreCliquer();
 }
 
@@ -120,14 +120,14 @@ void JouerTasR7(Tas *T, booleen *OK)
     DeplacerHautSur(T, &(LigneR7[Co]));
   else if (RSous == RangSuivant(RT))
     DeplacerHautSous(T, &(LigneR7[Co]));
-  else 
+  else
     *OK = faux;
 }
 
 void JouerUnTourR7(ModeTrace MT)
 {
   booleen OK;
-  
+
   if (MT == AvecTrace)
     AfficherR7();
   do	/* Jeu du talon, puis éventuellement du rebut */ {
@@ -154,7 +154,7 @@ void JouerUneR7(int NMaxT, ModeTrace MT)
   JouerUnTourR7(MT);
   /* Jeu d'au plus NMaxT tours */
 
-  while (!(TasVide(RebutR7)) && (NumTourR7 < NMaxT))  
+  while (!(TasVide(RebutR7)) && (NumTourR7 < NMaxT))
     {
       RetournerTas(&RebutR7);
       PoserTasSurTas(&RebutR7, &TalonR7);
@@ -170,7 +170,30 @@ void JouerUneR7(int NMaxT, ModeTrace MT)
       printf("Vous avez perdu !\n");
     }
 }
-		
+
+void AnalyserUneR7(int NMaxT, ModeTrace MT, int*c) /*procedure qui a le but d'extraire le tour auquel la partie est terminée et son resultat*/
+{
+
+  JouerUnTourR7(MT);
+  /* Jeu d'au plus NMaxT tours */
+
+  while (!(TasVide(RebutR7)) && (NumTourR7 < NMaxT))
+    {
+      RetournerTas(&RebutR7);
+      PoserTasSurTas(&RebutR7, &TalonR7);
+      JouerUnTourR7(MT);
+      NumTourR7 = NumTourR7 + 1;
+    }
+  if (TasVide(RebutR7)) {
+
+    *c=NumTourR7;
+    }
+  else
+    {
+    *c=0; /*convention:si perdu, c=0*/
+    }
+}
+
 void ObserverR7(int NP, int NMaxT)
 {
   int i;
@@ -184,8 +207,38 @@ void ObserverR7(int NP, int NMaxT)
     }
 }
 
-void AnalyserR7(int NP, int NMaxT)
+void AnalyserR7(int NP, int NMaxT) /*procedure qui stocke les resultats dans un tableau et permet de faire les statistiques*/
 {
-  /* A COMPLETER */
+   int i;
+   int resultat;
+   int stats[NMaxT+1];
+    int k;
+   for (k=0;k < NMaxT+1;k++){
+   stats[k]=0;
+   }
+
+
+  CreerTableauInitialR7();
+  AnalyserUneR7(NMaxT, SansTrace,&resultat);
+  stats[resultat]+=1;
+    for (i = 1; i <= NP-1; i++)
+    {
+        ReformerTableauInitialR7();
+        AnalyserUneR7(NMaxT, SansTrace, &resultat);
+        stats[resultat]+=1;
+    }
+
+    int totparties=0;
+    for (k=0;k < NMaxT+1;k++){
+    totparties=totparties+stats[k];
+    }
+    printf("\nStatistiques de ce jeu de Reussite sur %d parties, chacune avec %d tours au maximum:\n", NP, NMaxT);
+    printf("vous avez perdu %d %% des fois\n",100*stats[0]/totparties);
+    for (i = 1; i < NMaxT+1; i++)
+    {
+    printf("vous avez gagne %d %% des fois apres %d tours \n",100*stats[i]/totparties,i);
+    }
+
 }
-	
+
+
