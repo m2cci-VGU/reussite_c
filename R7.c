@@ -148,7 +148,7 @@ void JouerUnTourR7(ModeTrace MT)
   } while (!TasVide(TalonR7));
 }
 
-void JouerUneR7(int NMaxT, ModeTrace MT)
+int JouerUneR7(int NMaxT, ModeTrace MT)
 {
   JouerUnTourR7(MT);
   /* Jeu d'au plus NMaxT tours */
@@ -166,7 +166,7 @@ void JouerUneR7(int NMaxT, ModeTrace MT)
     }
   else
     {
-      printf("Vous avez perdu !\n");
+    *c=0; /*convention:si perdu, c=0*/
     }
 }
 
@@ -183,7 +183,39 @@ void ObserverR7(int NP, int NMaxT)
     }
 }
 
-void AnalyserR7(int NP, int NMaxT)
+void AnalyserR7(int NP, int NMaxT) /*procedure qui stocke les resultats dans un tableau et permet de faire les statistiques*/
 {
-  /* A COMPLETER */
+   int i;
+   int resultat;
+   int stats[NMaxT+1];
+   int k;
+   for (k=0;k < NMaxT+1;k++){
+     stats[k]=0;
+   }
+  CreerTableauInitialR7();
+  resultat=JouerUneR7(NMaxT, SansTrace);
+  stats[resultat]+=1;
+  for (i = 1; i <= NP-1; i++)
+  {
+      ReformerTableauInitialR7();
+      resultat=JouerUneR7(NMaxT, SansTrace);
+      stats[resultat]+=1;
+  }
+  printf("\nStatistiques de ce jeu de Reussite sur %d parties, chacune avec %d tours au maximum:\n", NP, NMaxT);
+  printf("vous avez perdu %d %% des fois\n",100*stats[0]/NP);
+  i=1;
+  int counter=stats[0];
+  while (i<NMaxT && counter<NP) {
+    counter+=stats[i];
+    printf("vous avez gagne %d %% des fois apres %d tours \n",100*stats[i]/NP,i);
+    i++;
+  }
+  printf("\nStatistiques avanc�es:\n");
+  i=1;
+  counter=stats[0];
+  while (i<NMaxT && counter<NP) {
+    counter+=stats[i];
+    printf("votre probabilite de gagner est %d %% apres %d tours \n",100*counter/NP,i);
+    i++;
+  }
 }
