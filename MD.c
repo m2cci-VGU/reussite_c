@@ -258,7 +258,7 @@ void JouerUneMD(ModeTrace MT){
   
 }
 
-void ObserverR7(int NP)
+void ObserverMD(int NP)
 {
 	int i;
 
@@ -269,4 +269,9 @@ void ObserverR7(int NP)
 		ReformerTableauInitialMD();
 		JouerUnemd(AvecTrace);
 	}
+}
+
+void AnalyserMD(int NP)
+{
+  /* A COMPLETER */
 }
