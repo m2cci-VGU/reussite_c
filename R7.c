@@ -23,6 +23,16 @@ Localisation LocTalonR7, LocRebutR7;
 
 /* Formation du tableau de jeu initial */
 
+Tas* getTalonR7 () {
+  return &TalonR7;
+}
+Tas* getRebutR7 () {
+  return &RebutR7;
+}
+Tas* getTasCouleurR7(Couleur Co) {
+  return &(LigneR7[Co]);
+}
+
 void SaisirLocTasR7()
 {
   int i;
@@ -150,7 +160,9 @@ void JouerUnTourR7(ModeTrace MT)
 
 void JouerUneR7(int NMaxT, ModeTrace MT)
 {
+  printf("JouerUneR7.enter\n");
   JouerUnTourR7(MT);
+  printf("JouerUneR7 fin de jouer un tour\n");
   /* Jeu d'au plus NMaxT tours */
 
   while (!(TasVide(RebutR7)) && (NumTourR7 < NMaxT))
