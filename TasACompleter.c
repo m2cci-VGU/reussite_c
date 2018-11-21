@@ -240,13 +240,13 @@ Carte IemeCarte(Tas T, int i)
     {
         {
             struct adCarte *Visitor;
-            Visitor=Tas.tete
+            Visitor = T->tete
                     int k=0;
-            while (k<i && Visitor.elt!=NULL)   /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
+            while (k<i && Visitor->elt!=NULL)   /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
             {
-                Visitor=Visitor.suiv;
+                Visitor=Visitor->suiv;
             }
-            return Visitor.elt;
+            return Visitor->elt;
         }
     }
 }
@@ -260,13 +260,16 @@ Pr�-condition : T non vide
 **************************************************************** */
 void RetournerCarteSur(Tas *T)
 {
-    if (!(*T).queue->elt.VC)
+    if (T->HT > 0)
     {
-        (*T).queue->elt.VC = Decouverte;
-    }
-    else
-    {
-        (*T).queue->elt.VC = Cachee;
+        if (!(*T).queue->elt.VC)
+        {
+            (*T).queue->elt.VC = Decouverte;
+        }
+        else
+        {
+            (*T).queue->elt.VC = Cachee;
+        }
     }
 }
 
@@ -285,8 +288,6 @@ void RetournerCarteSous(Tas *T)
     {
         (*T).tete->elt.VC = Cachee;
     }
-}
-
 }
 
 /* Modification d'un tas */
@@ -319,7 +320,6 @@ void EchangerCartes(int i, int j, Tas *T)
     struct adCarte *carteJ=IemeCarte(*T,j);
     struct adCarte *tempI=carteI;
     struct adCarte *tempJ=carteJ;
-
 }
 
 /* *************************************************************
@@ -473,4 +473,12 @@ ni leur mode d'�talement.
 ********************************************************************************* */
 void PoserTasSurTas(Tas *T1, Tas *T2)
 {
+    if(T1->MT == T2->MT)
+    {
+        T2->queue->suiv = T1->tete;
+        T1->RT = actif;
+        T1->HT = 0;
+        T1->tete = NULL;
+        T1->queue = NULL;
+    }
 }
