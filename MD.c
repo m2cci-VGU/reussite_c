@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "MD.h"
+
 
 char TexteCouleurMD[5][8] = {"", "Trefle", "Carreau", "Coeur", "Pique"};
 
@@ -98,7 +100,7 @@ void ReformerTableauInitialMD()
 	BattreTas(&TalonMD);
 }
 BISOUS */
- 
+
 void AfficherMD()
 {
 	Couleur Co;
@@ -113,7 +115,7 @@ void AfficherMD()
 	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
 		AfficherTas(LigneMD[Co], TexteCouleurMD[Co]);
 
-	AttendreCliquer();
+	/*AttendreCliquer();*/
 }
 
 /* Créer une carte invisible de Rang Six et de couleur donnée. Créer une structure adresse pour cette carte et fixe le précédent et le suivant à NULL*/
@@ -174,52 +176,56 @@ void JouerTasSurLigneMD(Tas *T, booleen *OK){
 		*OK = faux;
 	}
 }
+/* Fonction qui trouve l ecart minimum entre les stocks et la pioche, retourne le stock concerne*/
 
+void TrouverEcartMinimum (Rang RPioche, Tas** Cible, booleen* OK){
+  Rang RStock1, RStock2, RStock3, RStock4, E1, E2, E3, E4, Min;
+int i;
+*OK = vrai;
+	RStock1 = TasVide(Stock1) ? 0 : LeRang(CarteSur(Stock1));
+	RStock2 = TasVide(Stock2) ? 0 : LeRang(CarteSur(Stock2));
+	RStock3 = TasVide(Stock3) ? 0 : LeRang(CarteSur(Stock3));
+	RStock4 = TasVide(Stock4) ? 0 : LeRang(CarteSur(Stock4));
+
+  E1 = (RPioche > RStock1) ? 100 : (RStock1 - RPioche);
+  E2 = (RPioche > RStock2) ? 100 : (RStock2 - RPioche);
+  E3 = (RPioche > RStock3) ? 100 : (RStock3 - RPioche);
+  E4 = (RPioche > RStock4) ? 100 : (RStock4 - RPioche);
+Min = E1;
+*Cible = &Stock1;
+Tas* tabStock[4];
+tabStock[0] = &Stock1;
+tabStock[1] = &Stock2;
+tabStock[2] = &Stock3;
+tabStock[3] = &Stock4;
+ Rang tabEcart[4];
+ tabEcart[0] = E1;
+ tabEcart[1] = E2;
+ tabEcart[2] = E3;
+ tabEcart[3] = E4;
+
+for (i=1;i<=3;i++){
+if (Min > tabEcart[i]){
+	Min = tabEcart[i];
+	*Cible = (tabStock[i]);
+}
+}
+if (Min==100){
+	*OK= faux;
+}
+}
 void JouerTasSurStock(Tas* T, booleen* OK){
 
-	Rang RT, RStock1, RStock2, RStock3, RStock4;
+	Rang RT;
+  Tas* Cible;
+	booleen ecart;
 
 	RT = LeRang(CarteSur(*T));
-
-
-
-	if(TasVide(Stock1)){
-		RStock1=0;
-	}
-	else {
-		RStock1 = LeRang(CarteSur(Stock1));
-	}
-	if(TasVide(Stock2)){
-		RStock2=0;
-	}
-	else {
-		RStock2 = LeRang(CarteSur(Stock2));
-	}
-	if(TasVide(Stock3)){
-		RStock3=0;
-	}
-	else {
-		RStock3 = LeRang(CarteSur(Stock3));
-	}
-	if(TasVide(Stock4)){
-		RStock4=0;
-	}
-	else {
-		RStock4 = LeRang(CarteSur(Stock4));
-	}
+  TrouverEcartMinimum(RT,&Cible,&ecart);
 
 	*OK = vrai;
-	if (!TasVide(Stock1) && RT==RStock1-1){
-		DeplacerHautSur(&TalonMD, &Stock1);
-	}
-	else if (!TasVide(Stock2) && RT==RStock2-1){
-		DeplacerHautSur(&TalonMD, &Stock2);
-	}
-	else if (!TasVide(Stock3) && RT==RStock3-1){
-		DeplacerHautSur(&TalonMD, &Stock3);
-	}
-	else if (!TasVide(Stock4) && RT==RStock4-1){
-		DeplacerHautSur(&TalonMD, &Stock4);
+	if (ecart){
+		DeplacerHautSur(&TalonMD, Cible);
 	}
 	else if (TasVide(Stock1)){
 		DeplacerHautSur(&TalonMD, &Stock1);
@@ -238,7 +244,7 @@ void JouerTasSurStock(Tas* T, booleen* OK){
 	}
 }
 
-void RemonterCarteStock(){
+void RemonterCarteStock(ModeTrace MT){
 
 	booleen OKStock1 = faux;
 	booleen OKStock2 = faux;
@@ -248,15 +254,27 @@ void RemonterCarteStock(){
 	do {
 		if(!(TasVide(Stock1))){
 			JouerTasSurLigneMD(&Stock1, &OKStock1);
+			/*if (OKStock1 && MT == AvecTrace){
+				AfficherMD();
+			}*/
 		}
 		if(!(TasVide(Stock2))){
 			JouerTasSurLigneMD(&Stock2, &OKStock2);
+			/*if (OKStock2 && MT == AvecTrace){
+				AfficherMD();
+			}*/
 		}
 		if(!(TasVide(Stock3))){
 			JouerTasSurLigneMD(&Stock3, &OKStock3);
+			/*if (OKStock3 && MT == AvecTrace){
+				AfficherMD();
+			}*/
 		}
 		if(!(TasVide(Stock4))){
 			JouerTasSurLigneMD(&Stock4, &OKStock4);
+			/*if (OKStock4 && MT == AvecTrace){
+				AfficherMD();
+			}*/
 		}
 	}
 	while (OKStock1 || OKStock2 || OKStock3 || OKStock4);
@@ -281,16 +299,19 @@ void JouerUneMD(ModeTrace MT){
 				AfficherMD();
 			}
 		}
-		if (poserLigne){
-			RemonterCarteStock();
+		else {
+			poserStock = faux;
+			RemonterCarteStock(MT);
 			if (MT == AvecTrace){
 				AfficherMD();
 			}
 		}
-	}
-	while ((poserStock || poserLigne) && !(TasVide(TalonMD)));
+		AttendreCliquer();
+		printf("%d,%d,%d\n",poserStock,poserLigne,!(TasVide(TalonMD)));
+	}	while ((poserStock || poserLigne) && !(TasVide(TalonMD)));
 
-	if (TasVide(TalonMD) && (poserStock || poserLigne)){
+	printf("je suis La\n");
+	if (TasVide(TalonMD)){
 		printf("Bravo c'est gagné!\n");
 	}
 	else {
