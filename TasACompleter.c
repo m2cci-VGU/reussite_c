@@ -354,13 +354,13 @@ retourne le tas T : la premiere devient la derniere et la visibilite est inverse
 void RetournerTas(Tas *T)
 {
     /*inverser queue et tete*/
-    struct adCarte *temp = (*T)->tete ;
-    (*T)->tete = (*T)->queue;
-    (*T)->queue = *temp;
+    struct adCarte *temp = T->tete ;
+    T->tete = T->queue;
+    T->queue = *temp;
 
     /*changer la visibilité*/
-    struct adCarte visitor = (*T)->tete ;
-    while(visitor != (*T)->tete)
+    struct adCarte visitor = T->tete ;
+    while(visitor != T->queue)
     {
         if (visitor->elt.VC = Decouverte)
         {
@@ -458,7 +458,7 @@ Pr�-condition : T1 contient la carte et T2 est actif.
 ********************************************************************************* */
 void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 {
-    if(T2.RT == actif)
+    if(T2->RT == actif)
     {
         struct adCarte visiteur = T1->tete;
         while(visiteur != NULL && (visiteur->elt.CC != R & visiteur->elt.RC != C))
