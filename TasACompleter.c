@@ -366,7 +366,7 @@ ajoute la carte d'adresse ac sur le tas T
 ********************************************************************************* */
 void AjouterCarteSurTas (struct adCarte *ac, Tas *T)
 {
-
+    struct adCarte AC = malloc(sizeof(struct adCarte));
 
 
 
