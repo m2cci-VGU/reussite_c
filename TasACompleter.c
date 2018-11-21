@@ -326,19 +326,26 @@ void EchangerCartes(int i, int j, Tas *T)
 void BattreTas(Tas *T)
 bas le tas T
 **************************************************************** */
+
 void BattreTas(Tas *T)
 {
-    int i = 52;
-    int j = 52;
+    int i = 51;
+    int j = 51;
     int nbfois = 0;
+
+    int g;
+    time_t t;
+
+    g = (unsigned int) time(&t);
+    srand(g);
 
     while (nbfois < 500)
     {
         InitAlea();
-       rand()%i + 1;
-       rand()%j + 1;
-       EchangerCartes( i, j, *T );
-       nbfois++;
+        rand()%i + 0;
+        rand()%j + 0;
+        EchangerCartes( i, j, *T );
+        nbfois++;
     }
 }
 
