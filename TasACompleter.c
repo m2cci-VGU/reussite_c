@@ -31,7 +31,7 @@ Couleur CouleurSuivante(Couleur C) {
 
 Rang RangSuivant(Rang R) {
 	if(R == DernierRang){
-		return R;
+		return Deux;
 	} else {
 		return R+1;
 	}
@@ -122,10 +122,12 @@ associe � T un tas vide actif plac� en L et de mode d'�talement M.
 Pr�-condition : l'emplacement L est disponible
 **************************************************************** */
 void CreerTasVide(Localisation L, Mode M, Tas *T) {
-(*T).LT=L
+(*T).LT=L;
 (*T).RT=actif;
 (*T).MT=M;
 (*T).HT=0;
+(*T).tete=NULL;
+(*T).queue=NULL;
 }
 
 /* *************************************************************
@@ -136,7 +138,6 @@ Pr�-condition : le tas T est vide et actif
 **************************************************************** */
 void SupprimerTasVide(Tas *T) {  /*en cours-Marco*/
 if ((*T).HT==0) {(*T).RT=inactif;
-
 }
 }
 
@@ -148,8 +149,34 @@ Donne leur valeur aux variables globales NbCartes et PremierRang.
 Pr�-condition : l'emplacement L est libre
                 N==52 ou N==32
 **************************************************************** */
-void CreerJeuNeuf(int N, Localisation L, Tas *T) {	/* marjo en cours */
+void CreerJeuNeuf(int N, Localisation L, Tas *T) {
+    	/* marjo-marco en cours - soluce pas encore confirmée*/
+#define PremierRang 2
+#define N 52
+struct adCarte *fictif=(struct adCarte*)malloc(sizeof(struct adCarte));
+fictif->suiv=T->tete;
+struct adCarte *AdPred=fictif;
+struct adCarte *AdSuiv=fictif;
+for (couleur=DerniereCouleur; couleur=PremiereCouleur;couleur--){
+    for (rang=DernierRang;rang=PremierRang;rang--) {
+        struct adCarte *X=(struct adCarte*)malloc(sizeof(struct adCarte));
+        AdSuiv=X;
+        AdSuiv->prec=AdPred;
+        AdPred->suiv=AdSuiv;
+        AdSuiv->elt.CC=couleur;
+        AdSuiv->elt.RC=rang;
+        AdSuiv->elt.VC=cachee;
+        AdPred=AdSuiv
+    }
+T->tete=fictif->suiv;
+T->queue=AdSuiv;
+T->queue->suiv=NULL;
+free(fictif);
 }
+}
+
+
+
 
 	/* Consultation des cartes d'un tas: ne deplace pas la carte */
 
@@ -158,13 +185,15 @@ Carte CarteSur(Tas T) {
 carte situee au dessus du tas
 **************************************************************** */
 Carte CarteSur(Tas T) {
+return T.tete->elt;
 }
 
 /* *************************************************************
 Carte CarteSous(Tas T) {
 carte situee au dessous du tas
 **************************************************************** */
-Carte CarteSous(Tas T) {
+Carte CarteSous(Tas T)
+return T.queue->elt;
 }
 
 /* *************************************************************
@@ -173,6 +202,16 @@ ieme carte dans T (de bas en haut).
 Pr�condition : i <= LaHauteur(T)
 **************************************************************** */
 Carte IemeCarte(Tas T, int i) {
+  while (i<=LaHauteur(T)) {
+  { struct adCarte *Visitor;
+    Visitor=Tas.tete
+    int k=0;
+       while (k<i && Visitor.elt!=NULL) { /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
+        Visitor=Visitor.suiv;
+       }
+    return Visitor.elt;
+    }
+  }
 }
 
 	/* Retournement d'une carte sur un tas */
@@ -183,6 +222,12 @@ retourne la carte situ�e au dessus du tas T.
 Pr�-condition : T non vide
 **************************************************************** */
 void RetournerCarteSur(Tas *T) {
+if (!(*T).queue->elt.VC) {
+   (*T).queue->elt.VC = Decouverte;
+}
+else {
+   (*T).queue->elt.VC = Cachee;
+}
 }
 
 /* *************************************************************
@@ -191,6 +236,14 @@ retourne la carte situ�e au dessous du tas T.
 Pr�-condition : T non vide
 **************************************************************** */
 void RetournerCarteSous(Tas *T) {
+    if (!(*T).tete->elt.VC) {
+   (*T).tete->elt.VC = Decouverte;
+}
+else {
+   (*T).tete->elt.VC = Cachee;
+}
+}
+
 }
 
 	/* Modification d'un tas */
@@ -201,9 +254,12 @@ void EtalerTas(Tas *T)
 modification du mode d'etalement d'un tas
 **************************************************************** */
 void EmpilerTas(Tas *T) {
+    (*T).MT=empile;
+
 }
 
 void EtalerTas(Tas *T) {
+    (*T).MT=etale;
 }
 
 
@@ -213,6 +269,11 @@ echange les cartes i et j du tas T
 Precondition : les deux cartes existent i,j <= LaHauteur(T)
 **************************************************************** */
 void EchangerCartes(int i, int j, Tas *T) {
+   struct adCarte *carteI=IemeCarte(*T,i);
+   struct adCarte *carteJ=IemeCarte(*T,j);
+   struct adCarte *tempI=carteI;
+   struct adCarte *tempJ=carteJ;
+
 }
 
 /* *************************************************************
