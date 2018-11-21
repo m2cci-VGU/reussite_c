@@ -336,29 +336,26 @@ retourne le tas T : la premiere devient la derniere et la visibilite est inverse
 ********************************************************************************* */
 void RetournerTas(Tas *T)
 {
-}
-/*inverser queue et tete*/
-struct adCarte *temp = (*T)->tete ;
-(*T)->tete = (*T)->queue;
-(*T)->queue = *temp;
+    /*inverser queue et tete*/
+    struct adCarte *temp = (*T)->tete ;
+    (*T)->tete = (*T)->queue;
+    (*T)->queue = *temp;
 
-/*changer la visibilité*/
-struct adCarte visitor = (*T)->tete ;
-while(visitor != (*T)->tete)
-{
-    if (visitor->elt.VC = Decouverte)
+    /*changer la visibilité*/
+    struct adCarte visitor = (*T)->tete ;
+    while(visitor != (*T)->tete)
     {
-        visitor->elt.VC = Cachee;
+        if (visitor->elt.VC = Decouverte)
+        {
+            visitor->elt.VC = Cachee;
+        }
+        else
+        {
+            visitor->elt.VC = Decouverte;
+        }
+        visitor = visitor->suiv;
     }
-    else
-    {
-        visitor->elt.VC = Decouverte;
-    }
-    visitor = visitor->suiv;
 }
-
-
-
 
 /* Deplacements de cartes d'un tas sur un autre */
 
@@ -369,6 +366,10 @@ ajoute la carte d'adresse ac sur le tas T
 ********************************************************************************* */
 void AjouterCarteSurTas (struct adCarte *ac, Tas *T)
 {
+
+
+
+
 }
 
 /* ******************************************************************************
