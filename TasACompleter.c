@@ -441,6 +441,24 @@ Pr�-condition : T1 contient la carte et T2 est actif.
 ********************************************************************************* */
 void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 {
+    if(T2.RT == actif)
+    {
+        struct adCarte visiteur = T1->tete;
+        while(visiteur != NULL && (visiteur->elt.CC != R & visiteur->elt.RC != C))
+        {
+            visiteur = visiteur->suiv;
+        }
+        if(visiteur = NULL)
+        {
+            printf("La carte demandée de rang %d et de couleur % n'est pas dans le tas !", R, C);
+        }
+        else /*Carte trouvée, on l'a déplace au dessus de T2*/
+        {
+            (visiteur->prec)->suiv = visiteur->suiv;
+            (visiteur->suiv)->prec = visiteur->prec;
+            AjouterCarteSurTas(visiteur, *T2);
+        }
+    }
 }
 
 /* ******************************************************************************
