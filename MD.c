@@ -62,6 +62,7 @@ void CreerTableauInitialMD()
 		CreerTasVide(LocSerieMD[Co], etale, &(LigneMD[Co]));
 	}
 }
+/* Bonjour CECI est INUTILE Merci !
 
 void ReformerTableauInitialMD()
 {
@@ -96,7 +97,8 @@ void ReformerTableauInitialMD()
 	RetournerTas(&TalonMD);
 	BattreTas(&TalonMD);
 }
-
+BISOUS */
+ 
 void AfficherMD()
 {
 	Couleur Co;
@@ -305,7 +307,7 @@ void ObserverMD(int NP)
 	JouerUneMD(AvecTrace);
 	for (i = 1; i <= NP-1; i++)
 	{
-		ReformerTableauInitialMD();
+		CreerTableauInitialMD();
 		JouerUneMD(AvecTrace);
 	}
 }
