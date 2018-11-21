@@ -1,8 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "R7.h"
+#include "Alea.h"
 
 //////// Independant du jeu /////////////
+
+Tas deck;
+typedef Tas* SerieCouleur;
 
 void initTestDeck() {
   Localisation LocDeck;
@@ -14,7 +18,7 @@ void initTas(Tas* adTas) {
   SupprimerTasVide(adTas);
   CreerTasVide(LaPlace(*adTas), TasEtale(*adTas), adTas);
 }
-initTestEnvironment(char* testName) {
+void initTestEnvironment(char* testName) {
     initTestDeck();
     InitAlea();
     OuvrirGraphique(testName);
@@ -27,8 +31,6 @@ void endTest() {
 // Specifiques au jeu: tas disponibles, et fonctions //
 //////////////////////////////////////////////////////
 
-Tas deck;
-typedef Tas* SerieCouleur;
 SerieCouleur ListeAdresseTasCouleur[DerniereCouleur+1];
 Tas *adTalon, *adRebut;
 

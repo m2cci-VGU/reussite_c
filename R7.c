@@ -172,13 +172,13 @@ int JouerUneR7(int NMaxT, ModeTrace MT)
       JouerUnTourR7(MT);
       NumTourR7 = NumTourR7 + 1;
     }
-  if (TasVide(RebutR7))
-    {
+  if (TasVide(RebutR7)) {
       printf("Vous avez gagne en %d tours !\n",NumTourR7);
-    }
-  else
-    {
-    *c=0; /*convention:si perdu, c=0*/
+      return NumTourR7;
+  }
+  else {
+     printf("Vous avez Perdu !\n");
+     return 0; /*convention:si perdu, c=0*/
     }
 }
 
