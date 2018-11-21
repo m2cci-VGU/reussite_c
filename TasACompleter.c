@@ -18,23 +18,31 @@
 /* Couleurs */
 /* Ordre croissant sur les couleurs: trefle, carreau, coeur, pique */
 
-Couleur CouleurSuivante(Couleur C) {
-	if(C == DerniereCouleur){
-		return PremiereCouleur;
-	} else {
-		return C+1;
-	}
+Couleur CouleurSuivante(Couleur C)
+{
+    if(C == DerniereCouleur)
+    {
+        return PremiereCouleur;
+    }
+    else
+    {
+        return C+1;
+    }
 }
 
 /* Rangs */
 /* Ordre croissant sur les rangs: deux, ..., dix, valet, dame, roi, as */
 
-Rang RangSuivant(Rang R) {
-	if(R == DernierRang){
-		return Deux;
-	} else {
-		return R+1;
-	}
+Rang RangSuivant(Rang R)
+{
+    if(R == DernierRang)
+    {
+        return Deux;
+    }
+    else
+    {
+        return R+1;
+    }
 }
 
 /*--------------------------------------------------------------------*/
@@ -43,91 +51,109 @@ Rang RangSuivant(Rang R) {
 
 /* Representation des cartes */
 
-	/* Testeurs et selecteurs */
+/* Testeurs et selecteurs */
 
-Rang LeRang(Carte C) {
-	return C.RC;
+Rang LeRang(Carte C)
+{
+    return C.RC;
 }
 
-Couleur LaCouleur(Carte C) {
-	return C.CC;
+Couleur LaCouleur(Carte C)
+{
+    return C.CC;
 }
 
-Visibilite EstCachee(Carte C) {
-	return C.VC == Cachee;
+Visibilite EstCachee(Carte C)
+{
+    return C.VC == Cachee;
 }
 
-Visibilite EstDecouverte(Carte C) {
-	return C.VC == Decouverte;
+Visibilite EstDecouverte(Carte C)
+{
+    return C.VC == Decouverte;
 }
 
-	/* Comparaison de cartes */
+/* Comparaison de cartes */
 
-booleen RangInferieur(Carte C1, Carte C2) {
+booleen RangInferieur(Carte C1, Carte C2)
+{
     return LeRang(C1) < LeRang(C2);
 }
 
-booleen MemeRang(Carte C1, Carte C2) {
-	return LeRang(C1) == LeRang(C2);
+booleen MemeRang(Carte C1, Carte C2)
+{
+    return LeRang(C1) == LeRang(C2);
 }
 
-booleen CouleurInferieure(Carte C1, Carte C2) {
+booleen CouleurInferieure(Carte C1, Carte C2)
+{
     return LaCouleur(C1) < LaCouleur(C2);
 }
 
-booleen MemeCouleur(Carte C1, Carte C2) {
-	return LaCouleur(C1) == LaCouleur(C2);
+booleen MemeCouleur(Carte C1, Carte C2)
+{
+    return LaCouleur(C1) == LaCouleur(C2);
 }
 
 booleen EstCarteAvant(Carte C1, Carte C2)
-if (!MemeCouleur(C1,C2)) {return CouleurInferieure(C1,C2);
+if (!MemeCouleur(C1,C2))
+{
+    return CouleurInferieure(C1,C2);
 }
-else {return RangInferieur(C1,C2);
+else
+{
+    return RangInferieur(C1,C2);
 }
 }
 
 /* Representation des tas */
 
-	/* Testeurs et selecteurs */
+/* Testeurs et selecteurs */
 
 booleen TasActif(Tas T)
 return T.RT==actif;
 }
 
-booleen TasVide(Tas T) {
-return T.HT==0;
+booleen TasVide(Tas T)
+{
+    return T.HT==0;
 }
 
-booleen TasEmpile(Tas T) {
-return T.MT==empile;
+booleen TasEmpile(Tas T)
+{
+    return T.MT==empile;
 }
 
-booleen TasEtale(Tas T) {
-return T.MT==etale;
+booleen TasEtale(Tas T)
+{
+    return T.MT==etale;
 }
 
-int LaHauteur(Tas T) {
-return T.HT;
+int LaHauteur(Tas T)
+{
+    return T.HT;
 }
 
-Localisation LaPlace(Tas T) {
+Localisation LaPlace(Tas T)
+{
     return T.LT;
 }
 
-	/* Constructeurs */
+/* Constructeurs */
 
 /* *************************************************************
 void CreerTasVide(Localisation L, Mode M, Tas *T)
 associe � T un tas vide actif plac� en L et de mode d'�talement M.
 Pr�-condition : l'emplacement L est disponible
 **************************************************************** */
-void CreerTasVide(Localisation L, Mode M, Tas *T) {
-(*T).LT=L;
-(*T).RT=actif;
-(*T).MT=M;
-(*T).HT=0;
-(*T).tete=NULL;
-(*T).queue=NULL;
+void CreerTasVide(Localisation L, Mode M, Tas *T)
+{
+    (*T).LT=L;
+    (*T).RT=actif;
+    (*T).MT=M;
+    (*T).HT=0;
+    (*T).tete=NULL;
+    (*T).queue=NULL;
 }
 
 /* *************************************************************
@@ -136,9 +162,12 @@ rend le tas vide inactif. En particulier, la place qu'il occupait
 devient libre pour un autre tas.
 Pr�-condition : le tas T est vide et actif
 **************************************************************** */
-void SupprimerTasVide(Tas *T) {  /*en cours-Marco*/
-if ((*T).HT==0) {(*T).RT=inactif;
-}
+void SupprimerTasVide(Tas *T)    /*en cours-Marco*/
+{
+    if ((*T).HT==0)
+    {
+        (*T).RT=inactif;
+    }
 }
 
 /* *************************************************************
@@ -149,43 +178,47 @@ Donne leur valeur aux variables globales NbCartes et PremierRang.
 Pr�-condition : l'emplacement L est libre
                 N==52 ou N==32
 **************************************************************** */
-void CreerJeuNeuf(int N, Localisation L, Tas *T) {
-    	/* marjo-marco en cours - soluce pas encore confirmée*/
+void CreerJeuNeuf(int N, Localisation L, Tas *T)
+{
+    /* marjo-marco en cours - soluce pas encore confirmée*/
 #define PremierRang 2
 #define N 52
-struct adCarte *fictif=(struct adCarte*)malloc(sizeof(struct adCarte));
-fictif->suiv=T->tete;
-struct adCarte *AdPred=fictif;
-struct adCarte *AdSuiv=fictif;
-for (couleur=DerniereCouleur; couleur=PremiereCouleur;couleur--){
-    for (rang=DernierRang;rang=PremierRang;rang--) {
-        struct adCarte *X=(struct adCarte*)malloc(sizeof(struct adCarte));
-        AdSuiv=X;
-        AdSuiv->prec=AdPred;
-        AdPred->suiv=AdSuiv;
-        AdSuiv->elt.CC=couleur;
-        AdSuiv->elt.RC=rang;
-        AdSuiv->elt.VC=cachee;
-        AdPred=AdSuiv
+    struct adCarte *fictif=(struct adCarte*)malloc(sizeof(struct adCarte));
+    fictif->suiv=T->tete;
+    struct adCarte *AdPred=fictif;
+    struct adCarte *AdSuiv=fictif;
+    for (couleur=DerniereCouleur; couleur=PremiereCouleur; couleur--)
+    {
+        for (rang=DernierRang; rang=PremierRang; rang--)
+        {
+            struct adCarte *X=(struct adCarte*)malloc(sizeof(struct adCarte));
+            AdSuiv=X;
+            AdSuiv->prec=AdPred;
+            AdPred->suiv=AdSuiv;
+            AdSuiv->elt.CC=couleur;
+            AdSuiv->elt.RC=rang;
+            AdSuiv->elt.VC=cachee;
+            AdPred=AdSuiv
+        }
+        T->tete=fictif->suiv;
+        T->queue=AdSuiv;
+        T->queue->suiv=NULL;
+        free(fictif);
     }
-T->tete=fictif->suiv;
-T->queue=AdSuiv;
-T->queue->suiv=NULL;
-free(fictif);
-}
 }
 
 
 
 
-	/* Consultation des cartes d'un tas: ne deplace pas la carte */
+/* Consultation des cartes d'un tas: ne deplace pas la carte */
 
 /* *************************************************************
 Carte CarteSur(Tas T) {
 carte situee au dessus du tas
 **************************************************************** */
-Carte CarteSur(Tas T) {
-return T.tete->elt;
+Carte CarteSur(Tas T)
+{
+    return T.tete->elt;
 }
 
 /* *************************************************************
@@ -201,33 +234,40 @@ Carte IemeCarte(Tas T, int i)
 ieme carte dans T (de bas en haut).
 Pr�condition : i <= LaHauteur(T)
 **************************************************************** */
-Carte IemeCarte(Tas T, int i) {
-  while (i<=LaHauteur(T)) {
-  { struct adCarte *Visitor;
-    Visitor=Tas.tete
-    int k=0;
-       while (k<i && Visitor.elt!=NULL) { /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
-        Visitor=Visitor.suiv;
-       }
-    return Visitor.elt;
+Carte IemeCarte(Tas T, int i)
+{
+    while (i<=LaHauteur(T))
+    {
+        {
+            struct adCarte *Visitor;
+            Visitor=Tas.tete
+                    int k=0;
+            while (k<i && Visitor.elt!=NULL)   /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
+            {
+                Visitor=Visitor.suiv;
+            }
+            return Visitor.elt;
+        }
     }
-  }
 }
 
-	/* Retournement d'une carte sur un tas */
+/* Retournement d'une carte sur un tas */
 
 /* *************************************************************
 void RetournerCarteSur(Tas *T)
 retourne la carte situ�e au dessus du tas T.
 Pr�-condition : T non vide
 **************************************************************** */
-void RetournerCarteSur(Tas *T) {
-if (!(*T).queue->elt.VC) {
-   (*T).queue->elt.VC = Decouverte;
-}
-else {
-   (*T).queue->elt.VC = Cachee;
-}
+void RetournerCarteSur(Tas *T)
+{
+    if (!(*T).queue->elt.VC)
+    {
+        (*T).queue->elt.VC = Decouverte;
+    }
+    else
+    {
+        (*T).queue->elt.VC = Cachee;
+    }
 }
 
 /* *************************************************************
@@ -235,30 +275,35 @@ void RetournerCarteSous(Tas *T)
 retourne la carte situ�e au dessous du tas T.
 Pr�-condition : T non vide
 **************************************************************** */
-void RetournerCarteSous(Tas *T) {
-    if (!(*T).tete->elt.VC) {
-   (*T).tete->elt.VC = Decouverte;
-}
-else {
-   (*T).tete->elt.VC = Cachee;
-}
+void RetournerCarteSous(Tas *T)
+{
+    if (!(*T).tete->elt.VC)
+    {
+        (*T).tete->elt.VC = Decouverte;
+    }
+    else
+    {
+        (*T).tete->elt.VC = Cachee;
+    }
 }
 
 }
 
-	/* Modification d'un tas */
+/* Modification d'un tas */
 
 /* *************************************************************
 void EmpilerTas(Tas *T)
 void EtalerTas(Tas *T)
 modification du mode d'etalement d'un tas
 **************************************************************** */
-void EmpilerTas(Tas *T) {
+void EmpilerTas(Tas *T)
+{
     (*T).MT=empile;
 
 }
 
-void EtalerTas(Tas *T) {
+void EtalerTas(Tas *T)
+{
     (*T).MT=etale;
 }
 
@@ -268,11 +313,12 @@ void EchangerCartes(int i, int j, Tas *T)
 echange les cartes i et j du tas T
 Precondition : les deux cartes existent i,j <= LaHauteur(T)
 **************************************************************** */
-void EchangerCartes(int i, int j, Tas *T) {
-   struct adCarte *carteI=IemeCarte(*T,i);
-   struct adCarte *carteJ=IemeCarte(*T,j);
-   struct adCarte *tempI=carteI;
-   struct adCarte *tempJ=carteJ;
+void EchangerCartes(int i, int j, Tas *T)
+{
+    struct adCarte *carteI=IemeCarte(*T,i);
+    struct adCarte *carteJ=IemeCarte(*T,j);
+    struct adCarte *tempI=carteI;
+    struct adCarte *tempJ=carteJ;
 
 }
 
@@ -280,31 +326,57 @@ void EchangerCartes(int i, int j, Tas *T) {
 void BattreTas(Tas *T)
 bas le tas T
 **************************************************************** */
-void BattreTas(Tas *T) {
+void BattreTas(Tas *T)
+{
 }
 
 /* ******************************************************************************
 void RetournerTas(Tas *T)
 retourne le tas T : la premiere devient la derniere et la visibilite est inversee
 ********************************************************************************* */
-void RetournerTas(Tas *T) {
+void RetournerTas(Tas *T)
+{
+}
+/*inverser queue et tete*/
+struct adCarte *temp = (*T).tete ;
+(*T)->tete = (*T)->queue;
+(*T)->queue = *temp;
+
+/*changer la visibilité*/
+struct adCarte visitor = (*T)->tete ;
+while(visitor != (*T)->tete)
+{
+    if (visitor->elt.VC = Decouverte)
+    {
+        visitor->elt.VC = Cachee;
+    }
+    else
+    {
+        visitor->elt.VC = Decouverte;
+    }
+    visitor = visitor->suiv;
 }
 
-	/* Deplacements de cartes d'un tas sur un autre */
+
+
+
+/* Deplacements de cartes d'un tas sur un autre */
 
 
 /* ******************************************************************************
 void AjouterCarteSurTas (adCarte *ac, Tas *T)
 ajoute la carte d'adresse ac sur le tas T
 ********************************************************************************* */
-void AjouterCarteSurTas (struct adCarte *ac, Tas *T) {
+void AjouterCarteSurTas (struct adCarte *ac, Tas *T)
+{
 }
 
 /* ******************************************************************************
 void AjouterCarteSousTas (adCarte *ac, Tas *T)
 ajoute la carte d'adresse ac sous le tas T
 ********************************************************************************* */
-void AjouterCarteSousTas (struct adCarte *ac, Tas *T) {
+void AjouterCarteSousTas (struct adCarte *ac, Tas *T)
+{
 }
 
 /* ******************************************************************************
@@ -312,7 +384,8 @@ void DeplacerHautSur(Tas *T1, Tas *T2)
 enl�ve la carte situ�e au dessus de T1 et la place au dessus de T2
 Pr�-condition : T1 n'est pas vide, T2 est actif.
 ********************************************************************************* */
-void DeplacerHautSur(Tas *T1, Tas *T2) {
+void DeplacerHautSur(Tas *T1, Tas *T2)
+{
 }
 
 /* ******************************************************************************
@@ -320,7 +393,8 @@ void DeplacerHautSous(Tas *T1, Tas *T2)
 enl�ve la carte situ�e au dessus de T1 et la place au dessous de T2.
 Pr�-condition : T1 n'est pas vide, T2 est actif.
 ********************************************************************************* */
-void DeplacerHautSous(Tas *T1, Tas *T2) {
+void DeplacerHautSous(Tas *T1, Tas *T2)
+{
 }
 
 /* ******************************************************************************
@@ -328,7 +402,8 @@ void DeplacerBasSur(Tas *T1, Tas *T2)
 enl�ve la carte situ�e au dessous de T1 et la place au dessus de T2.
 Pr�-condition : T1 n'est pas vide, T2 est actif.
 ********************************************************************************* */
-void DeplacerBasSur(Tas *T1, Tas *T2) {
+void DeplacerBasSur(Tas *T1, Tas *T2)
+{
 }
 
 /* ******************************************************************************
@@ -336,7 +411,8 @@ void DeplacerBasSous(Tas *T1, Tas *T2) {
 enl�ve la carte situ�e au dessous de T1 et la place au dessous de T2.
 Pr�-condition : T1 n'est pas vide, T2 est actif.
 ********************************************************************************* */
-void DeplacerBasSous(Tas *T1, Tas *T2) {
+void DeplacerBasSous(Tas *T1, Tas *T2)
+{
 }
 
 /* ******************************************************************************
@@ -344,7 +420,8 @@ void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 enl�ve du tas T1, la carte de couleur C et de rang R et la place au dessus de T2.
 Pr�-condition : T1 contient la carte et T2 est actif.
 ********************************************************************************* */
-void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2) {
+void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
+{
 }
 
 /* ******************************************************************************
@@ -357,5 +434,6 @@ qu'elles avaient au d�part dans chacun des tas.
 Cette op�ration ne modifie ni la visibilit� des cartes, ni la localisation des tas T1 et T2,
 ni leur mode d'�talement.
 ********************************************************************************* */
-void PoserTasSurTas(Tas *T1, Tas *T2) {
+void PoserTasSurTas(Tas *T1, Tas *T2)
+{
 }
