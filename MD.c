@@ -22,6 +22,25 @@ struct adCarte adSixCarreau;
 struct adCarte adSixCoeur;
 struct adCarte adSixPique;
 
+
+
+Tas* getTalonMD() {
+	return &TalonMD;
+}
+Tas* getTasCouleurMD(Couleur couleur){
+	return &(LigneMD[couleur]);
+}
+Tas* getTasDefausseMD(int index) {
+	switch(index){
+		case 0: return &Stock1;
+		case 1: return &Stock2;
+		case 2: return &Stock3;
+		case 3: return &Stock4;
+		default: return NULL;
+	}
+}
+
+
 void SaisirLocTasMD() {
 	int i;
 
@@ -63,43 +82,9 @@ void CreerTableauInitialMD()
 	{
 		CreerTasVide(LocSerieMD[Co], etale, &(LigneMD[Co]));
 	}
+
+		InitialisationMD();
 }
-/* Bonjour CECI est INUTILE Merci !
-
-void ReformerTableauInitialMD()
-{
-	Couleur Co;
-
-	if(!TasVide(TalonMD)){
-		RetournerTas(&TalonMD);
-	}
-	if(!TasVide(Stock1)){
-		EmpilerTas(&Stock1);
-	}
-	if(!TasVide(Stock2)){
-		EmpilerTas(&Stock2);
-	}
-	if(!TasVide(Stock3)){
-		EmpilerTas(&Stock3);
-	}
-	if(!TasVide(Stock4)){
-		EmpilerTas(&Stock4);
-	}
-	PoserTasSurTas(&Stock1, &TalonMD);
-	PoserTasSurTas(&Stock2, &TalonMD);
-	PoserTasSurTas(&Stock3, &TalonMD);
-	PoserTasSurTas(&Stock4, &TalonMD);
-
-	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
-	{
-		EmpilerTas(&(LigneMD[Co]));
-		PoserTasSurTas(&(LigneMD[Co]), &TalonMD);
-		EtalerTas(&(LigneMD[Co]));
-	}
-	RetournerTas(&TalonMD);
-	BattreTas(&TalonMD);
-}
-BISOUS */
 
 void AfficherMD()
 {
@@ -115,7 +100,7 @@ void AfficherMD()
 	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
 		AfficherTas(LigneMD[Co], TexteCouleurMD[Co]);
 
-	/*AttendreCliquer();*/
+	/* AttendreCliquer(); */
 }
 
 /* Créer une carte invisible de Rang Six et de couleur donnée. Créer une structure adresse pour cette carte et fixe le précédent et le suivant à NULL*/
@@ -286,7 +271,6 @@ void JouerUneMD(ModeTrace MT){
 	booleen poserStock;
 
 
-	InitialisationMD();
 	do	{
 		RetournerCarteSur(&TalonMD);
 		if (MT == AvecTrace){
@@ -323,10 +307,7 @@ void JouerUneMD(ModeTrace MT){
 void ObserverMD(int NP)
 {
 	int i;
-
-	CreerTableauInitialMD();
-	JouerUneMD(AvecTrace);
-	for (i = 1; i <= NP-1; i++)
+	for (i = 0; i <= NP-1; i++)
 	{
 		CreerTableauInitialMD();
 		JouerUneMD(AvecTrace);
