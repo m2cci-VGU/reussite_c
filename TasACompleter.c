@@ -240,8 +240,8 @@ Carte IemeCarte(Tas T, int i)
     {
         {
             struct adCarte *Visitor;
-            Visitor = T->tete
-                    int k=0;
+            Visitor = T.tete
+                      int k=0;
             while (k<i && Visitor->elt!=NULL)   /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
             {
                 Visitor=Visitor->suiv;
@@ -299,13 +299,13 @@ modification du mode d'etalement d'un tas
 **************************************************************** */
 void EmpilerTas(Tas *T)
 {
-    (*T).MT=empile;
+    (*T).MT = empile;
 
 }
 
 void EtalerTas(Tas *T)
 {
-    (*T).MT=etale;
+    (*T).MT = etale;
 }
 
 
@@ -316,10 +316,10 @@ Precondition : les deux cartes existent i,j <= LaHauteur(T)
 **************************************************************** */
 void EchangerCartes(int i, int j, Tas *T)
 {
-    struct adCarte *carteI=IemeCarte(*T,i);
-    struct adCarte *carteJ=IemeCarte(*T,j);
-    struct adCarte *tempI=carteI;
-    struct adCarte *tempJ=carteJ;
+    struct adCarte *carteI = IemeCarte(*T,i);
+    struct adCarte *carteJ = IemeCarte(*T,j);
+    struct adCarte *tempI = carteI;
+    struct adCarte *tempJ = carteJ;
 }
 
 /* *************************************************************
@@ -328,7 +328,21 @@ bas le tas T
 **************************************************************** */
 void BattreTas(Tas *T)
 {
+    int i = 52;
+    int j = 52;
+    int nbfois = 0;
+
+    while (nbfois < 500)
+    {
+        InitAlea();
+       rand()%i + 1;
+       rand()%j + 1;
+       EchangerCartes( i, j, *T );
+       nbfois++;
+    }
 }
+
+
 
 /* ******************************************************************************
 void RetournerTas(Tas *T)
@@ -450,7 +464,7 @@ void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
         }
         if(visiteur = NULL)
         {
-            printf("La carte demandée de rang %d et de couleur % n'est pas dans le tas !", R, C);
+            printf("La carte demandée de rang %d et de couleur %d n'est pas dans le tas !", R, C);
         }
         else /*Carte trouvée, on l'a déplace au dessus de T2*/
         {
