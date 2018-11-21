@@ -333,11 +333,7 @@ void BattreTas(Tas *T)
     int j = 51;
     int nbfois = 0;
 
-    int g;
-    time_t t;
-
-    g = (unsigned int) time(&t);
-    srand(g);
+    srand(time(NULL));
 
     while (nbfois < 500)
     {
