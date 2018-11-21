@@ -391,7 +391,7 @@ void DeplacerHautSur(Tas *T1, Tas *T2)
 {
     if (T1->tete != NULL && T2.RT == actif)
     {
-        AjouterCarteSurTas((*T1)->queue, *T2)
+        AjouterCarteSurTas(T1->queue, *T2)
     }
 }
 
@@ -402,9 +402,9 @@ Pr�-condition : T1 n'est pas vide, T2 est actif.
 ********************************************************************************* */
 void DeplacerHautSous(Tas *T1, Tas *T2)
 {
-        if (T1->tete != NULL && T2.RT == actif)
+    if (T1->tete != NULL && T2.RT == actif)
     {
-        AjouterCarteSousTas(T1->tete, *T2)
+        AjouterCarteSousTas(T1->queue, *T2)
     }
 }
 
@@ -415,6 +415,10 @@ Pr�-condition : T1 n'est pas vide, T2 est actif.
 ********************************************************************************* */
 void DeplacerBasSur(Tas *T1, Tas *T2)
 {
+    if (T1->tete != NULL && T2.RT == actif)
+    {
+        AjouterCarteSurTas(T1->tete, *T2)
+    }
 }
 
 /* ******************************************************************************
@@ -424,6 +428,10 @@ Pr�-condition : T1 n'est pas vide, T2 est actif.
 ********************************************************************************* */
 void DeplacerBasSous(Tas *T1, Tas *T2)
 {
+    if (T1->tete != NULL && T2.RT == actif)
+    {
+        AjouterCarteSousTas(T1->tete, *T2)
+    }
 }
 
 /* ******************************************************************************
