@@ -364,12 +364,11 @@ void RetournerTas(Tas *T)
 void AjouterCarteSurTas (adCarte *ac, Tas *T)
 ajoute la carte d'adresse ac sur le tas T
 ********************************************************************************* */
-void AjouterCarteSurTas (struct adCarte *ac, Tas *T)
+void AjouterCarteSurTas (struct adCarte *ac, Tas *T)    /*surTas = queue*/
 {
-    struct adCarte AC = malloc(sizeof(struct adCarte));
-
-
-
+    ac->suiv = NULL;
+    ac->prec = T->queue;
+    T->queue = ac;
 }
 
 /* ******************************************************************************
