@@ -45,7 +45,7 @@ void CreerImage(int width, int height, char *data, XImage *ximage)
 
 void OuvrirGraphique(char nom[])
 {
-  gr_inits_w(&FenetreParDefaut, 20,20, 640, 400, nom);
+  gr_inits_w(&FenetreParDefaut, 20, 20, 1000, 1000, nom);
 }
 
 void FermerGraphique()
