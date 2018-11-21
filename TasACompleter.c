@@ -375,8 +375,11 @@ void AjouterCarteSurTas (struct adCarte *ac, Tas *T)    /*surTas = queue*/
 void AjouterCarteSousTas (adCarte *ac, Tas *T)
 ajoute la carte d'adresse ac sous le tas T
 ********************************************************************************* */
-void AjouterCarteSousTas (struct adCarte *ac, Tas *T)
+void AjouterCarteSousTas (struct adCarte *ac, Tas *T)   /*sousTas = tete*/
 {
+    ac->suiv = T->tete;
+    ac->prec = NULL;
+    T->tete = ac;
 }
 
 /* ******************************************************************************
@@ -386,6 +389,10 @@ Pr�-condition : T1 n'est pas vide, T2 est actif.
 ********************************************************************************* */
 void DeplacerHautSur(Tas *T1, Tas *T2)
 {
+    if (T1->tete != NULL && T2.RT == actif)
+    {
+        AjouterCarteSurTas((*T1)->queue, *T2)
+    }
 }
 
 /* ******************************************************************************
@@ -395,6 +402,10 @@ Pr�-condition : T1 n'est pas vide, T2 est actif.
 ********************************************************************************* */
 void DeplacerHautSous(Tas *T1, Tas *T2)
 {
+        if (T1->tete != NULL && T2.RT == actif)
+    {
+        AjouterCarteSousTas(T1->tete, *T2)
+    }
 }
 
 /* ******************************************************************************
