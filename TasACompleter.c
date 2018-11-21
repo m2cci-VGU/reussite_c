@@ -338,7 +338,7 @@ void RetournerTas(Tas *T)
 {
 }
 /*inverser queue et tete*/
-struct adCarte *temp = (*T).tete ;
+struct adCarte *temp = (*T)->tete ;
 (*T)->tete = (*T)->queue;
 (*T)->queue = *temp;
 
