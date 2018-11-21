@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 /* Programme principal */
-
+#include "MD.h"
 #include "R7.h"
 #include "InteractionReussite.h"
 

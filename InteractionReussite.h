@@ -17,3 +17,10 @@ void SaisirCommande (CodeCommande *);
 
 
 
+void runSimulerR7(int NBMAXT);
+
+void runAnalyserR7(int NBMAXT);
+
+void runSimulerMD();
+
+void runAnalyserMD();
