@@ -231,10 +231,6 @@ void runSimulerMD()
     int nbparties;
     printf(TexteNbASimuler);
     scanf("%d",&nbparties);
-    printf("simuler MD\n ");
-
-    /* todo ANTOINE */
-
     OuvrirGraphique("Montée-Descente");
     ObserverMD(nbparties);
     FermerGraphique();
