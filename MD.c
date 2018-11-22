@@ -125,7 +125,7 @@ void AfficherMD()
 
 	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
 		AfficherTas(LigneMD[Co], TexteCouleurMD[Co]);
-
+	usleep(800000);
 	/* AttendreCliquer(); */
 }
 
@@ -242,7 +242,6 @@ void RemonterCarteStock(ModeTrace MT){
 			JouerTasSurLigneMD(&Stock1, &OKStock1);
 			if (OKStock1 && MT == AvecTrace){
 				AfficherMD();
-				usleep(1000000);
 			}
 		}
 		else {
@@ -252,7 +251,6 @@ void RemonterCarteStock(ModeTrace MT){
 			JouerTasSurLigneMD(&Stock2, &OKStock2);
 			if (OKStock2 && MT == AvecTrace){
 				AfficherMD();
-				usleep(1000000);
 			}
 		}
 		else {
@@ -262,7 +260,6 @@ void RemonterCarteStock(ModeTrace MT){
 			JouerTasSurLigneMD(&Stock3, &OKStock3);
 			if (OKStock3 && MT == AvecTrace){
 				AfficherMD();
-				usleep(1000000);
 			}
 		}
 		else {
@@ -272,7 +269,6 @@ void RemonterCarteStock(ModeTrace MT){
 			JouerTasSurLigneMD(&Stock4, &OKStock4);
 			if (OKStock4 && MT == AvecTrace){
 				AfficherMD();
-				usleep(1000000);
 			}
 		}
 		else {
@@ -293,8 +289,6 @@ void JouerUneMD(ModeTrace MT){
 		if (MT == AvecTrace){
 			AfficherMD();
 		}
-		/*AttendreCliquer();*/
-		usleep(1000000);
 		JouerTasSurLigneMD(&TalonMD, &poserLigne);
 		if (!poserLigne){
 			JouerTasSurStock(&TalonMD, &poserStock);
