@@ -38,18 +38,19 @@ Tas *adTalon;
 void newTest(char* testName)
 {
   initTestEnvironment(testName);
-
+  Couleur couleur;
+  int index;
   CreerTableauInitialMD();
   adTalon = getTalonMD();
   initTas(adTalon);
 
   Tas* adTasVisitor;
-  for(int couleur=PremiereCouleur; couleur<DerniereCouleur+1 ; couleur++) {
+  for(couleur=PremiereCouleur; couleur<DerniereCouleur+1 ; couleur++) {
     adTasVisitor = getTasCouleurMD(couleur);
     initTas(adTasVisitor);
     ListeAdresseTasCouleur[couleur] = adTasVisitor;
   }
-  for(int index = 0; index < NOMBRE_DE_STOCK ; index++) {
+  for(index = 0; index < NOMBRE_DE_STOCK ; index++) {
     adTasVisitor = getTasDefausseMD(index);
     initTas(adTasVisitor);
     ListeAdresseTasDefausse[index] = adTasVisitor;
@@ -57,7 +58,8 @@ void newTest(char* testName)
 }
 
 void runTest() {
-  JouerUneMD(AvecTrace);
+	booleen test;
+  JouerUneMD(AvecTrace, &test);
 }
 
   /////////////////////////////////////////////////////////////////////
