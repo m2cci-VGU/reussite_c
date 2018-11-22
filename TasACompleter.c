@@ -383,25 +383,28 @@ retourne le tas T : la premiere devient la derniere et la visibilite est inverse
 ********************************************************************************* */
 void RetournerTas(Tas *T)
 {
-    struct adCarte* sauveTete = T->tete ;
+    struct adCarte* sauveTete = T->tete->suiv ;
     struct adCarte* sauveQueue = T->queue ;
 
     T->tete->suiv = NULL ;
-    
+    T->tete->prec = T->queue;
+    T->queue->suiv = T->tete;
+    sauveTete->prec = NULL ;
+    T->tete = sauveTete ;
+    sauveQueue = sauveQueue->suiv;
 
-
-    while(T->queue != T->tete)
+    while(T->queue->prec != NULL)
     {
-      sauveTete = T->tete ;
+      sauveTete = T->tete->suiv ;
       //T->tete->elt.VC = Decouverte ;
-      T->tete = sauveTete->suiv ;
-
-      T->tete->prec = T->queue ;
-      T->tete->suiv = T->queue->suiv ;
-      T->queue->suiv = sauveTete ;
-      sauveTete = T->tete ;
+      sauveTete->prec = NULL;
+      T->tete->prec = T->queue;
+      T->tete->suiv = T->queue->suiv;
+      T->queue->suiv = T->tete;
+      T->tete->suiv->prec = T->tete;
+      T->tete = sauveTete;
     }
-    T->tete = sauveQueue ;
+    T->queue = sauveQueue;
 }
 
 /* Deplacements de cartes d'un tas sur un autre */
