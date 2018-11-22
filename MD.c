@@ -111,152 +111,152 @@ void AfficherMD()
 	}
 	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++) {
 		AfficherTas(LigneMD[Co], TexteCouleurMD[Co]);
-	usleep(temps);
-	/* AttendreCliquer(); */
-}
-
-void JouerTasSurLigneMD(Tas *T, booleen *OK){
-	Couleur Co = VideC;
-	Rang RT=0, RSur=0;
-
-	if( !TasVide(*T) ) {
-		Co = LaCouleur(CarteSur(*T));
-		RT = LeRang(CarteSur(*T));
-		RSur = LeRang(CarteSur(LigneMD[Co]));
+		usleep(temps);
+		/* AttendreCliquer(); */
 	}
 
-	*OK = faux;
-	if (RT !=0 && RT == RangSuivant(RSur)){
-		*OK = vrai;
-		DeplacerHautSur(T, &(LigneMD[Co]));
+	void JouerTasSurLigneMD(Tas *T, booleen *OK){
+		Couleur Co = VideC;
+		Rang RT=0, RSur=0;
+
+		if( !TasVide(*T) ) {
+			Co = LaCouleur(CarteSur(*T));
+			RT = LeRang(CarteSur(*T));
+			RSur = LeRang(CarteSur(LigneMD[Co]));
+		}
+
+		*OK = faux;
+		if (RT !=0 && RT == RangSuivant(RSur)){
+			*OK = vrai;
+			DeplacerHautSur(T, &(LigneMD[Co]));
+		}
 	}
-}
-/* Fonction qui trouve l ecart minimum entre les stocks et la pioche, retourne le stock concerne*/
+	/* Fonction qui trouve l ecart minimum entre les stocks et la pioche, retourne le stock concerne*/
 
-void TrouverMeilleureCible (Rang RPioche, Tas** Cible, int* OK){
-	int i;
-	Rang rangTas;
-	int ecartMax = As+1;
-	Rang rangCaseVide = ecartMax;
-	int ecartTas, ecartMin = ecartMax;
+	void TrouverMeilleureCible (Rang RPioche, Tas** Cible, int* OK){
+		int i;
+		Rang rangTas;
+		int ecartMax = As+1;
+		Rang rangCaseVide = ecartMax;
+		int ecartTas, ecartMin = ecartMax;
 
-	/* printf("-------------TrouverMeilleurTas-----------\n"); */
-	/* printf("Rang de la carte a poser: %d\n", RPioche); */
-	for(i=0; i<NOMBRE_DE_STOCK; i++) {
-		rangTas = TasVide(tasStock[i]) ? rangCaseVide : LeRang(CarteSur(tasStock[i]));
-		ecartTas = (RPioche > rangTas) ? ecartMax : (rangTas - RPioche);
-		/*printf(" - tas %d || rang: %d || ecart: %d\n", i, rangTas, ecartTas);*/
-		*Cible = (ecartTas < ecartMin) ? &(tasStock[i]) : *Cible;
-		ecartMin = (ecartTas < ecartMin) ? ecartTas : ecartMin;
+		/* printf("-------------TrouverMeilleurTas-----------\n"); */
+		/* printf("Rang de la carte a poser: %d\n", RPioche); */
+		for(i=0; i<NOMBRE_DE_STOCK; i++) {
+			rangTas = TasVide(tasStock[i]) ? rangCaseVide : LeRang(CarteSur(tasStock[i]));
+			ecartTas = (RPioche > rangTas) ? ecartMax : (rangTas - RPioche);
+			/*printf(" - tas %d || rang: %d || ecart: %d\n", i, rangTas, ecartTas);*/
+			*Cible = (ecartTas < ecartMin) ? &(tasStock[i]) : *Cible;
+			ecartMin = (ecartTas < ecartMin) ? ecartTas : ecartMin;
+		}
+		/* printf("FIN: ecartMin=%d <-> ecartMax=%d\n",ecartMin, ecartMax)	; */
+		*OK = (ecartMin < ecartMax);
 	}
-	/* printf("FIN: ecartMin=%d <-> ecartMax=%d\n",ecartMin, ecartMax)	; */
-	*OK = (ecartMin < ecartMax);
-}
 
-void JouerTasSurStock(Tas* T, booleen* carteDeplacee){
-	Tas* Cible;
-	booleen foundBestTarget;
+	void JouerTasSurStock(Tas* T, booleen* carteDeplacee){
+		Tas* Cible;
+		booleen foundBestTarget;
 
-	Rang RT = LeRang(CarteSur(*T));
-	TrouverMeilleureCible(RT,&Cible,&foundBestTarget);
+		Rang RT = LeRang(CarteSur(*T));
+		TrouverMeilleureCible(RT,&Cible,&foundBestTarget);
 
-	if (foundBestTarget){
-		*carteDeplacee = vrai;
-		DeplacerHautSur(&TalonMD, Cible);
-	} else {
-		*carteDeplacee = faux;
+		if (foundBestTarget){
+			*carteDeplacee = vrai;
+			DeplacerHautSur(&TalonMD, Cible);
+		} else {
+			*carteDeplacee = faux;
+		}
 	}
-}
 
-void RemonterCarteStock(ModeTrace MT){
-	booleen carteDeplacee = faux;
-	int i;
-	do {
-		carteDeplacee = faux;
-		for(i=0 ; i<NOMBRE_DE_STOCK ; i++) {
+	void RemonterCarteStock(ModeTrace MT){
+		booleen carteDeplacee = faux;
+		int i;
+		do {
+			carteDeplacee = faux;
+			for(i=0 ; i<NOMBRE_DE_STOCK ; i++) {
 				JouerTasSurLigneMD( &(tasStock[i]), &carteDeplacee);
 				if (carteDeplacee && MT == AvecTrace){
-						AfficherMD();
-						break;
+					AfficherMD();
+					break;
 				}
-		}
-	}	while (carteDeplacee);
-}
-
-void JouerUneMD(ModeTrace MT, booleen* Victoire){
-
-	booleen poserLigne;
-	booleen poserStock;
-
-	do	{
-		RetournerCarteSur(&TalonMD);
-		/*Carte c = CarteSur(TalonMD);*/
-		if (MT == AvecTrace){
-			AfficherMD();
-		}
-		JouerTasSurLigneMD(&TalonMD, &poserLigne);
-		if (!poserLigne){
-			JouerTasSurStock(&TalonMD, &poserStock);
-			if (poserStock && MT == AvecTrace){
-				AfficherMD();
 			}
-		}
-		else {
-			poserStock = faux;
-			RemonterCarteStock(MT);
+		}	while (carteDeplacee);
+	}
+
+	void JouerUneMD(ModeTrace MT, booleen* Victoire){
+
+		booleen poserLigne;
+		booleen poserStock;
+
+		do	{
+			RetournerCarteSur(&TalonMD);
+			/*Carte c = CarteSur(TalonMD);*/
 			if (MT == AvecTrace){
 				AfficherMD();
 			}
+			JouerTasSurLigneMD(&TalonMD, &poserLigne);
+			if (!poserLigne){
+				JouerTasSurStock(&TalonMD, &poserStock);
+				if (poserStock && MT == AvecTrace){
+					AfficherMD();
+				}
+			}
+			else {
+				poserStock = faux;
+				RemonterCarteStock(MT);
+				if (MT == AvecTrace){
+					AfficherMD();
+				}
+			}
+			/* printf("Carte: %d de %d\n", c.RC, c.CC);
+			printf("Placer sur stock: %d\n", poserStock);
+			printf("Placer sur ligne: %d\n", poserLigne);
+			printf("TasVide: %d\n",TasVide(TalonMD));
+			printf("Sortie du while: %s\n\n", (poserStock || poserLigne) && !(TasVide(TalonMD)) ? "non" : "oui");
+			*/
+		}	while ((poserStock || poserLigne) && !(TasVide(TalonMD)));
+
+		if (TasVide(TalonMD)){
+			if (MT == AvecTrace){
+				printf("Bravo c'est gagné!\n");
+			}
+			*Victoire=vrai;
 		}
-		/* printf("Carte: %d de %d\n", c.RC, c.CC);
-		 printf("Placer sur stock: %d\n", poserStock);
-		 printf("Placer sur ligne: %d\n", poserLigne);
-		 printf("TasVide: %d\n",TasVide(TalonMD));
-		 printf("Sortie du while: %s\n\n", (poserStock || poserLigne) && !(TasVide(TalonMD)) ? "non" : "oui");
-		*/
-	}	while ((poserStock || poserLigne) && !(TasVide(TalonMD)));
+		else {
+			if (MT == AvecTrace){
+				printf("BUHAHAHAHHAHA t'as perdu, essayes encore !\n");
+			}
+			*Victoire=faux;
+		}
 
-	if (TasVide(TalonMD)){
-     if (MT == AvecTrace){
-		printf("Bravo c'est gagné!\n");
-	}
-		*Victoire=vrai;
-	}
-	else {
-		if (MT == AvecTrace){
-		printf("BUHAHAHAHHAHA t'as perdu, essayes encore !\n");
-	}
-		*Victoire=faux;
 	}
 
-}
-
-void ObserverMD(int NP)
-{
-	booleen gagne;
-	int i;
-	for (i = 0; i <= NP-1; i++)
+	void ObserverMD(int NP)
 	{
-		CreerTableauInitialMD();
-		JouerUneMD(AvecTrace,&gagne);
-	}
-}
-
-void AnalyserMD(int NP)
-{
-	int i;
-	int victoire = 0;
-  float michel;
-	booleen gagne;
-
-	for (i = 0; i < NP ; i++){
-		CreerTableauInitialMD();
-		JouerUneMD(SansTrace, &gagne);
-		if (gagne){
-			victoire++;
+		booleen gagne;
+		int i;
+		for (i = 0; i <= NP-1; i++)
+		{
+			CreerTableauInitialMD();
+			JouerUneMD(AvecTrace,&gagne);
 		}
 	}
-	michel = (float)victoire/NP;
-	printf("Sur %d parties vous avez eu de la chance %d fois et manqué de bol %d fois (bah oui t as pas fait grand chose)\n", NP,victoire,(NP-victoire));
-	printf("Vous avez un taux de victoire de %.2f%% \n", michel*100);
-}
+
+	void AnalyserMD(int NP)
+	{
+		int i;
+		int victoire = 0;
+		float michel;
+		booleen gagne;
+
+		for (i = 0; i < NP ; i++){
+			CreerTableauInitialMD();
+			JouerUneMD(SansTrace, &gagne);
+			if (gagne){
+				victoire++;
+			}
+		}
+		michel = (float)victoire/NP;
+		printf("Sur %d parties vous avez eu de la chance %d fois et manqué de bol %d fois (bah oui t as pas fait grand chose)\n", NP,victoire,(NP-victoire));
+		printf("Vous avez un taux de victoire de %.2f%% \n", michel*100);
+	}
