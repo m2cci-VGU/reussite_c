@@ -120,10 +120,13 @@ void test2(){
 	ajouterCarteSurTasDeDefausse(2, Trefle, Huit);
 	
 	ajouterCarteSurTalon(Trefle, Sept);
+	
+	runTest();
+	endTest();
 		
 }
 
 int main() {
 	test1();
-	
+	test2();
 }
