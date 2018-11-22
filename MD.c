@@ -303,15 +303,18 @@ void JouerUneMD(ModeTrace MT, booleen* Victoire){
 				AfficherMD();
 			}
 		}
-		printf("%d,%d,%d\n",poserStock,poserLigne,!(TasVide(TalonMD)));
 	}	while ((poserStock || poserLigne) && !(TasVide(TalonMD)));
 
 	if (TasVide(TalonMD)){
+     if (MT == AvecTrace){
 		printf("Bravo c'est gagné!\n");
+	}
 		*Victoire=vrai;
 	}
 	else {
+		if (MT == AvecTrace){
 		printf("BUHAHAHAHHAHA t'as perdu, essayes encore !\n");
+	}
 		*Victoire=faux;
 	}
 
@@ -332,9 +335,9 @@ void AnalyserMD(int NP)
 {
 	int i;
 	int victoire = 0;
-	
+  float michel;
 	booleen gagne;
-	
+
 	for (i = 0; i < NP ; i++){
 		CreerTableauInitialMD();
 		JouerUneMD(SansTrace, &gagne);
@@ -342,7 +345,7 @@ void AnalyserMD(int NP)
 			victoire++;
 		}
 	}
-	printf("Sur %d parties vous avez eu de la chance %d fois et manqué de bol %d fois (bah oui t as pas fait grand chose)", NP,victoire,(NP-victoire));
-	printf("Vous avez un taux de %d\% victoires", (victoire)/NP*100);
-}
+	michel = (float)victoire/NP;
+	printf("Sur %d parties vous avez eu de la chance %d fois et manqué de bol %d fois (bah oui t as pas fait grand chose)\n", NP,victoire,(NP-victoire));
+	printf("Vous avez un taux de victoire de %.2f%% \n", michel*100);
 }
