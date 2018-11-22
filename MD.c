@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "MD.h"
 #include <unistd.h>
 
@@ -63,47 +64,6 @@ void SaisirLocTasMD() {
 	}
 }
 
-void CreerTableauInitialMD()
-{
-	Couleur Co;
-
-	SaisirLocTasMD();
-
-	/* Création du talon avec un jeu de 32 cartes et des différents stocks */
-	CreerJeuNeuf(32, LocTalonMD, &TalonMD);
-	BattreTas(&TalonMD);
-	CreerTasVide(LocStock1, etale, &Stock1);
-	CreerTasVide(LocStock2, etale, &Stock2);
-	CreerTasVide(LocStock3, etale, &Stock3);
-	CreerTasVide(LocStock4, etale, &Stock4);
-
-	/* Création des séries de chaque couleur */
-
-	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
-	{
-		CreerTasVide(LocSerieMD[Co], etale, &(LigneMD[Co]));
-	}
-
-		InitialisationMD();
-}
-
-void AfficherMD()
-{
-	Couleur Co;
-
-	EffacerGraphique();
-	AfficherTas(TalonMD, "Talon");
-	AfficherTas(Stock1, "Stock");
-	AfficherTas(Stock2, "Stock");
-	AfficherTas(Stock3, "Stock");
-	AfficherTas(Stock4, "Stock");
-
-	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
-		AfficherTas(LigneMD[Co], TexteCouleurMD[Co]);
-
-	/* AttendreCliquer(); */
-}
-
 /* Créer une carte invisible de Rang Six et de couleur donnée. Créer une structure adresse pour cette carte et fixe le précédent et le suivant à NULL*/
 void CreerCarteFictiveMD(Carte* carteFictive, Couleur V, struct adCarte* adCarteFictive){
 
@@ -127,6 +87,47 @@ void InitialisationMD(){
 	CreerCarteFictiveMD(&SixPique, Pique, &adSixPique);
 	AjouterCarteSurTas(&adSixPique, &LigneMD[4]);
 
+}
+
+void CreerTableauInitialMD()
+{
+	Couleur Co;
+
+	SaisirLocTasMD();
+
+	/* Création du talon avec un jeu de 32 cartes et des différents stocks */
+	CreerJeuNeuf(32, LocTalonMD, &TalonMD);
+	BattreTas(&TalonMD);
+	CreerTasVide(LocStock1, etale, &Stock1);
+	CreerTasVide(LocStock2, etale, &Stock2);
+	CreerTasVide(LocStock3, etale, &Stock3);
+	CreerTasVide(LocStock4, etale, &Stock4);
+
+	/* Création des séries de chaque couleur */
+
+	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
+	{
+		CreerTasVide(LocSerieMD[Co], etale, &(LigneMD[Co]));
+	}
+
+	InitialisationMD();
+}
+
+void AfficherMD()
+{
+	Couleur Co;
+
+	EffacerGraphique();
+	AfficherTas(TalonMD, "Talon");
+	AfficherTas(Stock1, "Stock");
+	AfficherTas(Stock2, "Stock");
+	AfficherTas(Stock3, "Stock");
+	AfficherTas(Stock4, "Stock");
+
+	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
+		AfficherTas(LigneMD[Co], TexteCouleurMD[Co]);
+	usleep(800000);
+	/* AttendreCliquer(); */
 }
 
 void JouerTasSurLigneMD(Tas *T, booleen *OK){
@@ -165,49 +166,49 @@ void JouerTasSurLigneMD(Tas *T, booleen *OK){
 /* Fonction qui trouve l ecart minimum entre les stocks et la pioche, retourne le stock concerne*/
 
 void TrouverEcartMinimum (Rang RPioche, Tas** Cible, booleen* OK){
-  Rang RStock1, RStock2, RStock3, RStock4, E1, E2, E3, E4, Min;
-int i;
-*OK = vrai;
+	Rang RStock1, RStock2, RStock3, RStock4, E1, E2, E3, E4, Min;
+	int i;
+	*OK = vrai;
 	RStock1 = TasVide(Stock1) ? 0 : LeRang(CarteSur(Stock1));
 	RStock2 = TasVide(Stock2) ? 0 : LeRang(CarteSur(Stock2));
 	RStock3 = TasVide(Stock3) ? 0 : LeRang(CarteSur(Stock3));
 	RStock4 = TasVide(Stock4) ? 0 : LeRang(CarteSur(Stock4));
 
-  E1 = (RPioche > RStock1) ? 100 : (RStock1 - RPioche);
-  E2 = (RPioche > RStock2) ? 100 : (RStock2 - RPioche);
-  E3 = (RPioche > RStock3) ? 100 : (RStock3 - RPioche);
-  E4 = (RPioche > RStock4) ? 100 : (RStock4 - RPioche);
-Min = E1;
-*Cible = &Stock1;
-Tas* tabStock[4];
-tabStock[0] = &Stock1;
-tabStock[1] = &Stock2;
-tabStock[2] = &Stock3;
-tabStock[3] = &Stock4;
- Rang tabEcart[4];
- tabEcart[0] = E1;
- tabEcart[1] = E2;
- tabEcart[2] = E3;
- tabEcart[3] = E4;
+	E1 = (RPioche > RStock1) ? 100 : (RStock1 - RPioche);
+	E2 = (RPioche > RStock2) ? 100 : (RStock2 - RPioche);
+	E3 = (RPioche > RStock3) ? 100 : (RStock3 - RPioche);
+	E4 = (RPioche > RStock4) ? 100 : (RStock4 - RPioche);
+	Min = E1;
+	*Cible = &Stock1;
+	Tas* tabStock[4];
+	tabStock[0] = &Stock1;
+	tabStock[1] = &Stock2;
+	tabStock[2] = &Stock3;
+	tabStock[3] = &Stock4;
+	Rang tabEcart[4];
+	tabEcart[0] = E1;
+	tabEcart[1] = E2;
+	tabEcart[2] = E3;
+	tabEcart[3] = E4;
 
-for (i=1;i<=3;i++){
-if (Min > tabEcart[i]){
-	Min = tabEcart[i];
-	*Cible = (tabStock[i]);
-}
-}
-if (Min==100){
-	*OK= faux;
-}
+	for (i=1;i<=3;i++){
+		if (Min > tabEcart[i]){
+			Min = tabEcart[i];
+			*Cible = (tabStock[i]);
+		}
+	}
+	if (Min==100){
+		*OK= faux;
+	}
 }
 void JouerTasSurStock(Tas* T, booleen* OK){
 
 	Rang RT;
-  Tas* Cible;
+	Tas* Cible;
 	booleen ecart;
 
 	RT = LeRang(CarteSur(*T));
-  TrouverEcartMinimum(RT,&Cible,&ecart);
+	TrouverEcartMinimum(RT,&Cible,&ecart);
 
 	*OK = vrai;
 	if (ecart){
@@ -240,33 +241,45 @@ void RemonterCarteStock(ModeTrace MT){
 	do {
 		if(!(TasVide(Stock1))){
 			JouerTasSurLigneMD(&Stock1, &OKStock1);
-			/*if (OKStock1 && MT == AvecTrace){
+			if (OKStock1 && MT == AvecTrace){
 				AfficherMD();
-			}*/
+			}
+		}
+		else {
+			OKStock1 = faux;
 		}
 		if(!(TasVide(Stock2))){
 			JouerTasSurLigneMD(&Stock2, &OKStock2);
-			/*if (OKStock2 && MT == AvecTrace){
+			if (OKStock2 && MT == AvecTrace){
 				AfficherMD();
-			}*/
+			}
+		}
+		else {
+			OKStock2 = faux;
 		}
 		if(!(TasVide(Stock3))){
 			JouerTasSurLigneMD(&Stock3, &OKStock3);
-			/*if (OKStock3 && MT == AvecTrace){
+			if (OKStock3 && MT == AvecTrace){
 				AfficherMD();
-			}*/
+			}
+		}
+		else {
+			OKStock3 = faux;
 		}
 		if(!(TasVide(Stock4))){
 			JouerTasSurLigneMD(&Stock4, &OKStock4);
-			/*if (OKStock4 && MT == AvecTrace){
+			if (OKStock4 && MT == AvecTrace){
 				AfficherMD();
-			}*/
+			}
+		}
+		else {
+			OKStock4 = faux;
 		}
 	}
 	while (OKStock1 || OKStock2 || OKStock3 || OKStock4);
 }
 
-void JouerUneMD(ModeTrace MT){
+void JouerUneMD(ModeTrace MT, booleen* Victoire){
 
 	booleen poserLigne;
 	booleen poserStock;
@@ -291,31 +304,49 @@ void JouerUneMD(ModeTrace MT){
 				AfficherMD();
 			}
 		}
-		AttendreCliquer();
-		printf("%d,%d,%d\n",poserStock,poserLigne,!(TasVide(TalonMD)));
 	}	while ((poserStock || poserLigne) && !(TasVide(TalonMD)));
 
-	printf("je suis La\n");
 	if (TasVide(TalonMD)){
+     if (MT == AvecTrace){
 		printf("Bravo c'est gagné!\n");
 	}
+		*Victoire=vrai;
+	}
 	else {
+		if (MT == AvecTrace){
 		printf("BUHAHAHAHHAHA t'as perdu, essayes encore !\n");
+	}
+		*Victoire=faux;
 	}
 
 }
 
 void ObserverMD(int NP)
 {
+	booleen gagne;
 	int i;
 	for (i = 0; i <= NP-1; i++)
 	{
 		CreerTableauInitialMD();
-		JouerUneMD(AvecTrace);
+		JouerUneMD(AvecTrace,&gagne);
 	}
 }
 
 void AnalyserMD(int NP)
 {
-	/* A COMPLETER */
+	int i;
+	int victoire = 0;
+  float michel;
+	booleen gagne;
+
+	for (i = 0; i < NP ; i++){
+		CreerTableauInitialMD();
+		JouerUneMD(SansTrace, &gagne);
+		if (gagne){
+			victoire++;
+		}
+	}
+	michel = (float)victoire/NP;
+	printf("Sur %d parties vous avez eu de la chance %d fois et manqué de bol %d fois (bah oui t as pas fait grand chose)\n", NP,victoire,(NP-victoire));
+	printf("Vous avez un taux de victoire de %.2f%% \n", michel*100);
 }
