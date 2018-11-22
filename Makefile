@@ -21,5 +21,21 @@ ReussiteQLL.e: ${LIB}/libmachine_trace.a Alea.o Tas.o AfficherTas.o QLL.o Intera
 Reussites.e: ${LIB}/libmachine_trace.a Alea.o Tas.o AfficherTas.o R7.o C4.o QLL.o InteractionToutes.o Reussites.c
 	gcc  -g -I${INCL} -o Reussites.e Reussites.c ${LIB}/graphlib_w.o InteractionToutes.o QLL.o C4.o R7.o Tas.o AfficherTas.o Alea.o -L${LIB} -lmachine_trace -L/usr/X11R6/lib -lX11 -lm
 
+	
+test : testTasACompleter.o TasACompleter.o 
+	@echo creation de test :
+	gcc -g -Wall -o test TasACompleter.o testTasACompleter.o
+	@echo -------------------------------
+
+testTasACompleter.o : testTasACompleter.c TasACompleter.h
+	@echo creation de testTasACompleter.o :
+	gcc -g -Wall -c testTasACompleter.c
+	@echo -------------------------------
+	
+TasACompleter.o: TasACompleter.c TypesConst.h TasACompleter.h
+	@echo creation de TasACompleter.o :
+	gcc -g -Wall -c  TasACompleter.c
+	@echo ------------------------------- 
+	
 clean:
 	rm -f AfficherTas.o Alea.o InteractionR7.o R7.o *.e
