@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "MD.h"
 #include "Alea.h"
+#define temps 120000
 
 //////// Independant du jeu /////////////
 

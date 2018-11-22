@@ -1,5 +1,6 @@
 #include "AfficherTas.h"
 #define NOMBRE_DE_STOCK 4
+#define temps 80000
 
 void ObserverMD(int);
 void AnalyserMD(int);
