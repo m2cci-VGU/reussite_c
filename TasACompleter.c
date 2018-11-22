@@ -335,7 +335,6 @@ void EchangerCartes(int i, int j, Tas *T)
     struct adCarte *tempJ = carteJ;*/
     Carte carteI = IemeCarte(*T,i);
     Carte carteJ = IemeCarte(*T,j);
-    carteJ=temp;
     struct adCarte *Visitor;
     Visitor = T->tete ;
     int k = 1;
