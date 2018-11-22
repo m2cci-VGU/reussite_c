@@ -9,22 +9,22 @@ Tas deck;
 typedef Tas* SerieCouleur;
 
 void initTestDeck() {
-  Localisation LocDeck;
-  LocDeck.NC = 42;
-  LocDeck.NL = 42;
-  CreerJeuNeuf(52, LocDeck, &deck);
+	Localisation LocDeck;
+	LocDeck.NC = 42;
+	LocDeck.NL = 42;
+	CreerJeuNeuf(52, LocDeck, &deck);
 }
 void initTas(Tas* adTas) {
-  SupprimerTasVide(adTas);
-  CreerTasVide(LaPlace(*adTas), TasEtale(*adTas), adTas);
+	SupprimerTasVide(adTas);
+	CreerTasVide(LaPlace(*adTas), TasEtale(*adTas), adTas);
 }
 void initTestEnvironment(char* testName) {
-    initTestDeck();
-    InitAlea();
-    OuvrirGraphique(testName);
+	initTestDeck();
+	InitAlea();
+	OuvrirGraphique(testName);
 }
 void endTest() {
-  FermerGraphique();
+	FermerGraphique();
 }
 
 ////////////////////////////////////////////////////////
@@ -37,77 +37,77 @@ Tas *adTalon;
 
 void newTest(char* testName)
 {
-  initTestEnvironment(testName);
-  Couleur couleur;
-  int index;
-  CreerTableauInitialMD();
-  adTalon = getTalonMD();
-  initTas(adTalon);
+	initTestEnvironment(testName);
+	Couleur couleur;
+	int index;
+	CreerTableauInitialMD();
+	adTalon = getTalonMD();
+	initTas(adTalon);
 
-  Tas* adTasVisitor;
-  for(couleur=PremiereCouleur; couleur<DerniereCouleur+1 ; couleur++) {
-    adTasVisitor = getTasCouleurMD(couleur);
-    initTas(adTasVisitor);
-    ListeAdresseTasCouleur[couleur] = adTasVisitor;
-  }
-  for(index = 0; index < NOMBRE_DE_STOCK ; index++) {
-    adTasVisitor = getTasDefausseMD(index);
-    initTas(adTasVisitor);
-    ListeAdresseTasDefausse[index] = adTasVisitor;
-  }
+	Tas* adTasVisitor;
+	for(couleur=PremiereCouleur; couleur<DerniereCouleur+1 ; couleur++) {
+		adTasVisitor = getTasCouleurMD(couleur);
+		initTas(adTasVisitor);
+		ListeAdresseTasCouleur[couleur] = adTasVisitor;
+	}
+	for(index = 0; index < NOMBRE_DE_STOCK ; index++) {
+		adTasVisitor = getTasDefausseMD(index);
+		initTas(adTasVisitor);
+		ListeAdresseTasDefausse[index] = adTasVisitor;
+	}
 }
 
 void runTest() {
 	booleen test;
-  JouerUneMD(AvecTrace, &test);
+	JouerUneMD(AvecTrace, &test);
 }
 
-  /////////////////////////////////////////////////////////////////////
- // Fonctions spécifiques (inutiles mais qui simplifient les tests) //
+/////////////////////////////////////////////////////////////////////
+// Fonctions spécifiques (inutiles mais qui simplifient les tests) //
 /////////////////////////////////////////////////////////////////////
 
 void ajouterCarteSurTasDeCouleur(Couleur couleur, Rang rang) {
-  Tas* adDest = ListeAdresseTasCouleur[couleur];
-  DeplacerCarteSur(couleur, rang, &deck, adDest);
-  RetournerCarteSur(adDest);
+	Tas* adDest = ListeAdresseTasCouleur[couleur];
+	DeplacerCarteSur(couleur, rang, &deck, adDest);
+	RetournerCarteSur(adDest);
 }
 void ajouterCarteSurTasDeDefausse(int i, Couleur couleur, Rang rang) {
-  Tas* adDest = ListeAdresseTasDefausse[i];
-  DeplacerCarteSur(couleur, rang, &deck, adDest);
-  RetournerCarteSur(adDest);
+	Tas* adDest = ListeAdresseTasDefausse[i];
+	DeplacerCarteSur(couleur, rang, &deck, adDest);
+	RetournerCarteSur(adDest);
 }
 
 void ajouterCarteSurTalon(Couleur couleur, Rang rang) {
-  DeplacerCarteSur(couleur, rang, &deck, adTalon);
+	DeplacerCarteSur(couleur, rang, &deck, adTalon);
 }
 
 void ajouterFamilleSurTalon(Rang rang) {
-  ajouterCarteSurTalon(Coeur, rang);
-  ajouterCarteSurTalon(Pique, rang);
-  ajouterCarteSurTalon(Trefle, rang);
-  ajouterCarteSurTalon(Carreau, rang);
+	ajouterCarteSurTalon(Coeur, rang);
+	ajouterCarteSurTalon(Pique, rang);
+	ajouterCarteSurTalon(Trefle, rang);
+	ajouterCarteSurTalon(Carreau, rang);
 }
 
 
-  ///////////////
- /// Tests ////
+///////////////
+/// Tests ////
 //////////////
 
 void test1() {
-    newTest("Test 1");
-    printf("Principe de ce test: verifier que ca marche\n");
-    // ajouterCarteSurTasDeCouleur(Pique, Sept);
+	newTest("Test 1");
+	printf("Principe de ce test: verifier que ca marche\n");
+	// ajouterCarteSurTasDeCouleur(Pique, Sept);
 
-    ajouterCarteSurTasDeDefausse(0, Trefle, Huit);
-    ajouterCarteSurTasDeDefausse(1, Trefle, Dame);
-    ajouterCarteSurTasDeDefausse(1, Trefle, Dix);
+	ajouterCarteSurTasDeDefausse(0, Trefle, Huit);
+	ajouterCarteSurTasDeDefausse(1, Trefle, Dame);
+	ajouterCarteSurTasDeDefausse(1, Trefle, Dix);
 
-    ajouterCarteSurTalon(Trefle, Sept);
+	ajouterCarteSurTalon(Trefle, Sept);
 
-    runTest();
-    endTest();
+	runTest();
+	endTest();
 }
 
 int main() {
-  test1();
+	test1();
 }
