@@ -385,7 +385,7 @@ void RetournerTas(Tas *T)
 {
     struct adCarte* sauveTete = T->tete->suiv ;
     struct adCarte* sauveQueue = T->queue ;
-
+    T->tete->elt.VC = (T->tete->elt.VC == Decouverte) ? Cachee : Decouverte;
     T->tete->suiv = NULL ;
     T->tete->prec = T->queue;
     T->queue->suiv = T->tete;
@@ -396,7 +396,7 @@ void RetournerTas(Tas *T)
     while(T->queue->prec != NULL)
     {
       sauveTete = T->tete->suiv ;
-      //T->tete->elt.VC = Decouverte ;
+      sauveTete->elt.VC = (sauveTete->elt.VC == Decouverte) ? Cachee : Decouverte;
       sauveTete->prec = NULL;
       T->tete->prec = T->queue;
       T->tete->suiv = T->queue->suiv;
