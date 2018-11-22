@@ -83,7 +83,7 @@ void CreerTableauInitialMD()
 		CreerTasVide(LocSerieMD[Co], etale, &(LigneMD[Co]));
 	}
 
-		InitialisationMD();
+	InitialisationMD();
 }
 
 void AfficherMD()
@@ -164,49 +164,49 @@ void JouerTasSurLigneMD(Tas *T, booleen *OK){
 /* Fonction qui trouve l ecart minimum entre les stocks et la pioche, retourne le stock concerne*/
 
 void TrouverEcartMinimum (Rang RPioche, Tas** Cible, booleen* OK){
-  Rang RStock1, RStock2, RStock3, RStock4, E1, E2, E3, E4, Min;
-int i;
-*OK = vrai;
+	Rang RStock1, RStock2, RStock3, RStock4, E1, E2, E3, E4, Min;
+	int i;
+	*OK = vrai;
 	RStock1 = TasVide(Stock1) ? 0 : LeRang(CarteSur(Stock1));
 	RStock2 = TasVide(Stock2) ? 0 : LeRang(CarteSur(Stock2));
 	RStock3 = TasVide(Stock3) ? 0 : LeRang(CarteSur(Stock3));
 	RStock4 = TasVide(Stock4) ? 0 : LeRang(CarteSur(Stock4));
 
-  E1 = (RPioche > RStock1) ? 100 : (RStock1 - RPioche);
-  E2 = (RPioche > RStock2) ? 100 : (RStock2 - RPioche);
-  E3 = (RPioche > RStock3) ? 100 : (RStock3 - RPioche);
-  E4 = (RPioche > RStock4) ? 100 : (RStock4 - RPioche);
-Min = E1;
-*Cible = &Stock1;
-Tas* tabStock[4];
-tabStock[0] = &Stock1;
-tabStock[1] = &Stock2;
-tabStock[2] = &Stock3;
-tabStock[3] = &Stock4;
- Rang tabEcart[4];
- tabEcart[0] = E1;
- tabEcart[1] = E2;
- tabEcart[2] = E3;
- tabEcart[3] = E4;
+	E1 = (RPioche > RStock1) ? 100 : (RStock1 - RPioche);
+	E2 = (RPioche > RStock2) ? 100 : (RStock2 - RPioche);
+	E3 = (RPioche > RStock3) ? 100 : (RStock3 - RPioche);
+	E4 = (RPioche > RStock4) ? 100 : (RStock4 - RPioche);
+	Min = E1;
+	*Cible = &Stock1;
+	Tas* tabStock[4];
+	tabStock[0] = &Stock1;
+	tabStock[1] = &Stock2;
+	tabStock[2] = &Stock3;
+	tabStock[3] = &Stock4;
+	Rang tabEcart[4];
+	tabEcart[0] = E1;
+	tabEcart[1] = E2;
+	tabEcart[2] = E3;
+	tabEcart[3] = E4;
 
-for (i=1;i<=3;i++){
-if (Min > tabEcart[i]){
-	Min = tabEcart[i];
-	*Cible = (tabStock[i]);
-}
-}
-if (Min==100){
-	*OK= faux;
-}
+	for (i=1;i<=3;i++){
+		if (Min > tabEcart[i]){
+			Min = tabEcart[i];
+			*Cible = (tabStock[i]);
+		}
+	}
+	if (Min==100){
+		*OK= faux;
+	}
 }
 void JouerTasSurStock(Tas* T, booleen* OK){
 
 	Rang RT;
-  Tas* Cible;
+	Tas* Cible;
 	booleen ecart;
 
 	RT = LeRang(CarteSur(*T));
-  TrouverEcartMinimum(RT,&Cible,&ecart);
+	TrouverEcartMinimum(RT,&Cible,&ecart);
 
 	*OK = vrai;
 	if (ecart){
@@ -240,26 +240,38 @@ void RemonterCarteStock(ModeTrace MT){
 		if(!(TasVide(Stock1))){
 			JouerTasSurLigneMD(&Stock1, &OKStock1);
 			/*if (OKStock1 && MT == AvecTrace){
-				AfficherMD();
+			AfficherMD();
 			}*/
+		}
+		else {
+			OKStock1 = faux;
 		}
 		if(!(TasVide(Stock2))){
 			JouerTasSurLigneMD(&Stock2, &OKStock2);
 			/*if (OKStock2 && MT == AvecTrace){
-				AfficherMD();
+			AfficherMD();
 			}*/
+		}
+		else {
+			OKStock2 = faux;
 		}
 		if(!(TasVide(Stock3))){
 			JouerTasSurLigneMD(&Stock3, &OKStock3);
 			/*if (OKStock3 && MT == AvecTrace){
-				AfficherMD();
+			AfficherMD();
 			}*/
+		}
+		else {
+			OKStock3 = faux;
 		}
 		if(!(TasVide(Stock4))){
 			JouerTasSurLigneMD(&Stock4, &OKStock4);
 			/*if (OKStock4 && MT == AvecTrace){
-				AfficherMD();
+			AfficherMD();
 			}*/
+		}
+		else {
+			OKStock4 = faux;
 		}
 	}
 	while (OKStock1 || OKStock2 || OKStock3 || OKStock4);
