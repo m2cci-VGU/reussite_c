@@ -372,6 +372,10 @@ void RetournerTas(Tas *T)
     struct adCarte* sauveTete = T->tete ;
     struct adCarte* sauveQueue = T->queue ;
 
+    T->tete->suiv = NULL ;
+    
+
+
     while(T->queue != T->tete)
     {
       sauveTete = T->tete ;
