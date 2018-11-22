@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "MD.h"
 
 
@@ -21,6 +22,7 @@ struct adCarte adSixTrefle;
 struct adCarte adSixCarreau;
 struct adCarte adSixCoeur;
 struct adCarte adSixPique;
+
 
 
 Tas* getTalonMD() {
@@ -59,6 +61,31 @@ void SaisirLocTasMD() {
 		LocSerieMD[i].NC = i+5;
 		LocSerieMD[i].NL = 1;
 	}
+}
+
+/* Créer une carte invisible de Rang Six et de couleur donnée. Créer une structure adresse pour cette carte et fixe le précédent et le suivant à NULL*/
+void CreerCarteFictiveMD(Carte* carteFictive, Couleur V, struct adCarte* adCarteFictive){
+
+	carteFictive->CC= V;
+	carteFictive->RC= Six;
+	carteFictive->VC= Cachee;
+
+	adCarteFictive->elt= *carteFictive;
+	adCarteFictive->suiv=NULL;
+	adCarteFictive->prec=NULL;
+}
+
+void InitialisationMD(){
+
+	CreerCarteFictiveMD(&SixTrefle, Trefle, &adSixTrefle);
+	AjouterCarteSurTas(&adSixTrefle, &LigneMD[1]);
+	CreerCarteFictiveMD(&SixCarreau, Carreau, &adSixCarreau);
+	AjouterCarteSurTas(&adSixCarreau, &LigneMD[2]);
+	CreerCarteFictiveMD(&SixCoeur, Coeur, &adSixCoeur);
+	AjouterCarteSurTas(&adSixCoeur, &LigneMD[3]);
+	CreerCarteFictiveMD(&SixPique, Pique, &adSixPique);
+	AjouterCarteSurTas(&adSixPique, &LigneMD[4]);
+
 }
 
 void CreerTableauInitialMD()
@@ -100,31 +127,6 @@ void AfficherMD()
 		AfficherTas(LigneMD[Co], TexteCouleurMD[Co]);
 
 	/* AttendreCliquer(); */
-}
-
-/* Créer une carte invisible de Rang Six et de couleur donnée. Créer une structure adresse pour cette carte et fixe le précédent et le suivant à NULL*/
-void CreerCarteFictiveMD(Carte* carteFictive, Couleur V, struct adCarte* adCarteFictive){
-
-	carteFictive->CC= V;
-	carteFictive->RC= Six;
-	carteFictive->VC= Cachee;
-
-	adCarteFictive->elt= *carteFictive;
-	adCarteFictive->suiv=NULL;
-	adCarteFictive->prec=NULL;
-}
-
-void InitialisationMD(){
-
-	CreerCarteFictiveMD(&SixTrefle, Trefle, &adSixTrefle);
-	AjouterCarteSurTas(&adSixTrefle, &LigneMD[1]);
-	CreerCarteFictiveMD(&SixCarreau, Carreau, &adSixCarreau);
-	AjouterCarteSurTas(&adSixCarreau, &LigneMD[2]);
-	CreerCarteFictiveMD(&SixCoeur, Coeur, &adSixCoeur);
-	AjouterCarteSurTas(&adSixCoeur, &LigneMD[3]);
-	CreerCarteFictiveMD(&SixPique, Pique, &adSixPique);
-	AjouterCarteSurTas(&adSixPique, &LigneMD[4]);
-
 }
 
 void JouerTasSurLigneMD(Tas *T, booleen *OK){
@@ -240,6 +242,7 @@ void RemonterCarteStock(ModeTrace MT){
 			JouerTasSurLigneMD(&Stock1, &OKStock1);
 			if (OKStock1 && MT == AvecTrace){
 				AfficherMD();
+				usleep(1000000);
 			}
 		}
 		else {
@@ -249,6 +252,7 @@ void RemonterCarteStock(ModeTrace MT){
 			JouerTasSurLigneMD(&Stock2, &OKStock2);
 			if (OKStock2 && MT == AvecTrace){
 				AfficherMD();
+				usleep(1000000);
 			}
 		}
 		else {
@@ -258,6 +262,7 @@ void RemonterCarteStock(ModeTrace MT){
 			JouerTasSurLigneMD(&Stock3, &OKStock3);
 			if (OKStock3 && MT == AvecTrace){
 				AfficherMD();
+				usleep(1000000);
 			}
 		}
 		else {
@@ -267,6 +272,7 @@ void RemonterCarteStock(ModeTrace MT){
 			JouerTasSurLigneMD(&Stock4, &OKStock4);
 			if (OKStock4 && MT == AvecTrace){
 				AfficherMD();
+				usleep(1000000);
 			}
 		}
 		else {
@@ -276,17 +282,19 @@ void RemonterCarteStock(ModeTrace MT){
 	while (OKStock1 || OKStock2 || OKStock3 || OKStock4);
 }
 
-void JouerUneMD(ModeTrace MT, booleen* Victoire){
+void JouerUneMD(ModeTrace MT){
 
 	booleen poserLigne;
 	booleen poserStock;
 
+
 	do	{
 		RetournerCarteSur(&TalonMD);
-		AttendreCliquer();
 		if (MT == AvecTrace){
 			AfficherMD();
 		}
+		/*AttendreCliquer();*/
+		usleep(1000000);
 		JouerTasSurLigneMD(&TalonMD, &poserLigne);
 		if (!poserLigne){
 			JouerTasSurStock(&TalonMD, &poserStock);
@@ -306,39 +314,24 @@ void JouerUneMD(ModeTrace MT, booleen* Victoire){
 
 	if (TasVide(TalonMD)){
 		printf("Bravo c'est gagné!\n");
-		*Victoire = vrai;
 	}
 	else {
 		printf("BUHAHAHAHHAHA t'as perdu, essayes encore !\n");
-		*Victoire = faux;
 	}
+
 }
 
 void ObserverMD(int NP)
 {
 	int i;
-	booleen Victoire;
 	for (i = 0; i <= NP-1; i++)
 	{
 		CreerTableauInitialMD();
-		JouerUneMD(AvecTrace, &Victoire);
+		JouerUneMD(AvecTrace);
 	}
 }
 
 void AnalyserMD(int NP)
 {
-	int i;
-	int victoire = 0;
-	
-	booleen gagne;
-	
-	for (i = 0; i < NP ; i++){
-		CreerTableauInitialMD();
-		JouerUneMD(SansTrace, &gagne);
-		if (gagne){
-			victoire++;
-		}
-	}
-	printf("Sur %d parties vous avez eu de la chance %d fois et manqué de bol %d fois (bah oui t as pas fait grand chose)", NP,victoire,(NP-victoire));
-	printf("Vous avez un taux de %d\% victoires", (victoire)/NP*100);
+	/* A COMPLETER */
 }
