@@ -6,14 +6,24 @@
 int main()
 {
     /*TAS*/
-        Tas T;
         Tas T1;
         Tas T2;
-        int N = 52;
-        Localisation L;
-        L.NL = 1 ;
-        L.NC = 1 ;
-        char message;
+        Tas T3;
+        int N1 = 52;
+        Localisation L1;
+        L1.NL = 1 ;
+        L1.NC = 1 ;
+        char message1;
+        int N2 = 32;
+        Localisation L2;
+        L2.NL = 1 ;
+        L2.NC = 1 ;
+        char message2;
+        int N3 = 32;
+        Localisation L3;
+        L3.NL = 1 ;
+        L3.NC = 1 ;
+        char message3;
 
     /*cartes*/
     Carte C;
@@ -31,36 +41,23 @@ int main()
     C2.CC = Pique;
     C2.VC = Cachee;
 
-    afficherCarte(C);
-    afficherCarte(C1);
+  afficherCarte(C1);
     afficherCarte(C2);
 
     testCarte(C1);
     testCarteBooleen(C1, C2);
 
+CreerJeuNeuf(N1, L1, &T1);
+afficherTasPourTest(T1);
+testBoolenTas(T1);
+testLocalisationPlaceTas(T1);
+
+//RetournerTas(&T1);
+//afficherTasPourTest(T1);
+
 
 };
 
-
-/*void testMouvementCarteTas(T)
-{
-    CreerJeuNeuf(N, L, *T);
-    afficherTasPourTest(T);
-    AjouterCarteSurTas (struct adCarte *ac, Tas *T)
-    afficherPremiereCarteAccessible(*T);
-    afficherTasPourTest(T);
-}*/
-
-/*
-AjouterCarteSurTas (struct adCarte *ac, Tas *T);
-AjouterCarteSousTas (struct adCarte *ac, Tas *T);
-DeplacerHautSur(Tas *T1, Tas *T2);
-DeplacerHautSous(Tas *T1, Tas *T2);
-DeplacerBasSur(Tas *T1, Tas *T2);
-DeplacerBasSous(Tas *T1, Tas *T2);
-DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2);
-PoserTasSurTas(Tas *T1, Tas *T2);
-*/
 
 
 void afficherTasPourTest(Tas T)
@@ -70,7 +67,7 @@ void afficherTasPourTest(Tas T)
     printf("Le TAS est [ ") ;
     while (visiteur != NULL)
     {
-        printf("%d%d%s ", visiteur->elt.RC, visiteur->elt.CC, visiteur->elt.VC) ;
+        printf("%d%d%d ", visiteur->elt.RC, visiteur->elt.CC, visiteur->elt.VC) ;
         visiteur = visiteur->suiv;
     }
     printf("]\n");
@@ -88,31 +85,36 @@ void testCarte(Carte C1)
     printf("Rang : %d\n", LeRang(C1));
     printf("Couleur : %d\n", LaCouleur(C1));
     printf("Couleur suivante : %d\n", CouleurSuivante(C1.CC));
-    printf("Est-elle cachée : %d\n", EstCachee(C1));
+    printf("Est-elle cachï¿½e : %d\n", EstCachee(C1));
     printf("Est-elle decouverte : %d\n", EstDecouverte(C1));
 }
 
 void testCarteBooleen(Carte C1, Carte C2)
 {
-printf("C1 est-elle bien de rang inférieur à C2 ?\n : %d", RangInferieur(C1, C2));
-printf("C1 est-elle de même rang que C2 ?\n : %d", MemeRang(C1, C2));
-printf("C1 est-elle bien de couleur inférieur à C2 ?\n : %d", CouleurInferieure(C1, C2));
-printf("C1 est-elle de même rang que C2 ?\n : %d", MemeCouleur(C1, C2));
-printf("C1 est-elle de rang et couleur inférieur à C2 ?\n : %d",EstCarteAvant(C1, C2));
+printf("C1 est-elle bien de rang infï¿½rieur ï¿½ C2 ? : %d\n", RangInferieur(C1, C2));
+printf("C1 est-elle de mï¿½me rang que C2 ? : %d\n", MemeRang(C1, C2));
+printf("C1 est-elle bien de couleur infï¿½rieur ï¿½ C2 ? : %d\n", CouleurInferieure(C1, C2));
+printf("C1 est-elle de mï¿½me rang que C2 ? : %d\n", MemeCouleur(C1, C2));
+printf("C1 est-elle de rang et couleur infï¿½rieur ï¿½ C2 ? : %d\n",EstCarteAvant(C1, C2));
+}
+
+void testBoolenTas(Tas T2)
+{
+printf("Est-ce que le tas est actif ? :\n", TasActif(T2) );
+printf("Est-ce que le tas est vide ? :\n", TasVide(T2) );
+printf("Est-ce que le tas est empilÃ© ? :\n", TasEmpile(T2) );
+printf("Est-ce que le tas est Ã©talÃ© ? :\n", TasEtale(T2) );
+}
+
+void testLocalisationPlaceTas(Tas T3)
+{
+  printf("Est-ce que le tas est empilÃ© ? :\n", LaHauteur(T3) );
+  printf("Est-ce que le tas est Ã©talÃ© ? :\n", LaPlace(T3) );
 }
 
 
 
-
-
 /*
-booleen TasActif(Tas T);
-booleen TasVide(Tas T);
-booleen TasEmpile(Tas T);
-booleen TasEtale(Tas T);
-LaHauteur(Tas T);
-Localisation LaPlace(Tas T);
-
 
 CreerTasVide(Localisation L, Mode M, Tas *T);
 SupprimerTasVide(Tas *T);
@@ -141,7 +143,3 @@ DeplacerBasSous(Tas *T1, Tas *T2);
 DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2);
 PoserTasSurTas(Tas *T1, Tas *T2);
 */
-
-
-
-
