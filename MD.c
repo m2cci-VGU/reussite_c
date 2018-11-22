@@ -9,10 +9,12 @@ char TexteCouleurMD[5][8] = {"", "Trefle", "Carreau", "Coeur", "Pique"};
 
 typedef Tas SerieCouleurMD;
 SerieCouleurMD LigneMD[DerniereCouleur+1];
-Tas TalonMD, Stock1, Stock2, Stock3, Stock4;
+SerieCouleurMD tasStock[NOMBRE_DE_STOCK];
+Tas TalonMD;
 /* localisation des tas */
 Localisation LocSerieMD[DerniereCouleur+1];
-Localisation LocTalonMD, LocStock1, LocStock2, LocStock3, LocStock4;
+Localisation LocTasStock[NOMBRE_DE_STOCK];
+Localisation LocTalonMD;
 
 Carte SixTrefle;
 Carte SixCarreau;
@@ -33,33 +35,21 @@ Tas* getTasCouleurMD(Couleur couleur){
 	return &(LigneMD[couleur]);
 }
 Tas* getTasDefausseMD(int index) {
-	switch(index){
-		case 0: return &Stock1;
-		case 1: return &Stock2;
-		case 2: return &Stock3;
-		case 3: return &Stock4;
-		default: return NULL;
-	}
+	return &(tasStock[index]);
 }
 
 
 void SaisirLocTasMD() {
 	int i;
-
-	LocTalonMD.NC = 5;
+	for(i = 0; i < NOMBRE_DE_STOCK; i++) {
+		LocTasStock[i].NC = i+1;
+		LocTasStock[i].NL = 1;
+	}
+	LocTalonMD.NC = NOMBRE_DE_STOCK+1;
 	LocTalonMD.NL = 3;
-	LocStock1.NC = 1;
-	LocStock1.NL = 1;
-	LocStock2.NC = 2;
-	LocStock2.NL = 1;
-	LocStock3.NC = 3;
-	LocStock3.NL = 1;
-	LocStock4.NC = 4;
-	LocStock4.NL = 1;
-
 	for (i=PremiereCouleur; i<=DerniereCouleur; i++)
 	{
-		LocSerieMD[i].NC = i+5;
+		LocSerieMD[i].NC = i+NOMBRE_DE_STOCK+1;
 		LocSerieMD[i].NL = 1;
 	}
 }
@@ -92,191 +82,105 @@ void InitialisationMD(){
 void CreerTableauInitialMD()
 {
 	Couleur Co;
+	int i;
 
 	SaisirLocTasMD();
-
 	/* Création du talon avec un jeu de 32 cartes et des différents stocks */
 	CreerJeuNeuf(32, LocTalonMD, &TalonMD);
 	BattreTas(&TalonMD);
-	CreerTasVide(LocStock1, etale, &Stock1);
-	CreerTasVide(LocStock2, etale, &Stock2);
-	CreerTasVide(LocStock3, etale, &Stock3);
-	CreerTasVide(LocStock4, etale, &Stock4);
-
+	for(i=0; i<NOMBRE_DE_STOCK; i++) {
+		CreerTasVide(LocTasStock[i], etale, &(tasStock[i]));
+	}
 	/* Création des séries de chaque couleur */
-
-	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
-	{
+	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)	{
 		CreerTasVide(LocSerieMD[Co], etale, &(LigneMD[Co]));
 	}
-
 	InitialisationMD();
 }
 
 void AfficherMD()
 {
 	Couleur Co;
+	int i;
 
 	EffacerGraphique();
 	AfficherTas(TalonMD, "Talon");
-	AfficherTas(Stock1, "Stock");
-	AfficherTas(Stock2, "Stock");
-	AfficherTas(Stock3, "Stock");
-	AfficherTas(Stock4, "Stock");
-
-	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
+	for(i=0; i<NOMBRE_DE_STOCK; i++) {
+		AfficherTas(tasStock[i], "Stock");
+	}
+	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++) {
 		AfficherTas(LigneMD[Co], TexteCouleurMD[Co]);
-	usleep(800000);
+	}
+	usleep(200000);
 	/* AttendreCliquer(); */
 }
 
 void JouerTasSurLigneMD(Tas *T, booleen *OK){
-	Couleur Co;
-	Rang RT, RSur;
+	Couleur Co = VideC;
+	Rang RT=0, RSur=0;
 
-	if (TasVide(*T)){
-		Co=VideC;
-	}
-	else {
+	if( !TasVide(*T) ) {
 		Co = LaCouleur(CarteSur(*T));
-	}
-
-	if (TasVide(*T)){
-		RT=0;
-	}
-	else {
 		RT = LeRang(CarteSur(*T));
-	}
-	if (TasVide(LigneMD[Co])){
-		RSur=0;
-	}
-	else {
 		RSur = LeRang(CarteSur(LigneMD[Co]));
 	}
 
-	*OK = vrai;
-
+	*OK = faux;
 	if (RT !=0 && RT == RangSuivant(RSur)){
+		*OK = vrai;
 		DeplacerHautSur(T, &(LigneMD[Co]));
-	}
-	else{
-		*OK = faux;
 	}
 }
 /* Fonction qui trouve l ecart minimum entre les stocks et la pioche, retourne le stock concerne*/
 
-void TrouverEcartMinimum (Rang RPioche, Tas** Cible, booleen* OK){
-	Rang RStock1, RStock2, RStock3, RStock4, E1, E2, E3, E4, Min;
+void TrouverMeilleureCible (Rang RPioche, Tas** Cible, int* OK){
 	int i;
-	*OK = vrai;
-	RStock1 = TasVide(Stock1) ? 0 : LeRang(CarteSur(Stock1));
-	RStock2 = TasVide(Stock2) ? 0 : LeRang(CarteSur(Stock2));
-	RStock3 = TasVide(Stock3) ? 0 : LeRang(CarteSur(Stock3));
-	RStock4 = TasVide(Stock4) ? 0 : LeRang(CarteSur(Stock4));
+	Rang rangTas;
+	int ecartMax = As+1;
+	Rang rangCaseVide = ecartMax;
+	int ecartTas, ecartMin = ecartMax;
 
-	E1 = (RPioche > RStock1) ? 100 : (RStock1 - RPioche);
-	E2 = (RPioche > RStock2) ? 100 : (RStock2 - RPioche);
-	E3 = (RPioche > RStock3) ? 100 : (RStock3 - RPioche);
-	E4 = (RPioche > RStock4) ? 100 : (RStock4 - RPioche);
-	Min = E1;
-	*Cible = &Stock1;
-	Tas* tabStock[4];
-	tabStock[0] = &Stock1;
-	tabStock[1] = &Stock2;
-	tabStock[2] = &Stock3;
-	tabStock[3] = &Stock4;
-	Rang tabEcart[4];
-	tabEcart[0] = E1;
-	tabEcart[1] = E2;
-	tabEcart[2] = E3;
-	tabEcart[3] = E4;
-
-	for (i=1;i<=3;i++){
-		if (Min > tabEcart[i]){
-			Min = tabEcart[i];
-			*Cible = (tabStock[i]);
-		}
+	/* printf("-------------TrouverMeilleurTas-----------\n"); */
+	/* printf("Rang de la carte a poser: %d\n", RPioche); */
+	for(i=0; i<NOMBRE_DE_STOCK; i++) {
+		rangTas = TasVide(tasStock[i]) ? rangCaseVide : LeRang(CarteSur(tasStock[i]));
+		ecartTas = (RPioche > rangTas) ? ecartMax : (rangTas - RPioche);
+		/*printf(" - tas %d || rang: %d || ecart: %d\n", i, rangTas, ecartTas);*/
+		*Cible = (ecartTas < ecartMin) ? &(tasStock[i]) : *Cible;
+		ecartMin = (ecartTas < ecartMin) ? ecartTas : ecartMin;
 	}
-	if (Min==100){
-		*OK= faux;
-	}
+	/* printf("FIN: ecartMin=%d <-> ecartMax=%d\n",ecartMin, ecartMax)	; */
+	*OK = (ecartMin < ecartMax);
 }
-void JouerTasSurStock(Tas* T, booleen* OK){
 
-	Rang RT;
+void JouerTasSurStock(Tas* T, booleen* carteDeplacee){
 	Tas* Cible;
-	booleen ecart;
+	booleen foundBestTarget;
 
-	RT = LeRang(CarteSur(*T));
-	TrouverEcartMinimum(RT,&Cible,&ecart);
+	Rang RT = LeRang(CarteSur(*T));
+	TrouverMeilleureCible(RT,&Cible,&foundBestTarget);
 
-	*OK = vrai;
-	if (ecart){
+	if (foundBestTarget){
+		*carteDeplacee = vrai;
 		DeplacerHautSur(&TalonMD, Cible);
-	}
-	else if (TasVide(Stock1)){
-		DeplacerHautSur(&TalonMD, &Stock1);
-	}
-	else if (TasVide(Stock2)){
-		DeplacerHautSur(&TalonMD, &Stock2);
-	}
-	else if (TasVide(Stock3)){
-		DeplacerHautSur(&TalonMD, &Stock3);
-	}
-	else if (TasVide(Stock4)){
-		DeplacerHautSur(&TalonMD, &Stock4);
-	}
-	else {
-		*OK= faux;
+	} else {
+		*carteDeplacee = faux;
 	}
 }
 
 void RemonterCarteStock(ModeTrace MT){
-
-	booleen OKStock1 = faux;
-	booleen OKStock2 = faux;
-	booleen OKStock3 = faux;
-	booleen OKStock4 = faux;
-
+	booleen carteDeplacee = faux;
+	int i;
 	do {
-		if(!(TasVide(Stock1))){
-			JouerTasSurLigneMD(&Stock1, &OKStock1);
-			if (OKStock1 && MT == AvecTrace){
-				AfficherMD();
-			}
+		carteDeplacee = faux;
+		for(i=0 ; i<NOMBRE_DE_STOCK ; i++) {
+				JouerTasSurLigneMD( &(tasStock[i]), &carteDeplacee);
+				if (carteDeplacee && MT == AvecTrace){
+						AfficherMD();
+						break;
+				}
 		}
-		else {
-			OKStock1 = faux;
-		}
-		if(!(TasVide(Stock2))){
-			JouerTasSurLigneMD(&Stock2, &OKStock2);
-			if (OKStock2 && MT == AvecTrace){
-				AfficherMD();
-			}
-		}
-		else {
-			OKStock2 = faux;
-		}
-		if(!(TasVide(Stock3))){
-			JouerTasSurLigneMD(&Stock3, &OKStock3);
-			if (OKStock3 && MT == AvecTrace){
-				AfficherMD();
-			}
-		}
-		else {
-			OKStock3 = faux;
-		}
-		if(!(TasVide(Stock4))){
-			JouerTasSurLigneMD(&Stock4, &OKStock4);
-			if (OKStock4 && MT == AvecTrace){
-				AfficherMD();
-			}
-		}
-		else {
-			OKStock4 = faux;
-		}
-	}
-	while (OKStock1 || OKStock2 || OKStock3 || OKStock4);
+	}	while (carteDeplacee);
 }
 
 void JouerUneMD(ModeTrace MT, booleen* Victoire){
@@ -284,9 +188,9 @@ void JouerUneMD(ModeTrace MT, booleen* Victoire){
 	booleen poserLigne;
 	booleen poserStock;
 
-
 	do	{
 		RetournerCarteSur(&TalonMD);
+		/*Carte c = CarteSur(TalonMD);*/
 		if (MT == AvecTrace){
 			AfficherMD();
 		}
@@ -304,6 +208,12 @@ void JouerUneMD(ModeTrace MT, booleen* Victoire){
 				AfficherMD();
 			}
 		}
+		/* printf("Carte: %d de %d\n", c.RC, c.CC);
+		 printf("Placer sur stock: %d\n", poserStock);
+		 printf("Placer sur ligne: %d\n", poserLigne);
+		 printf("TasVide: %d\n",TasVide(TalonMD));
+		 printf("Sortie du while: %s\n\n", (poserStock || poserLigne) && !(TasVide(TalonMD)) ? "non" : "oui");
+		*/
 	}	while ((poserStock || poserLigne) && !(TasVide(TalonMD)));
 
 	if (TasVide(TalonMD)){

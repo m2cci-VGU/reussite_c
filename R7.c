@@ -112,7 +112,7 @@ void AfficherR7()
     AfficherTas(LigneR7[Co], TexteCouleurR7[Co]);
 
 /* AttendreCliquer() */
-  usleep(500 000);
+  usleep(500000);
 }
 
 /* Jouer le relais des 7 */
