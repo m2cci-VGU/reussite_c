@@ -6,8 +6,9 @@
    --> tas representes par des listes chainees
 ----------------------------------------------------------------*/
 
-#include "Tas.h"
-#include "Alea.h"
+//#include "Tas.h"
+//#include "Alea.h"
+#include "TasACompleter.h"
 
 /*-----------------------------------*/
 /* Specifications des objets de base */
@@ -96,6 +97,7 @@ booleen MemeCouleur(Carte C1, Carte C2)
 }
 
 booleen EstCarteAvant(Carte C1, Carte C2)
+{
 if (!MemeCouleur(C1,C2))
 {
     return CouleurInferieure(C1,C2);
@@ -111,22 +113,23 @@ else
 /* Testeurs et selecteurs */
 
 booleen TasActif(Tas T)
-return T.RT==actif;
+{
+return (T.RT==actif);
 }
 
 booleen TasVide(Tas T)
 {
-    return T.HT==0;
+    return (T.HT==0);
 }
 
 booleen TasEmpile(Tas T)
 {
-    return T.MT==empile;
+    return (T.MT==empile);
 }
 
 booleen TasEtale(Tas T)
 {
-    return T.MT==etale;
+    return (T.MT==etale);
 }
 
 int LaHauteur(Tas T)
@@ -148,12 +151,12 @@ Pr�-condition : l'emplacement L est disponible
 **************************************************************** */
 void CreerTasVide(Localisation L, Mode M, Tas *T)
 {
-    (*T).LT=L;
-    (*T).RT=actif;
-    (*T).MT=M;
-    (*T).HT=0;
-    (*T).tete=NULL;
-    (*T).queue=NULL;
+    (*T).LT = L;
+    (*T).RT = actif;
+    (*T).MT = M;
+    (*T).HT = 0;
+    (*T).tete = NULL ;
+    (*T).queue = NULL ;
 }
 
 /* *************************************************************
@@ -178,9 +181,9 @@ Donne leur valeur aux variables globales NbCartes et PremierRang.
 Pr�-condition : l'emplacement L est libre
                 N==52 ou N==32
 **************************************************************** */
-void CreerJeuNeuf(int N, Localisation L, Tas *T)
+/*void CreerJeuNeuf(int N, Localisation L, Tas *T)
 {
-    /* marjo-marco en cours - soluce pas encore confirmée*/
+    
 #define PremierRang 2
 #define N 52
     struct adCarte *fictif=(struct adCarte*)malloc(sizeof(struct adCarte));
@@ -207,7 +210,7 @@ void CreerJeuNeuf(int N, Localisation L, Tas *T)
     }
 }
 
-
+*/
 
 
 /* Consultation des cartes d'un tas: ne deplace pas la carte */
@@ -226,6 +229,7 @@ Carte CarteSous(Tas T) {
 carte situee au dessous du tas
 **************************************************************** */
 Carte CarteSous(Tas T)
+{
 return T.queue->elt;
 }
 
@@ -236,15 +240,15 @@ Pr�condition : i <= LaHauteur(T)
 **************************************************************** */
 Carte IemeCarte(Tas T, int i)
 {
-    while (i<=LaHauteur(T))
+    while (i <= LaHauteur(T))
     {
         {
             struct adCarte *Visitor;
-            Visitor = T.tete
-                      int k=0;
-            while (k<i && Visitor->elt!=NULL)   /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
+            Visitor = T.tete ;
+            int k = 0;
+            while (k < i && Visitor->elt! = NULL)   /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
             {
-                Visitor=Visitor->suiv;
+                Visitor = Visitor->suiv;
             }
             return Visitor->elt;
         }
@@ -337,7 +341,6 @@ void BattreTas(Tas *T)
 
     while (nbfois < 500)
     {
-        InitAlea();
         rand()%i + 0;
         rand()%j + 0;
         EchangerCartes( i, j, *T );
@@ -354,9 +357,9 @@ retourne le tas T : la premiere devient la derniere et la visibilite est inverse
 void RetournerTas(Tas *T)
 {
     /*inverser queue et tete*/
-    struct adCarte *temp = T->tete ;
+    struct adCarte temp = T->tete ;
     T->tete = T->queue;
-    T->queue = *temp;
+    T->queue = temp;
 
     /*changer la visibilité*/
     struct adCarte visitor = T->tete ;
@@ -460,12 +463,12 @@ void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 {
     if(T2->RT == actif)
     {
-        struct adCarte visiteur = T1->tete;
-        while(visiteur != NULL && (visiteur->elt.CC != R & visiteur->elt.RC != C))
+        struct adCarte *visiteur = T1->tete;
+        while(*visiteur != NULL && (visiteur->elt.CC != R & visiteur->elt.RC != C))
         {
-            visiteur = visiteur->suiv;
+            *visiteur = visiteur->suiv;
         }
-        if(visiteur = NULL)
+        if(*visiteur = NULL)
         {
             printf("La carte demandée de rang %d et de couleur %d n'est pas dans le tas !", R, C);
         }
