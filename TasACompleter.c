@@ -359,7 +359,6 @@ void BattreTas(Tas *T)
         e = rand()%i + 1;
         f = rand()%j + 1;
         EchangerCartes( e, f, T );
-        nbfois++;
     }
 }
 
