@@ -220,7 +220,7 @@ for (Co=Trefle; Co <= Pique;Co++){
 fausseTete=T->tete; //on remet la fausse tete � son emplacement initial pour la liberer//
 T->tete=fausseTete->suiv;
 T->queue=fausseQueue->prec; //la queue du Tas pointe vers le dernier element//
-T->tete->prec=T->queue; T->queue->suiv=T->tete; //creation liste circulaire//
+T->tete->prec=NULL; T->queue->suiv=NULL; //creation liste circulaire//
 free(fausseTete); free(fausseQueue); //liberation fictifs//
 
 }
@@ -356,9 +356,15 @@ void BattreTas(Tas *T)
 
     while (nbfois < 500)
     {
+<<<<<<< HEAD
         e= rand()%i + 1;
         f= rand()%j + 1;
         EchangerCartes( e, f, T );
+=======
+        rand()%i + 0;
+        rand()%j + 0;
+        EchangerCartes( i, j, T );
+>>>>>>> 80f702943bdaec1e0740990e8c2586d863d8d5c2
         nbfois++;
     }
 }
