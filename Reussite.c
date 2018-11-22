@@ -10,6 +10,7 @@
 #include "R7.h"
 #include "InteractionReussite.h"
 
+
 /* -------------------------------------------------------------------
  *      PROGRAMME PRINCIPAL AVEC MENU D'INTERACTION
  * -------------------------------------------------------------------
@@ -143,5 +144,3 @@ int main(void)
 
     return 0;
 }
-
-

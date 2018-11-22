@@ -6,6 +6,7 @@
 /* Le relais des 7 */
 
 #include <stdio.h>
+#include <unistd.h>
 
 #include "R7.h"
 
@@ -110,7 +111,8 @@ void AfficherR7()
   for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
     AfficherTas(LigneR7[Co], TexteCouleurR7[Co]);
 
-  AttendreCliquer();
+/* AttendreCliquer() */
+  usleep(500 000);
 }
 
 /* Jouer le relais des 7 */
