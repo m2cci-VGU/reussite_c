@@ -356,16 +356,9 @@ void BattreTas(Tas *T)
 
     while (nbfois < 500)
     {
-<<<<<<< HEAD
         e= rand()%i + 1;
         f= rand()%j + 1;
         EchangerCartes( e, f, T );
-=======
-        rand()%i + 0;
-        rand()%j + 0;
-        EchangerCartes( i, j, T );
->>>>>>> 80f702943bdaec1e0740990e8c2586d863d8d5c2
-        nbfois++;
     }
 }
 
