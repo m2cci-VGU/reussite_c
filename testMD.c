@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "MD.h"
 #include "Alea.h"
-#define temps 120000
+#define temps 1200000
 
 //////// Independant du jeu /////////////
 
@@ -58,6 +58,7 @@ void newTest(char* testName)
 
 void runTest() {
 	booleen test;
+	AfficherMD();
 	JouerUneMD(AvecTrace, &test);
 }
 
