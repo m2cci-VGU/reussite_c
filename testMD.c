@@ -47,12 +47,10 @@ void newTest(char* testName)
 	Tas* adTasVisitor;
 	for(couleur=PremiereCouleur; couleur<DerniereCouleur+1 ; couleur++) {
 		adTasVisitor = getTasCouleurMD(couleur);
-		initTas(adTasVisitor);
 		ListeAdresseTasCouleur[couleur] = adTasVisitor;
 	}
 	for(index = 0; index < NOMBRE_DE_STOCK ; index++) {
 		adTasVisitor = getTasDefausseMD(index);
-		initTas(adTasVisitor);
 		ListeAdresseTasDefausse[index] = adTasVisitor;
 	}
 }
