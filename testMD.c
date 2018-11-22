@@ -108,6 +108,22 @@ void test1() {
 	endTest();
 }
 
+void test2(){
+	newTest("Test 2");
+	printf("Vérifier la remontée des cartes du stock vers la ligne de couleur\n");
+	ajouterCarteSurTasDeDefausse(0, Trefle, As);
+	ajouterCarteSurTasDeDefausse(0, Trefle, Dame);
+	ajouterCarteSurTasDeDefausse(0, Trefle, Dix);
+	ajouterCarteSurTasDeDefausse(1, Trefle, Roi);
+	ajouterCarteSurTasDeDefausse(1, Trefle, Valet);
+	ajouterCarteSurTasDeDefausse(1, Trefle, Neuf);
+	ajouterCarteSurTasDeDefausse(2, Trefle, Huit);
+	
+	ajouterCarteSurTalon(Trefle, Sept);
+		
+}
+
 int main() {
 	test1();
+	
 }
