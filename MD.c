@@ -239,36 +239,36 @@ void RemonterCarteStock(ModeTrace MT){
 	do {
 		if(!(TasVide(Stock1))){
 			JouerTasSurLigneMD(&Stock1, &OKStock1);
-			/*if (OKStock1 && MT == AvecTrace){
-			AfficherMD();
-			}*/
+			if (OKStock1 && MT == AvecTrace){
+				AfficherMD();
+			}
 		}
 		else {
 			OKStock1 = faux;
 		}
 		if(!(TasVide(Stock2))){
 			JouerTasSurLigneMD(&Stock2, &OKStock2);
-			/*if (OKStock2 && MT == AvecTrace){
-			AfficherMD();
-			}*/
+			if (OKStock2 && MT == AvecTrace){
+				AfficherMD();
+			}
 		}
 		else {
 			OKStock2 = faux;
 		}
 		if(!(TasVide(Stock3))){
 			JouerTasSurLigneMD(&Stock3, &OKStock3);
-			/*if (OKStock3 && MT == AvecTrace){
-			AfficherMD();
-			}*/
+			if (OKStock3 && MT == AvecTrace){
+				AfficherMD();
+			}
 		}
 		else {
 			OKStock3 = faux;
 		}
 		if(!(TasVide(Stock4))){
 			JouerTasSurLigneMD(&Stock4, &OKStock4);
-			/*if (OKStock4 && MT == AvecTrace){
-			AfficherMD();
-			}*/
+			if (OKStock4 && MT == AvecTrace){
+				AfficherMD();
+			}
 		}
 		else {
 			OKStock4 = faux;
@@ -285,6 +285,7 @@ void JouerUneMD(ModeTrace MT){
 
 	do	{
 		RetournerCarteSur(&TalonMD);
+		AttendreCliquer();
 		if (MT == AvecTrace){
 			AfficherMD();
 		}
@@ -302,11 +303,9 @@ void JouerUneMD(ModeTrace MT){
 				AfficherMD();
 			}
 		}
-		AttendreCliquer();
 		printf("%d,%d,%d\n",poserStock,poserLigne,!(TasVide(TalonMD)));
 	}	while ((poserStock || poserLigne) && !(TasVide(TalonMD)));
 
-	printf("je suis La\n");
 	if (TasVide(TalonMD)){
 		printf("Bravo c'est gagné!\n");
 	}
