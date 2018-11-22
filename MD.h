@@ -8,4 +8,4 @@ Tas* getTalonMD();
 Tas* getTasCouleurMD(Couleur);
 Tas* getTasDefausseMD(int);
 void CreerTableauInitialMD();
-void JouerUneMD(ModeTrace);
+void JouerUneMD(ModeTrace, booleen*);
