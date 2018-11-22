@@ -278,7 +278,7 @@ void RemonterCarteStock(ModeTrace MT){
 	while (OKStock1 || OKStock2 || OKStock3 || OKStock4);
 }
 
-void JouerUneMD(ModeTrace MT){
+void JouerUneMD(ModeTrace MT, booleen* Victoire){
 
 	booleen poserLigne;
 	booleen poserStock;
@@ -308,24 +308,41 @@ void JouerUneMD(ModeTrace MT){
 
 	if (TasVide(TalonMD)){
 		printf("Bravo c'est gagné!\n");
+		*Victoire=vrai;
 	}
 	else {
 		printf("BUHAHAHAHHAHA t'as perdu, essayes encore !\n");
+		*Victoire=faux;
 	}
 
 }
 
 void ObserverMD(int NP)
 {
+	booleen gagne;
 	int i;
 	for (i = 0; i <= NP-1; i++)
 	{
 		CreerTableauInitialMD();
-		JouerUneMD(AvecTrace);
+		JouerUneMD(AvecTrace,&gagne);
 	}
 }
 
 void AnalyserMD(int NP)
 {
-	/* A COMPLETER */
+	int i;
+	int victoire = 0;
+	
+	booleen gagne;
+	
+	for (i = 0; i < NP ; i++){
+		CreerTableauInitialMD();
+		JouerUneMD(SansTrace, &gagne);
+		if (gagne){
+			victoire++;
+		}
+	}
+	printf("Sur %d parties vous avez eu de la chance %d fois et manqué de bol %d fois (bah oui t as pas fait grand chose)", NP,victoire,(NP-victoire));
+	printf("Vous avez un taux de %d\% victoires", (victoire)/NP*100);
+}
 }
