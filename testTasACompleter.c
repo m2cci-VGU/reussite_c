@@ -5,9 +5,20 @@
 
 int main()
 {
+  void afficherTasPourTest(Tas T);
+  void afficherCarte(Carte C);
+  void testCarte(Carte C1);
+  void testCarteBooleen(Carte C1, Carte C2);
+  void testTas(Tas T);
     /*TAS*/
         Tas T1;
         Tas T2;
+<<<<<<< HEAD
+        int N = 52;
+        Localisation L;
+        L.NL = 1 ;
+        L.NC = 1 ;
+=======
         Tas T3;
         int N1 = 52;
         Localisation L1;
@@ -24,6 +35,7 @@ int main()
         L3.NL = 1 ;
         L3.NC = 1 ;
         char message3;
+>>>>>>> 83de2576e3dfad458bbd02987c8a03ca704c4817
 
     /*cartes*/
     Carte C;
@@ -39,14 +51,25 @@ int main()
     Carte C2;
     C2.RC = Valet;
     C2.CC = Pique;
+
     C2.VC = Cachee;
 
   afficherCarte(C1);
     afficherCarte(C2);
-
     testCarte(C1);
     testCarteBooleen(C1, C2);
 
+<<<<<<< HEAD
+    CreerTasVide(L,etale,&T); afficherTasPourTest(T); testTas(T);
+    SupprimerTasVide(&T); afficherTasPourTest(T); testTas(T);
+    CreerJeuNeuf(N,L,&T);  afficherTasPourTest(T);
+    EchangerCartes(1,2,&T);EchangerCartes(51,52,&T); EchangerCartes(26,27,&T);  afficherTasPourTest(T);
+    BattreTas(&T);  afficherTasPourTest(T);
+    EmpilerTas(&T); testTas(T);
+    EtalerTas(&T); testTas(T);
+
+return 0;
+=======
 CreerJeuNeuf(N1, L1, &T1);
 afficherTasPourTest(T1);
 testBoolenTas(T1);
@@ -54,6 +77,7 @@ testLocalisationPlaceTas(T1);
 
 //RetournerTas(&T1);
 //afficherTasPourTest(T1);
+>>>>>>> 83de2576e3dfad458bbd02987c8a03ca704c4817
 
 
 };
@@ -91,6 +115,44 @@ void testCarte(Carte C1)
 
 void testCarteBooleen(Carte C1, Carte C2)
 {
+<<<<<<< HEAD
+printf("C1 est-elle bien de rang inf�rieur � C2 ?\n : %d", RangInferieur(C1, C2));
+if (MemeRang(C1,C2)) {printf("\nC1 et C2 ont le meme rang");
+}
+else {printf("\nC1 et C2 n'ont pas le meme rang");
+}
+printf("C1 est-elle bien de couleur inf�rieur � C2 ?\n : %d", CouleurInferieure(C1, C2));
+printf("C1 est-elle de m�me rang que C2 ?\n : %d", MemeCouleur(C1, C2));
+printf("C1 est-elle de rang et couleur inf�rieur � C2 ?\n : %d",EstCarteAvant(C1, C2));
+}
+
+void testTas(Tas T)
+{
+ if (TasActif(T)) {printf("\nLe tas est actif");
+ }
+ else {printf("\nLe tas est inactif");
+}
+if (TasVide(T)) {printf("\nLe tas est vide");
+}
+else {printf("\nLe tas n'est pas vide");
+}
+if (TasEmpile(T)) {printf("\nLe tas est empile");
+}
+else {printf("\nLe tas n'est pas empile");
+}
+if (TasEtale(T)) {printf("\nLe tas est etale");
+}
+else {printf("\nLe tas n'est pas etale");
+}
+printf("\nLahauteur du Tas est %d",LaHauteur(T));
+printf("\nLa localisation du tas est %d,%d\n",T.LT.NC, T.LT.NL);
+if (T.HT != 0) {
+Carte cartesur=CarteSur(T); Carte cartesous=CarteSous(T);int i = 51; Carte carteI=IemeCarte(T,i);
+printf("\nla premiere carte est [%d %d %d]",cartesur.RC,cartesur.CC,cartesur.VC);
+printf("\nla derniere carte est [%d %d %d]",cartesous.RC,cartesous.CC,cartesous.VC);
+printf("\nla carte numero %d est [%d %d %d]",i, carteI.RC,carteI.CC,carteI.VC);
+}
+=======
 printf("C1 est-elle bien de rang inf�rieur � C2 ? : %d\n", RangInferieur(C1, C2));
 printf("C1 est-elle de m�me rang que C2 ? : %d\n", MemeRang(C1, C2));
 printf("C1 est-elle bien de couleur inf�rieur � C2 ? : %d\n", CouleurInferieure(C1, C2));
@@ -104,6 +166,7 @@ printf("Est-ce que le tas est actif ? :\n", TasActif(T2) );
 printf("Est-ce que le tas est vide ? :\n", TasVide(T2) );
 printf("Est-ce que le tas est empilé ? :\n", TasEmpile(T2) );
 printf("Est-ce que le tas est étalé ? :\n", TasEtale(T2) );
+>>>>>>> 83de2576e3dfad458bbd02987c8a03ca704c4817
 }
 
 void testLocalisationPlaceTas(Tas T3)
@@ -114,24 +177,18 @@ void testLocalisationPlaceTas(Tas T3)
 
 
 
+<<<<<<< HEAD
+=======
+/*
+>>>>>>> 83de2576e3dfad458bbd02987c8a03ca704c4817
+
 /*
 
-CreerTasVide(Localisation L, Mode M, Tas *T);
-SupprimerTasVide(Tas *T);
-CreerJeuNeuf(int N, Localisation L, Tas *T);
-
-Carte CarteSur(Tas T);
-Carte CarteSous(Tas T);
-Carte IemeCarte(Tas T, int i);
+fonctions a tester - marco jeudi 17h00
 
 RetournerCarteSur(Tas *T);
 RetournerCarteSous(Tas *T);
 
-
-EmpilerTas(Tas *T);
-EtalerTas(Tas *T);
-EchangerCartes(int i, int j, Tas *T);
-BattreTas(Tas *T);
 RetournerTas(Tas *T);
 
 AjouterCarteSurTas (struct adCarte *ac, Tas *T);

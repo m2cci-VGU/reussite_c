@@ -335,10 +335,23 @@ void EchangerCartes(int i, int j, Tas *T)
     struct adCarte *tempJ = carteJ;*/
     Carte carteI = IemeCarte(*T,i);
     Carte carteJ = IemeCarte(*T,j);
-    Carte temp;
-    temp=carteI;
-    carteI=carteJ;
-    carteJ=temp;
+    struct adCarte *Visitor;
+    Visitor = T->tete ;
+    int k = 1;
+    while (k < j && Visitor->suiv != NULL)   /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
+    {
+        Visitor = Visitor->suiv;
+        k++;
+    }
+    Visitor->elt=carteI;
+    Visitor = T->tete ;
+    k = 1;
+    while (k < i && Visitor->suiv != NULL)   /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
+    {
+        Visitor = Visitor->suiv;
+        k++;
+    }
+    Visitor->elt=carteJ;
 }
 
 /* *************************************************************
@@ -354,11 +367,12 @@ void BattreTas(Tas *T)
     int e; int f;
     srand(time(NULL));
 
-    while (nbfois < 500)
+    while (nbfois < 5000)
     {
         e = rand()%i + 1;
         f = rand()%j + 1;
         EchangerCartes( e, f, T );
+        nbfois++;
     }
 }
 
