@@ -38,4 +38,4 @@ TasACompleter.o: TasACompleter.c TypesConst.h TasACompleter.h
 	@echo ------------------------------- 
 	
 clean:
-	rm -f AfficherTas.o Alea.o InteractionR7.o R7.o *.e
+	rm -f AfficherTas.o Alea.o InteractionR7.o R7.o testTasACompleter.o TasACompleter.o *.e

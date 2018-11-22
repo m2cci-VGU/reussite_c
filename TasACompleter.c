@@ -369,8 +369,8 @@ void BattreTas(Tas *T)
 
     while (nbfois < 5000)
     {
-        e= rand()%i + 1;
-        f= rand()%j + 1;
+        e = rand()%i + 1;
+        f = rand()%j + 1;
         EchangerCartes( e, f, T );
         nbfois++;
     }
@@ -383,25 +383,21 @@ retourne le tas T : la premiere devient la derniere et la visibilite est inverse
 ********************************************************************************* */
 void RetournerTas(Tas *T)
 {
-    /*inverser queue et tete*/
-    struct adCarte* temp = T->tete ;
-    T->tete = T->queue;
-    T->queue = temp;
+    struct adCarte* sauveTete = T->tete ;
+    struct adCarte* sauveQueue = T->queue ;
 
-    /*changer la visibilité*/
-    struct adCarte* visitor = T->tete ;
-    while(visitor != T->queue)
+    while(T->queue != T->tete)
     {
-        if (visitor->elt.VC == Decouverte)
-        {
-            visitor->elt.VC = Cachee;
-        }
-        else
-        {
-            visitor->elt.VC = Decouverte;
-        }
-        visitor = visitor->suiv;
+      sauveTete = T->tete ;
+      //T->tete->elt.VC = Decouverte ;
+      T->tete = sauveTete->suiv ;
+
+      T->tete->prec = T->queue ;
+      T->tete->suiv = T->queue->suiv ;
+      T->queue->suiv = sauveTete ;
+      sauveTete = T->tete ;
     }
+    T->tete = sauveQueue ;
 }
 
 /* Deplacements de cartes d'un tas sur un autre */

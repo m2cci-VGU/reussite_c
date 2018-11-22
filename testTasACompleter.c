@@ -11,13 +11,31 @@ int main()
   void testCarteBooleen(Carte C1, Carte C2);
   void testTas(Tas T);
     /*TAS*/
-        Tas T;
         Tas T1;
         Tas T2;
+<<<<<<< HEAD
         int N = 52;
         Localisation L;
         L.NL = 1 ;
         L.NC = 1 ;
+=======
+        Tas T3;
+        int N1 = 52;
+        Localisation L1;
+        L1.NL = 1 ;
+        L1.NC = 1 ;
+        char message1;
+        int N2 = 32;
+        Localisation L2;
+        L2.NL = 1 ;
+        L2.NC = 1 ;
+        char message2;
+        int N3 = 32;
+        Localisation L3;
+        L3.NL = 1 ;
+        L3.NC = 1 ;
+        char message3;
+>>>>>>> 83de2576e3dfad458bbd02987c8a03ca704c4817
 
     /*cartes*/
     Carte C;
@@ -36,12 +54,12 @@ int main()
 
     C2.VC = Cachee;
 
-    afficherCarte(C);
-    afficherCarte(C1);
+  afficherCarte(C1);
     afficherCarte(C2);
     testCarte(C1);
     testCarteBooleen(C1, C2);
 
+<<<<<<< HEAD
     CreerTasVide(L,etale,&T); afficherTasPourTest(T); testTas(T);
     SupprimerTasVide(&T); afficherTasPourTest(T); testTas(T);
     CreerJeuNeuf(N,L,&T);  afficherTasPourTest(T);
@@ -51,6 +69,15 @@ int main()
     EtalerTas(&T); testTas(T);
 
 return 0;
+=======
+CreerJeuNeuf(N1, L1, &T1);
+afficherTasPourTest(T1);
+testBoolenTas(T1);
+testLocalisationPlaceTas(T1);
+
+//RetournerTas(&T1);
+//afficherTasPourTest(T1);
+>>>>>>> 83de2576e3dfad458bbd02987c8a03ca704c4817
 
 
 };
@@ -88,6 +115,7 @@ void testCarte(Carte C1)
 
 void testCarteBooleen(Carte C1, Carte C2)
 {
+<<<<<<< HEAD
 printf("C1 est-elle bien de rang inf�rieur � C2 ?\n : %d", RangInferieur(C1, C2));
 if (MemeRang(C1,C2)) {printf("\nC1 et C2 ont le meme rang");
 }
@@ -124,11 +152,35 @@ printf("\nla premiere carte est [%d %d %d]",cartesur.RC,cartesur.CC,cartesur.VC)
 printf("\nla derniere carte est [%d %d %d]",cartesous.RC,cartesous.CC,cartesous.VC);
 printf("\nla carte numero %d est [%d %d %d]",i, carteI.RC,carteI.CC,carteI.VC);
 }
+=======
+printf("C1 est-elle bien de rang inf�rieur � C2 ? : %d\n", RangInferieur(C1, C2));
+printf("C1 est-elle de m�me rang que C2 ? : %d\n", MemeRang(C1, C2));
+printf("C1 est-elle bien de couleur inf�rieur � C2 ? : %d\n", CouleurInferieure(C1, C2));
+printf("C1 est-elle de m�me rang que C2 ? : %d\n", MemeCouleur(C1, C2));
+printf("C1 est-elle de rang et couleur inf�rieur � C2 ? : %d\n",EstCarteAvant(C1, C2));
+}
+
+void testBoolenTas(Tas T2)
+{
+printf("Est-ce que le tas est actif ? :\n", TasActif(T2) );
+printf("Est-ce que le tas est vide ? :\n", TasVide(T2) );
+printf("Est-ce que le tas est empilé ? :\n", TasEmpile(T2) );
+printf("Est-ce que le tas est étalé ? :\n", TasEtale(T2) );
+>>>>>>> 83de2576e3dfad458bbd02987c8a03ca704c4817
+}
+
+void testLocalisationPlaceTas(Tas T3)
+{
+  printf("Est-ce que le tas est empilé ? :\n", LaHauteur(T3) );
+  printf("Est-ce que le tas est étalé ? :\n", LaPlace(T3) );
 }
 
 
 
-
+<<<<<<< HEAD
+=======
+/*
+>>>>>>> 83de2576e3dfad458bbd02987c8a03ca704c4817
 
 /*
 
