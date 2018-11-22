@@ -111,9 +111,9 @@ void AfficherMD()
 	}
 	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++) {
 		AfficherTas(LigneMD[Co], TexteCouleurMD[Co]);
-		usleep(temps);
 		/* AttendreCliquer(); */
 	}
+	usleep(temps);
 }
 void JouerTasSurLigneMD(Tas *T, booleen *OK){
 	Couleur Co = VideC;
