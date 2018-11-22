@@ -5,6 +5,7 @@
 #include <unistd.h>
 
 
+
 char TexteCouleurMD[5][8] = {"", "Trefle", "Carreau", "Coeur", "Pique"};
 
 typedef Tas SerieCouleurMD;
@@ -110,8 +111,7 @@ void AfficherMD()
 	}
 	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++) {
 		AfficherTas(LigneMD[Co], TexteCouleurMD[Co]);
-	}
-	usleep(200000);
+	usleep(temps);
 	/* AttendreCliquer(); */
 }
 
