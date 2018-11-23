@@ -230,13 +230,15 @@ void JouerUneMD(ModeTrace MT, booleen* Victoire){
 	}	while ((poserStock || poserLigne) && !(TasVide(TalonMD)));
 	RemonterCarteStock(MT);
 	StockVide(&vide);
-	printf("vide=%d",vide);
 	if (TasVide(TalonMD)){
 		if (vide){
 			if (MT == AvecTrace){
 				printf("Bravo c'est gagné!\n");
 			}
 			*Victoire=vrai;
+		}
+		else {
+			printf("BUHAHAHAHHAHA t'as perdu, essayes encore !\n");
 		}
 	}
 	else {
