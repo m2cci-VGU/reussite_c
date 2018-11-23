@@ -37,5 +37,39 @@ TasACompleter.o: TasACompleter.c TypesConst.h TasACompleter.h
 	gcc -g -Wall -c  TasACompleter.c
 	@echo ------------------------------- 
 	
+Tas.o : Tas.c Tas.h
+	@echo creation de tas.o :
+	gcc -g -Wall -c Tas.c
+	@echo -------------------------------
+
+Alea.o: Alea.c Alea.h
+	@echo creation de Alea.o :
+	gcc -g -Wall -c Alea.c
+	@echo -------------------------------
+
 clean:
-	rm -f AfficherTas.o Alea.o InteractionR7.o R7.o testTasACompleter.o TasACompleter.o *.e
+	rm -f AfficherTas.o Alea.o InteractionR7.o R7.o *.e
+
+.%.o: %.c
+	gcc -I${INCL} -fPIC -c -g $<
+#	chgrp dsu-ens *.o
+#	chmod g+w *.o
+
+%.o: %.c ${INCL}/%.h
+	gcc -I${INCL} -fPIC -c -g $<
+#	chgrp dsu-ens *.o
+#	chmod g+w *.o
+
+libmachine_trace.a: machine_trace.o graphlib_w.o
+	ar rc libmachine_trace.a machine_trace.o graphlib_w.o
+#	chgrp dsu-ens libmachine_trace.a
+#	chmod g+w libmachine_trace.a
+
+clean:
+	/bin/rm -f *.a *.o *~
+
+install:
+	mv *.o *.a ${LIB}/
+
+
+
