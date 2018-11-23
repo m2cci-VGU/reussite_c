@@ -184,7 +184,7 @@ void RemonterCarteStock(ModeTrace MT){
 }
 
 void StockVide(booleen* vide){
-	
+
 	int i =0;
 	*vide = faux;
 	while (i<NBSTOCK && TasVide(tasStock[i])){
@@ -250,10 +250,11 @@ void JouerUneMD(ModeTrace MT, booleen* Victoire){
 
 }
 
-void ObserverMD(int NP, int NBSTOCK)
+void ObserverMD(int NP, int nbStock)
 {
 	booleen gagne;
 	int i;
+	NBSTOCK = nbStock;
 	for (i = 0; i <= NP-1; i++)
 	{
 		CreerTableauInitialMD();
@@ -261,12 +262,13 @@ void ObserverMD(int NP, int NBSTOCK)
 	}
 }
 
-void AnalyserMD(int NP, int NBSTOCK)
+void AnalyserMD(int NP, int nbStock)
 {
 	int i;
 	int victoire = 0;
 	float michel;
 	booleen gagne;
+	NBSTOCK = nbStock;
 
 	for (i = 0; i < NP ; i++){
 		CreerTableauInitialMD();

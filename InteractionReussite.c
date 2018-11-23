@@ -242,8 +242,6 @@ void runAnalyserMD(int NBSTOCK)
     printf(TexteNbAAnalyser);
     scanf("%d",&nbparties);
     printf("analyser - MD\n ");
-
     /* todo ANTOINE */
-
     AnalyserMD(nbparties, NBSTOCK);
 }
