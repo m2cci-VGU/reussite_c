@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#include "MD.h"
 
 /* Interaction avec l'utilisateur */
 
@@ -225,31 +226,22 @@ void runAnalyserR7(int NBMAXT)
     /*AnalyserR7(nbparties,NBMAXT);*/
 }
 
-void runSimulerMD()
+void runSimulerMD(int NBSTOCK)
 {
     int nbparties;
     printf(TexteNbASimuler);
     scanf("%d",&nbparties);
-    printf("simuler MD\n ");
-
-    /* todo ANTOINE */
-
-    /*OuvrirGraphique("Montée-Descente");
-    ObserverMD(nbparties, NBMAXT);
-    FermerGraphique();*/
+    OuvrirGraphique("Montée-Descente");
+    ObserverMD(nbparties, NBSTOCK);
+    FermerGraphique();
 }
 
-void runAnalyserMD()
+void runAnalyserMD(int NBSTOCK)
 {
     int nbparties;
     printf(TexteNbAAnalyser);
     scanf("%d",&nbparties);
     printf("analyser - MD\n ");
-
     /* todo ANTOINE */
-
-    /*AnalyserMD(nbparties,NBMAXT);*/
+    AnalyserMD(nbparties, NBSTOCK);
 }
-
-
-

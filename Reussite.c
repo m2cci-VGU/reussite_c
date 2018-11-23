@@ -6,9 +6,10 @@
 #include <stdio.h>
 
 /* Programme principal */
-
+#include "MD.h"
 #include "R7.h"
 #include "InteractionReussite.h"
+
 
 /* -------------------------------------------------------------------
  *      PROGRAMME PRINCIPAL AVEC MENU D'INTERACTION
@@ -21,6 +22,7 @@
 int main(void)
 {
     int NBMAXT;
+	int NBSTOCK;
 
     CodeCommande    Commande ;
     int nbparties ;
@@ -42,7 +44,16 @@ int main(void)
     {
         NBMAXT = 3;
     }
-
+	if (CJ == MD){
+		printf("Combien de sotck voulez vous (minimum 1, maximum 8)?");
+		scanf("%d", &NBSTOCK);	
+		if (NBSTOCK>8){
+			NBSTOCK=8;
+		}
+		else if (NBSTOCK<0){
+			NBSTOCK=1;
+		}
+	}
 
     while(CJ != FINJ)
     {
@@ -76,10 +87,10 @@ int main(void)
                 switch  (Commande)
                 {
                 case SIMUL :
-                    runSimulerMD();
+                    runSimulerMD(NBSTOCK);
                     break ;
                 case ANALYSE :
-                    runAnalyserMD();
+                    runAnalyserMD(NBSTOCK);
                     break;
                 }
                 SaisirCommande (&Commande) ;
@@ -143,5 +154,3 @@ int main(void)
 
     return 0;
 }
-
-

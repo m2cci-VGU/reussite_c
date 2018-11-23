@@ -15,5 +15,13 @@ void SaisirJeu (CodeJeu *CJ);
 
 void SaisirCommande (CodeCommande *);
 
+void EcrireMenuChoixJeu ();
 
 
+void runSimulerR7(int NBMAXT);
+
+void runAnalyserR7(int NBMAXT);
+
+void runSimulerMD(int NBSTOCK);
+
+void runAnalyserMD(int NBSTOCK);
