@@ -3,7 +3,6 @@
 #include "MD.h"
 #include "Alea.h"
 
-
 //////// Independant du jeu /////////////
 
 Tas deck;
@@ -33,7 +32,7 @@ void endTest() {
 //////////////////////////////////////////////////////
 
 SerieCouleur ListeAdresseTasCouleur[DerniereCouleur+1];
-SerieCouleur ListeAdresseTasDefausse[NOMBRE_DE_STOCK];
+SerieCouleur ListeAdresseTasDefausse[NOMBRE_DE_STOCK_MAX];
 Tas *adTalon;
 
 void newTest(char* testName)
@@ -50,7 +49,7 @@ void newTest(char* testName)
 		adTasVisitor = getTasCouleurMD(couleur);
 		ListeAdresseTasCouleur[couleur] = adTasVisitor;
 	}
-	for(index = 0; index < NOMBRE_DE_STOCK ; index++) {
+	for(index = 0; index < NOMBRE_DE_STOCK_MAX ; index++) {
 		adTasVisitor = getTasDefausseMD(index);
 		ListeAdresseTasDefausse[index] = adTasVisitor;
 	}
@@ -59,6 +58,7 @@ void newTest(char* testName)
 void runTest() {
 	booleen test;
 	AfficherMD();
+	AttendreCliquer();
 	JouerUneMD(AvecTrace, &test);
 }
 
@@ -118,16 +118,16 @@ void test2(){
 	ajouterCarteSurTasDeDefausse(1, Trefle, Valet);
 	ajouterCarteSurTasDeDefausse(1, Trefle, Neuf);
 	ajouterCarteSurTasDeDefausse(2, Trefle, Huit);
-	
+
 	ajouterCarteSurTalon(Trefle, Sept);
-	
+
 	runTest();
 	endTest();
-		
+
 }
 
 void test3(){
-	
+
 	newTest("Test 2");
 	printf("Vérifier Une situation de perte de partie\n");
 	ajouterCarteSurTasDeDefausse(0, Trefle, As);
@@ -135,7 +135,7 @@ void test3(){
 	ajouterCarteSurTasDeDefausse(1, Coeur, Dame);
 	ajouterCarteSurTasDeDefausse(2, Pique, Roi);
 	ajouterCarteSurTasDeDefausse(3, Trefle, Valet);
-	
+
 	ajouterCarteSurTasDeCouleur(Carreau, Sept);
 	ajouterCarteSurTasDeCouleur(Carreau, Huit);
 	ajouterCarteSurTasDeCouleur(Coeur, Sept);
@@ -144,12 +144,12 @@ void test3(){
 	ajouterCarteSurTasDeCouleur(Pique, Huit);
 	ajouterCarteSurTasDeCouleur(Trefle, Sept);
 	ajouterCarteSurTasDeCouleur(Trefle, Huit);
-	
+
 	ajouterCarteSurTalon(Pique, As);
-	
+
 	runTest();
 	endTest();
-	
+
 }
 
 int main() {
