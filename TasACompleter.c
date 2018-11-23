@@ -220,7 +220,7 @@ for (Co=Trefle; Co <= Pique;Co++){
 fausseTete=T->tete; //on remet la fausse tete � son emplacement initial pour la liberer//
 T->tete=fausseTete->suiv;
 T->queue=fausseQueue->prec; //la queue du Tas pointe vers le dernier element//
-T->tete->prec=NULL; T->queue->suiv=NULL; //pas de creation de liste circulaire//
+T->tete->prec=NULL; T->queue->suiv=NULL; //creation liste circulaire//
 free(fausseTete); free(fausseQueue); //liberation fictifs//
 
 }
@@ -385,7 +385,7 @@ void RetournerTas(Tas *T)
 {
     struct adCarte* sauveTete = T->tete->suiv ;
     struct adCarte* sauveQueue = T->queue ;
-
+    T->tete->elt.VC = (T->tete->elt.VC == Decouverte) ? Cachee : Decouverte;
     T->tete->suiv = NULL ;
     T->tete->prec = T->queue;
     T->queue->suiv = T->tete;
@@ -396,7 +396,7 @@ void RetournerTas(Tas *T)
     while(T->queue->prec != NULL)
     {
       sauveTete = T->tete->suiv ;
-      //T->tete->elt.VC = Decouverte ;
+      sauveTete->elt.VC = (sauveTete->elt.VC == Decouverte) ? Cachee : Decouverte;
       sauveTete->prec = NULL;
       T->tete->prec = T->queue;
       T->tete->suiv = T->queue->suiv;
@@ -418,9 +418,7 @@ void AjouterCarteSurTas (struct adCarte *ac, Tas *T)    /*surTas = queue*/
 {
     ac->suiv = NULL;
     ac->prec = T->queue;
-    T->queue->suiv=ac;
     T->queue = ac;
-    T->HT++; /*augmentation taille tas*/
 }
 
 /* ******************************************************************************
@@ -432,9 +430,7 @@ void AjouterCarteSousTas (struct adCarte *ac, Tas *T)   /*sousTas = tete*/
     ac->suiv = T->tete;
     ac->prec = NULL;
     T->tete = ac;
-    T->HT++; /*augmentation taille tas*/
 }
-
 
 /* ******************************************************************************
 void DeplacerHautSur(Tas *T1, Tas *T2)
@@ -445,11 +441,7 @@ void DeplacerHautSur(Tas *T1, Tas *T2)
 {
     if (T1->tete != NULL && T2->RT == actif)
     {
-        struct adCarte *temporaire=T1->queue->prec;
         AjouterCarteSurTas(T1->queue, T2);
-        T1->queue=temporaire;
-        T1->queue->suiv=NULL;
-        T1->HT-=1;
     }
 }
 
@@ -462,11 +454,7 @@ void DeplacerHautSous(Tas *T1, Tas *T2)
 {
     if (T1->tete != NULL && T2->RT == actif)
     {
-        struct adCarte *temporaire=T1->queue->prec;
         AjouterCarteSousTas(T1->queue, T2);
-        T1->queue=temporaire;
-        T1->queue->suiv=NULL;
-        T1->HT-=1; /*diminution taille tas*/
     }
 }
 
@@ -479,11 +467,7 @@ void DeplacerBasSur(Tas *T1, Tas *T2)
 {
     if (T1->tete != NULL && T2->RT == actif)
     {
-        struct adCarte *temporaire=T1->tete->suiv;
         AjouterCarteSurTas(T1->tete, T2);
-        T1->tete=temporaire;
-        T1->tete->prec=NULL;
-        T1->HT-=1;
     }
 }
 
@@ -496,11 +480,7 @@ void DeplacerBasSous(Tas *T1, Tas *T2)
 {
     if (T1->tete != NULL && T2->RT == actif)
     {
-        struct adCarte *temporaire=T1->tete->suiv;
         AjouterCarteSousTas(T1->tete, T2);
-        T1->tete=temporaire;
-        T1->tete->prec=NULL;
-        T1->HT-=1;
     }
 }
 
@@ -514,7 +494,7 @@ void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
     if(T2->RT == actif)
     {
         struct adCarte *visiteur = T1->tete;
-        while(visiteur != NULL /*&& visiteur->elt.RC != R*/ && visiteur->elt.CC != C);
+        while(visiteur != NULL && ((visiteur->elt.RC != R) & (visiteur->elt.CC != C)))
         {
             visiteur = visiteur->suiv;
         }
@@ -527,7 +507,6 @@ void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
             (visiteur->prec)->suiv = visiteur->suiv;
             (visiteur->suiv)->prec = visiteur->prec;
             AjouterCarteSurTas(visiteur, T2);
-            T1->HT-=1;
         }
     }
 }
@@ -547,13 +526,9 @@ void PoserTasSurTas(Tas *T1, Tas *T2)
     if(T1->MT == T2->MT)
     {
         T2->queue->suiv = T1->tete;
-        T1->tete->prec=T2->queue;
-        T2->queue=T1->queue;
         T1->RT = actif;
-        T2->HT+=T1->HT;
-        T1->HT=0;
+        T1->HT = 0;
         T1->tete = NULL;
         T1->queue = NULL;
-
     }
 }
