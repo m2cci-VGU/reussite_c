@@ -6,6 +6,7 @@
 /* Le relais des 7 */
 
 #include <stdio.h>
+#include <unistd.h>
 
 #include "R7.h"
 
@@ -22,6 +23,16 @@ Localisation LocSeriesR7[DerniereCouleur+1];
 Localisation LocTalonR7, LocRebutR7;
 
 /* Formation du tableau de jeu initial */
+
+Tas* getTalonR7 () {
+  return &TalonR7;
+}
+Tas* getRebutR7 () {
+  return &RebutR7;
+}
+Tas* getTasCouleurR7(Couleur Co) {
+  return &(LigneR7[Co]);
+}
 
 void SaisirLocTasR7()
 {
@@ -100,7 +111,8 @@ void AfficherR7()
   for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
     AfficherTas(LigneR7[Co], TexteCouleurR7[Co]);
 
-  AttendreCliquer();
+/* AttendreCliquer() */
+  usleep(500000);
 }
 
 /* Jouer le relais des 7 */
@@ -150,7 +162,9 @@ void JouerUnTourR7(ModeTrace MT)
 
 int JouerUneR7(int NMaxT, ModeTrace MT)
 {
+  printf("JouerUneR7.enter\n");
   JouerUnTourR7(MT);
+  printf("JouerUneR7 fin de jouer un tour\n");
   /* Jeu d'au plus NMaxT tours */
 
   while (!(TasVide(RebutR7)) && (NumTourR7 < NMaxT))
@@ -160,13 +174,13 @@ int JouerUneR7(int NMaxT, ModeTrace MT)
       JouerUnTourR7(MT);
       NumTourR7 = NumTourR7 + 1;
     }
-  if (TasVide(RebutR7))
-    {
+  if (TasVide(RebutR7)) {
       printf("Vous avez gagne en %d tours !\n",NumTourR7);
-    }
-  else
-    {
-    *c=0; /*convention:si perdu, c=0*/
+      return NumTourR7;
+  }
+  else {
+     printf("Vous avez Perdu !\n");
+     return 0; /*convention:si perdu, c=0*/
     }
 }
 

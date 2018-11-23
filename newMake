@@ -1,0 +1,5 @@
+#!/bin/bash
+
+make clean
+cp Tas.o_bu Tas.o
+make all
