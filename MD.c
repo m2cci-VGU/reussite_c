@@ -175,9 +175,11 @@ void RemonterCarteStock(ModeTrace MT){
 		carteDeplacee = faux;
 		for(i=0 ; i<NOMBRE_DE_STOCK ; i++) {
 			JouerTasSurLigneMD( &(tasStock[i]), &carteDeplacee);
-			if (carteDeplacee && MT == AvecTrace){
-				AfficherMD();
+			if (carteDeplacee){
 				break;
+				if(MT == AvecTrace){
+					AfficherMD();
+				}
 			}
 		}
 	}	while (carteDeplacee);
@@ -228,9 +230,9 @@ void JouerUneMD(ModeTrace MT, booleen* Victoire){
 		printf("Sortie du while: %s\n\n", (poserStock || poserLigne) && !(TasVide(TalonMD)) ? "non" : "oui");
 		*/
 	}	while ((poserStock || poserLigne) && !(TasVide(TalonMD)));
-	RemonterCarteStock(MT);
-	StockVide(&vide);
 	if (TasVide(TalonMD)){
+		RemonterCarteStock(MT);
+		StockVide(&vide);
 		if (vide){
 			if (MT == AvecTrace){
 				printf("Bravo c'est gagné!\n");
