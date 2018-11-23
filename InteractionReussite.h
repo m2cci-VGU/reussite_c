@@ -22,6 +22,6 @@ void runSimulerR7(int NBMAXT);
 
 void runAnalyserR7(int NBMAXT);
 
-void runSimulerMD();
+void runSimulerMD(int NBSTOCK);
 
-void runAnalyserMD();
+void runAnalyserMD(int NBSTOCK);

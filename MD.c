@@ -8,11 +8,11 @@ char TexteCouleurMD[5][8] = {"", "Trefle", "Carreau", "Coeur", "Pique"};
 
 typedef Tas SerieCouleurMD;
 SerieCouleurMD LigneMD[DerniereCouleur+1];
-SerieCouleurMD tasStock[NOMBRE_DE_STOCK];
+SerieCouleurMD tasStock[NOMBRE_DE_STOCK_MAX];
 Tas TalonMD;
 /* localisation des tas */
 Localisation LocSerieMD[DerniereCouleur+1];
-Localisation LocTasStock[NOMBRE_DE_STOCK];
+Localisation LocTasStock[NOMBRE_DE_STOCK_MAX];
 Localisation LocTalonMD;
 
 Carte SixTrefle;
@@ -40,15 +40,15 @@ Tas* getTasDefausseMD(int index) {
 
 void SaisirLocTasMD() {
 	int i;
-	for(i = 0; i < NOMBRE_DE_STOCK; i++) {
+	for(i = 0; i < NBSTOCK; i++) {
 		LocTasStock[i].NC = i+1;
 		LocTasStock[i].NL = 1;
 	}
-	LocTalonMD.NC = NOMBRE_DE_STOCK+1;
+	LocTalonMD.NC = NBSTOCK+1;
 	LocTalonMD.NL = 3;
 	for (i=PremiereCouleur; i<=DerniereCouleur; i++)
 	{
-		LocSerieMD[i].NC = i+NOMBRE_DE_STOCK+1;
+		LocSerieMD[i].NC = i+NBSTOCK+1;
 		LocSerieMD[i].NL = 1;
 	}
 }
@@ -87,7 +87,7 @@ void CreerTableauInitialMD()
 	/* Création du talon avec un jeu de 32 cartes et des différents stocks */
 	CreerJeuNeuf(32, LocTalonMD, &TalonMD);
 	BattreTas(&TalonMD);
-	for(i=0; i<NOMBRE_DE_STOCK; i++) {
+	for(i=0; i<NBSTOCK; i++) {
 		CreerTasVide(LocTasStock[i], etale, &(tasStock[i]));
 	}
 	/* Création des séries de chaque couleur */
@@ -104,7 +104,7 @@ void AfficherMD( )
 
 	EffacerGraphique();
 	AfficherTas(TalonMD, "Talon");
-	for(i=0; i<NOMBRE_DE_STOCK; i++) {
+	for(i=0; i<NBSTOCK; i++) {
 		AfficherTas(tasStock[i], "Stock");
 	}
 	for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++) {
@@ -140,7 +140,7 @@ void TrouverMeilleureCible (Rang RPioche, Tas** Cible, int* OK){
 
 	/* printf("-------------TrouverMeilleurTas-----------\n"); */
 	/* printf("Rang de la carte a poser: %d\n", RPioche); */
-	for(i=0; i<NOMBRE_DE_STOCK; i++) {
+	for(i=0; i<NBSTOCK; i++) {
 		rangTas = TasVide(tasStock[i]) ? rangCaseVide : LeRang(CarteSur(tasStock[i]));
 		ecartTas = (RPioche > rangTas) ? ecartMax : (rangTas - RPioche);
 		/*printf(" - tas %d || rang: %d || ecart: %d\n", i, rangTas, ecartTas);*/
@@ -171,7 +171,7 @@ void RemonterCarteStock(ModeTrace MT){
 	int i;
 	do {
 		carteDeplacee = faux;
-		for(i=0 ; i<NOMBRE_DE_STOCK ; i++) {
+		for(i=0 ; i<NBSTOCK ; i++) {
 			JouerTasSurLigneMD( &(tasStock[i]), &carteDeplacee);
 			if (carteDeplacee){
 				break;
@@ -187,10 +187,10 @@ void StockVide(booleen* vide){
 	
 	int i =0;
 	*vide = faux;
-	while (i<NOMBRE_DE_STOCK && TasVide(tasStock[i])){
+	while (i<NBSTOCK && TasVide(tasStock[i])){
 		i++;
 	}
-	if (i==NOMBRE_DE_STOCK){
+	if (i==NBSTOCK){
 		*vide = vrai;
 	}
 }
@@ -250,7 +250,7 @@ void JouerUneMD(ModeTrace MT, booleen* Victoire){
 
 }
 
-void ObserverMD(int NP)
+void ObserverMD(int NP, int NBSTOCK)
 {
 	booleen gagne;
 	int i;
@@ -261,7 +261,7 @@ void ObserverMD(int NP)
 	}
 }
 
-void AnalyserMD(int NP)
+void AnalyserMD(int NP, int NBSTOCK)
 {
 	int i;
 	int victoire = 0;

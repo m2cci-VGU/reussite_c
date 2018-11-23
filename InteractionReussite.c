@@ -226,17 +226,17 @@ void runAnalyserR7(int NBMAXT)
     /*AnalyserR7(nbparties,NBMAXT);*/
 }
 
-void runSimulerMD()
+void runSimulerMD(int NBSTOCK)
 {
     int nbparties;
     printf(TexteNbASimuler);
     scanf("%d",&nbparties);
     OuvrirGraphique("Montée-Descente");
-    ObserverMD(nbparties);
+    ObserverMD(nbparties, NBSTOCK);
     FermerGraphique();
 }
 
-void runAnalyserMD()
+void runAnalyserMD(int NBSTOCK)
 {
     int nbparties;
     printf(TexteNbAAnalyser);
@@ -245,5 +245,5 @@ void runAnalyserMD()
 
     /* todo ANTOINE */
 
-    AnalyserMD(nbparties);
+    AnalyserMD(nbparties, NBSTOCK);
 }
