@@ -99,7 +99,7 @@ void CreerTableauInitialMD()
 	InitialisationMD();
 }
 
-void AfficherMD()
+void AfficherMD( )
 {
 	Couleur Co;
 	int i;
@@ -183,10 +183,23 @@ void RemonterCarteStock(ModeTrace MT){
 	}	while (carteDeplacee);
 }
 
+void StockVide(booleen* vide){
+	
+	int i =0;
+	*vide = faux;
+	while (i<NOMBRE_DE_STOCK && TasVide(tasStock[i])){
+		i++;
+	}
+	if (i==NOMBRE_DE_STOCK){
+		*vide = vrai;
+	}
+}
+
 void JouerUneMD(ModeTrace MT, booleen* Victoire){
 
 	booleen poserLigne;
 	booleen poserStock;
+	booleen vide;
 
 	do	{
 		RetournerCarteSur(&TalonMD);
@@ -215,12 +228,16 @@ void JouerUneMD(ModeTrace MT, booleen* Victoire){
 		printf("Sortie du while: %s\n\n", (poserStock || poserLigne) && !(TasVide(TalonMD)) ? "non" : "oui");
 		*/
 	}	while ((poserStock || poserLigne) && !(TasVide(TalonMD)));
-
+	RemonterCarteStock(MT);
+	StockVide(&vide);
+	printf("vide=%d",vide);
 	if (TasVide(TalonMD)){
-		if (MT == AvecTrace){
-			printf("Bravo c'est gagné!\n");
+		if (vide){
+			if (MT == AvecTrace){
+				printf("Bravo c'est gagné!\n");
+			}
+			*Victoire=vrai;
 		}
-		*Victoire=vrai;
 	}
 	else {
 		if (MT == AvecTrace){
