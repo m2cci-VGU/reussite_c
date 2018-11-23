@@ -417,11 +417,20 @@ ajoute la carte d'adresse ac sur le tas T
 ********************************************************************************* */
 void AjouterCarteSurTas (struct adCarte *ac, Tas *T)    /*surTas = queue*/
 {
+  if (T->HT == 0) {
+    T->tete = ac;
+    T->queue = ac;
+    T->tete->suiv=NULL;
+    T->tete->prec=NULL;
+    T->HT++; /*augmentation taille tas*/
+  }
+  else {
     ac->suiv = NULL;
     ac->prec = T->queue;
     T->queue->suiv=ac;
     T->queue = ac;
     T->HT++; /*augmentation taille tas*/
+  }
 }
 
 /* ******************************************************************************
@@ -430,10 +439,19 @@ ajoute la carte d'adresse ac sous le tas T
 ********************************************************************************* */
 void AjouterCarteSousTas (struct adCarte *ac, Tas *T)   /*sousTas = tete*/
 {
+  if (T->HT == 0) {
+    T->tete = ac;
+    T->queue = ac;
+    T->tete->suiv=NULL;
+    T->tete->prec=NULL;
+    T->HT++; /*augmentation taille tas*/
+  }
+  else {
     ac->suiv = T->tete;
     ac->prec = NULL;
     T->tete = ac;
     T->HT++; /*augmentation taille tas*/
+  }
 }
 
 
