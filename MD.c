@@ -19,6 +19,7 @@ Carte SixTrefle;
 Carte SixCarreau;
 Carte SixCoeur;
 Carte SixPique;
+int NBSTOCK=4;
 
 struct adCarte adSixTrefle;
 struct adCarte adSixCarreau;
