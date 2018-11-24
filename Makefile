@@ -7,7 +7,7 @@ INCL = ${DIR}/include
 LIB = ${DIR}/lib
 
 .c.o :
-	gcc -Wall -g -ansi -c -I${INCL} $<
+	gcc -fPIC -Wall -g -ansi -c -I${INCL} $<
 
 .PHONY : all
 all : Reussites.e testR7.e testMD.e testTasACompleter.e
