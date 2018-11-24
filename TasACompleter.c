@@ -553,25 +553,44 @@ Pr�-condition : T1 contient la carte et T2 est actif.
 ********************************************************************************* */
 void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 {
-	if(T2->RT == actif)
+	struct adCarte *visiteur = T1->tete;
+	int trouve=0 ;
+	while(visiteur != NULL && (visiteur->elt.RC != R) && (visiteur->elt.CC != C))
 	{
-		struct adCarte *visiteur = T1->tete;
-		while(visiteur != NULL && ((visiteur->elt.RC != R) & (visiteur->elt.CC != C)))
+		visiteur = visiteur->suiv;
+	}
+	if (visiteur->elt.RC != R || visiteur->elt.CC != R)
+		 {
+		 trouve = 0;
+	   }
+	else
+		 {
+	   trouve = (visiteur == NULL)? 0 : 1;
+     }
+
+	if(T2->RT == actif && trouve == 1)
+	{
+		visiteur = T1->tete;
+		while(visiteur != NULL && (visiteur->elt.RC != R) && (visiteur->elt.CC != C))
 		{
 			visiteur = visiteur->suiv;
 		}
-		if(visiteur == NULL)
+		if(visiteur == NULL || visiteur->elt.RC != R || visiteur->elt.CC != C)
 		{
-			printf("La carte demandée de rang %d et de couleur %d n'est pas dans le tas !", R, C);
+			exit(0);
 		}
-		else /*Carte trouvée, on l'a déplace au dessus de T2*/
+		else
 		{
-			(visiteur->prec)->suiv = visiteur->suiv;
-			(visiteur->suiv)->prec = visiteur->prec;
+			visiteur->prec->suiv = visiteur->suiv;
+			visiteur->suiv->prec = visiteur->prec;
+			visiteur->prec = NULL;
+			visiteur->suiv = NULL;
 			AjouterCarteSurTas(visiteur, T2);
+			T1->HT -= 1;
 		}
 	}
 }
+
 
 
 /* ******************************************************************************
