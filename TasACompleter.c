@@ -189,7 +189,8 @@ void CreerJeuNeuf(int N, Localisation L, Tas *T){
 	if (N==52) {
 		PremierRang=Deux;
 	}
-	else if (N==32) {PremierRang=Sept;
+	else if (N==32) {
+		PremierRang=Sept;
 	}
 	struct adCarte *fausseQueue=(struct adCarte*)malloc(sizeof(struct adCarte)); /* creation fictif1 */
 	struct adCarte *fausseTete=(struct adCarte*)malloc(sizeof(struct adCarte)); /* creation fictif2 */
@@ -198,6 +199,7 @@ void CreerJeuNeuf(int N, Localisation L, Tas *T){
 	fausseQueue->prec=fausseTete;
 	fausseQueue->suiv=fausseTete;
 	T->tete=fausseTete;
+	T->queue=fausseQueue;
 	T->HT=0;
 	Couleur Co;
 	Rang Ra;
@@ -468,8 +470,13 @@ void DeplacerHautSur(Tas *T1, Tas *T2)
 		struct adCarte *temporaire=T1->queue->prec;
 		AjouterCarteSurTas(T1->queue, T2);
 		T1->queue=temporaire;
-		T1->queue->suiv=NULL;
-		T1->HT-=1;
+		if(T1->HT>1){
+			temporaire->suiv=NULL;
+			T1->HT-=1;
+		}
+		else {
+			T1->HT=0;
+		}
 	}
 }
 
@@ -485,8 +492,13 @@ void DeplacerHautSous(Tas *T1, Tas *T2)
 		struct adCarte *temporaire=T1->queue->prec;
 		AjouterCarteSousTas(T1->queue, T2);
 		T1->queue=temporaire;
-		T1->queue->suiv=NULL;
-		T1->HT-=1; /*diminution taille tas*/
+		if(T1->HT>1){
+			T1->queue->suiv=NULL;
+			T1->HT-=1; /*diminution taille tas*/
+		}
+		else {
+			T1->HT=0;
+		}
 	}
 }
 
@@ -502,8 +514,13 @@ void DeplacerBasSur(Tas *T1, Tas *T2)
 		struct adCarte *temporaire=T1->tete->suiv;
 		AjouterCarteSurTas(T1->tete, T2);
 		T1->tete=temporaire;
-		T1->tete->prec=NULL;
-		T1->HT-=1;
+		if(T1->HT>1){
+			T1->tete->prec=NULL;
+			T1->HT-=1;
+		}
+		else {
+			T1->HT=0;
+		}
 	}
 }
 
@@ -519,8 +536,13 @@ void DeplacerBasSous(Tas *T1, Tas *T2)
 		struct adCarte *temporaire=T1->tete->suiv;
 		AjouterCarteSousTas(T1->tete, T2);
 		T1->tete=temporaire;
-		T1->tete->prec=NULL;
-		T1->HT-=1;
+		if(T1->HT>1){
+			T1->tete->prec=NULL;
+			T1->HT-=1;
+		}
+		else {
+			T1->HT=0;
+		}
 	}
 }
 
