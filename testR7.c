@@ -47,7 +47,8 @@ void newTest(char* testName)
   initTas(adRebut);
 
   Tas* adTasVisitor;
-  for(int couleur=PremiereCouleur; couleur<DerniereCouleur+1 ; couleur++) {
+  Couleur couleur;
+  for(couleur=PremiereCouleur; couleur<DerniereCouleur+1 ; couleur++) {
     adTasVisitor = getTasCouleurR7(couleur);
     initTas(adTasVisitor);
     ListeAdresseTasCouleur[couleur] = adTasVisitor;

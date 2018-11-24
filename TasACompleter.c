@@ -232,7 +232,7 @@ carte situee au dessus du tas
 **************************************************************** */
 Carte CarteSur(Tas T)
 {
-    return T.tete->elt;
+    return T.queue->elt;
 }
 
 /* *************************************************************
@@ -241,7 +241,7 @@ carte situee au dessous du tas
 **************************************************************** */
 Carte CarteSous(Tas T)
 {
-	return T.queue->elt;
+	return T.tete->elt;
 }
 
 /* *************************************************************
@@ -418,7 +418,7 @@ void AjouterCarteSurTas (struct adCarte *ac, Tas *T)    /*surTas = queue*/
   if (T->HT == 0) {
     T->tete = ac;
     T->queue = ac;
-    T->tete->suiv=NULL;
+    T->queue->suiv=NULL;
     T->tete->prec=NULL;
     T->HT++; /*augmentation taille tas*/
   }
@@ -447,6 +447,7 @@ void AjouterCarteSousTas (struct adCarte *ac, Tas *T)   /*sousTas = tete*/
   else {
     ac->suiv = T->tete;
     ac->prec = NULL;
+	T->tete->prec=ac;
     T->tete = ac;
     T->HT++; /*augmentation taille tas*/
   }
