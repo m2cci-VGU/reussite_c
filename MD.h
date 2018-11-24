@@ -2,7 +2,7 @@
 #define NOMBRE_DE_STOCK_MAX 8
 #define temps 300000
 
-
+void AfficherMD();
 void ObserverMD(int, int);
 void AnalyserMD(int, int);
 

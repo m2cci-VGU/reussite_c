@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "TasACompleter.h"
+#include "Tas.h"
+void afficherTasPourTest(Tas T);
+void afficherCarte(Carte C);
+void testCarte(Carte C1);
+void testCarteBooleen(Carte C1, Carte C2);
+void testTas(Tas T);
 
 int main()
 {
-  void afficherTasPourTest(Tas T);
-  void afficherCarte(Carte C);
-  void testCarte(Carte C1);
-  void testCarteBooleen(Carte C1, Carte C2);
-  void testTas(Tas T);
   /*TAS*/
   Tas T1;
   Tas T2;
@@ -19,59 +19,19 @@ int main()
   L.NL = 1 ;
   L.NC = 1 ;
 
-  Tas T3;
   int N1 = 52;
   Localisation L1;
   L1.NL = 1 ;
   L1.NC = 1 ;
-  int N2 = 32;
-  Localisation L2;
-  L2.NL = 1 ;
-  L2.NC = 1 ;
-  char message2;
-  int N3 = 32;
-  Localisation L3;
-  L3.NL = 1 ;
-  L3.NC = 1 ;
-  char message3;
 
 
   /*cartes*/
-  Carte C;
-  C.RC = Quatre;
-  C.CC = Carreau;
-  C.VC = Decouverte;
-
   Carte C1;
   C1.RC = Dame;
   C1.CC = Coeur;
   C1.VC = Decouverte;
   struct adCarte C1struct;
   C1struct.elt=C1;
-
-  Carte C2;
-  C2.RC = Valet;
-  C2.CC = Pique;
-  C2.VC = Cachee;
-  struct adCarte C2struct;
-  C2struct.elt=C2;
-
-
-  /*afficherCarte(C1);
-  afficherCarte(C2);
-  testCarte(C1);
-  testCarteBooleen(C1, C2);*/
-
-  /*CreerJeuNeuf(N1, L1, &T1);
-  afficherTasPourTest(T1);
-  RetournerTas(&T1);
-  afficherTasPourTest(T1);*/
-
-
-
-  //testBoolenTas(T1);
-  //  testLocalisationPlaceTas(T1);
-
 
   printf("\n\n\n\n==================test Creation et manipulation du Tas ================\n");
   printf("\n******Test CreerTasVide*******\n");
@@ -118,36 +78,37 @@ int main()
   printf("******Test RetournerTas*******\n");
   RetournerTas(&T1);  afficherTasPourTest(T1);testTas(T1);
   printf("\n******Test RetournerCarteSur - la tete est retournee (change de visibilite)*******\n");
-  printf("\n# etat de depart #\n");if (T1.HT != 0)
+  printf("\n# etat de depart #\n");
+  if (T1.HT != 0)
   {
     Carte cartesur=CarteSur(T1); Carte cartesous=CarteSous(T1);
     printf("\nla premiere carte eCreerTasVide(L,etale,&T1);CreerJeuNeuf(N1, L1, &T1);afficherTasPourTest(T1);st [%d %d %d]",cartesur.RC,cartesur.CC,cartesur.VC);
     printf("\nla derniere carte est [%d %d %d]",cartesous.RC,cartesous.CC,cartesous.VC);
-    }
+  }
   RetournerCarteSur(&T1);
-  printf("\n# etat final #\n");if (T1.HT != 0)
-  {
-    Carte cartesur=CarteSur(T1); Carte cartesous=CarteSous(T1);int i = 51;
-    printf("\nla premiere carte est [%d %d %d]",cartesur.RC,cartesur.CC,cartesur.VC);
-    printf("\nla derniere carte est [%d %d %d]",cartesous.RC,cartesous.CC,cartesous.VC);
-    }
-  printf("\n******Test RetournerCarteSous - la queue est retournee (change de visibilite)*******\n");
-  printf("\n# etat de depart #\n");if (T1.HT != 0)
+  printf("\n# etat final #\n");
+  if (T1.HT != 0)
   {
     Carte cartesur=CarteSur(T1); Carte cartesous=CarteSous(T1);
     printf("\nla premiere carte est [%d %d %d]",cartesur.RC,cartesur.CC,cartesur.VC);
     printf("\nla derniere carte est [%d %d %d]",cartesous.RC,cartesous.CC,cartesous.VC);
-    }
-  RetournerCarteSous(&T1);
-  printf("\n# etat final #\n");if (T1.HT != 0)
+  }
+  printf("\n******Test RetournerCarteSous - la queue est retournee (change de visibilite)*******\n");
+  printf("\n# etat de depart #\n");
+  if (T1.HT != 0)
   {
-    Carte cartesur=CarteSur(T1); Carte cartesous=CarteSous(T1);int i = 51;
+    Carte cartesur=CarteSur(T1); Carte cartesous=CarteSous(T1);
     printf("\nla premiere carte est [%d %d %d]",cartesur.RC,cartesur.CC,cartesur.VC);
     printf("\nla derniere carte est [%d %d %d]",cartesous.RC,cartesous.CC,cartesous.VC);
-    }
-
-
-
+  }
+  RetournerCarteSous(&T1);
+  printf("\n# etat final #\n");
+  if (T1.HT != 0)
+  {
+    Carte cartesur=CarteSur(T1); Carte cartesous=CarteSous(T1);
+    printf("\nla premiere carte est [%d %d %d]",cartesur.RC,cartesur.CC,cartesur.VC);
+    printf("\nla derniere carte est [%d %d %d]",cartesous.RC,cartesous.CC,cartesous.VC);
+  }
 
   printf("\n\n\n\n=============test deplacement cartes d'un Tas à l'autre===============\n");
   CreerTasVide(L,etale,&T1);CreerJeuNeuf(N1, L1, &T1);CreerTasVide(L,etale,&T2);CreerJeuNeuf(N,L,&T2);  printf("\nTas de depart 1\n");afficherTasPourTest(T1); testTas(T1);  printf("\nTas de depart 2\n");afficherTasPourTest(T2);testTas(T2);
@@ -164,7 +125,6 @@ int main()
   DeplacerCarteSur(2,14,&T1,&T2);afficherTasPourTest(T1);printf("\nLahauteur du Tas 1 est %d\n",LaHauteur(T1));afficherTasPourTest(T2);printf("\nLahauteur du Tas 2 est %d\n",LaHauteur(T2));
   printf("\n******test PoserTasSurTas-T2 recoit toutes sur sa queue les cartes de T1, qui restent en ordre. T1 devient vide********\n");
   PoserTasSurTas(&T1,&T2);afficherTasPourTest(T1);printf("\nLahauteur du Tas 1 est %d\n",LaHauteur(T1));afficherTasPourTest(T2);printf("\nLahauteur du Tas 2 est %d\n",LaHauteur(T2));
-
 
   return 0;
 }

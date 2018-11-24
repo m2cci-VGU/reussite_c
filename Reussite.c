@@ -9,6 +9,7 @@
 #include "MD.h"
 #include "R7.h"
 #include "InteractionReussite.h"
+#include "Alea.h"
 
 
 /* -------------------------------------------------------------------
@@ -46,7 +47,7 @@ int main(void)
     }
 	if (CJ == MD){
 		printf("Combien de sotck voulez vous (minimum 1, maximum 8)?");
-		scanf("%d", &NBSTOCK);	
+		scanf("%d", &NBSTOCK);
 		if (NBSTOCK>8){
 			NBSTOCK=8;
 		}

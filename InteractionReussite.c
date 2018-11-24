@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "MD.h"
+#include "R7.h"
 
 /* Interaction avec l'utilisateur */
 
@@ -219,11 +220,7 @@ void runAnalyserR7(int NBMAXT)
     int nbparties;
     printf(TexteNbAAnalyser);
     scanf("%d",&nbparties);
-    printf("analyser - R7 \n");
-
-    /* todo MARCO */
-
-    /*AnalyserR7(nbparties,NBMAXT);*/
+    AnalyserR7(nbparties,NBMAXT);
 }
 
 void runSimulerMD(int NBSTOCK)
