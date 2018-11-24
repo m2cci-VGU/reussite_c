@@ -1,4 +1,4 @@
-/*--------------------------------------------------------------*/
+﻿/*--------------------------------------------------------------*/
 /* Reussites. Cecile Dumas, Catherine Parent, octobre 2005,
    d'apres les algorithmes de Pierre-Claude Scholl              */
 /*--------------------------------------------------------------*/
@@ -20,7 +20,7 @@
 #define         TexteNbAAnalyser         "Choisissez le nombre de parties a analyser : "
 
 #define         nbMaxEssais              5
-#define         Invite                   "Choisissez votre mode de jeu  (? pour obtenir de de l'aide) : "
+#define         Invite                   "Choisissez votre mode de jeu  (? pour obtenir de l'aide) : "
 #define         TexteSimulation          '1'
 #define         TexteAnalyse             '2'
 #define         TexteRetour              'R'
@@ -87,7 +87,7 @@ void SaisirJeu (CodeJeu *CJ)
     char codeJ  ;
     int  nbEssais;
 
-    printf ("Quel est votre choix de jeu ?\n") ;
+    printf ("Quel est votre choix de jeu parmi les réussites ci-dessous ?\n") ;
     EcrireMenuChoixJeu ();
     LireCar (&codeJ) ;
     nbEssais = 0 ;
@@ -151,7 +151,6 @@ void EcrireMenuChoixMode ()
     printf (" %c pour Simulation graphique de la reussite, \n",TexteSimulation) ;
     printf (" %c pour Analyse d une serie de reussites (sans affichage graphique), \n",TexteAnalyse);
     printf (" %c pour Retour au choix du jeu,\n",TexteRetour);
-    printf (" %c pour Fin, \n",TexteFin);
     printf (" %c pour Aide.\n",TexteAideMode);
 }
 
@@ -210,7 +209,7 @@ void runSimulerR7(int NBMAXT)
     int nbparties;
     printf(TexteNbASimuler);
     scanf("%d",&nbparties);
-    OuvrirGraphique("Relai 7");
+    OuvrirGraphique("Relais des 7");
     ObserverR7(nbparties, NBMAXT);
     FermerGraphique();
 }

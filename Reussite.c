@@ -23,7 +23,7 @@
 int main(void)
 {
     int NBMAXT;
-	int NBSTOCK;
+	  int NBSTOCK;
 
     CodeCommande    Commande ;
     int nbparties ;
@@ -36,28 +36,30 @@ int main(void)
 
     SaisirJeu(&CJ);
 
-    if (CJ == R7)
-    {
-        printf("Choix du nombre de tours maximum: \n");
-        scanf("%d", &NBMAXT);
-    }
-    else
-    {
-        NBMAXT = 3;
-    }
-	if (CJ == MD){
-		printf("Combien de sotck voulez vous (minimum 1, maximum 8)?");
-		scanf("%d", &NBSTOCK);
-		if (NBSTOCK>8){
-			NBSTOCK=8;
-		}
-		else if (NBSTOCK<0){
-			NBSTOCK=1;
-		}
-	}
-
     while(CJ != FINJ)
     {
+      if (CJ == R7)
+      {
+          printf("Choix du nombre de tours maximum: \n");
+          scanf("%d", &NBMAXT);
+      }
+      else
+      {
+          NBMAXT = 3;
+      }
+
+      if (CJ == MD)
+      {
+      printf("Combien de stock voulez-vous (minimum 1, maximum 8)?");
+      scanf("%d", &NBSTOCK);
+          if (NBSTOCK>8){
+          NBSTOCK=8;
+          }
+          else if (NBSTOCK<0){
+          NBSTOCK=1;
+          }
+      }
+
         switch (CJ)
         {
         case AIDE :
@@ -100,58 +102,7 @@ int main(void)
             break;
         }
         SaisirJeu(&CJ);
-
     }
-
-    /*
-        if(CJ == FINJ)
-        {
-            printf (TexteAuRevoir) ;
-        }
-        else if (CJ == AIDE)
-        {
-            EcrireMenuChoixJeu ();
-        }
-        else if (CJ == R7)
-        {
-            SaisirCommande (&Commande) ;
-
-            while (Commande != RETOUR)
-            {
-                switch  (Commande)
-                {
-                case SIMUL :
-                    runSimulerR7();
-                    break ;
-                case ANALYSE:
-                    runAnalyserR7();
-                    break;
-                }
-                SaisirCommande (&Commande) ;
-            }
-            printf (TexteAuRevoir) ;
-        }
-        else if (CJ == MD)
-        {
-            SaisirCommande (&Commande) ;
-
-
-            while (Commande != RETOUR)
-            {
-                switch  (Commande)
-                {
-                case SIMUL :
-                    runSimulerMD();
-                    break ;
-                case ANALYSE :
-                    runAnalyserMD();
-                    break;
-                }
-                SaisirCommande (&Commande) ;
-            }
-            printf (TexteAuRevoir) ;
-        }*/
-
 
     return 0;
 }
