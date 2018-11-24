@@ -1,9 +1,9 @@
 /*--------------------------------------------------------------*/
 /* Reussites. Michel Bonin, Catherine Parent, octobre 2005,
-   d'apres les algorithmes de Pierre-Claude Scholl
-   modifie par F. Carrier, juillet 2012
-   --> types enumeres : Couleur, Rang
-   --> tas representes par des listes chainees
+d'apres les algorithmes de Pierre-Claude Scholl
+modifie par F. Carrier, juillet 2012
+--> types enumeres : Couleur, Rang
+--> tas representes par des listes chainees
 ----------------------------------------------------------------*/
 
 #include "Tas.h"
@@ -22,14 +22,14 @@
 
 Couleur CouleurSuivante(Couleur C)
 {
-    if(C == DerniereCouleur)
-    {
-        return PremiereCouleur;
-    }
-    else
-    {
-        return C+1;
-    }
+	if(C == DerniereCouleur)
+	{
+		return PremiereCouleur;
+	}
+	else
+	{
+		return C+1;
+	}
 }
 
 /* Rangs */
@@ -37,14 +37,14 @@ Couleur CouleurSuivante(Couleur C)
 
 Rang RangSuivant(Rang R)
 {
-    if(R == DernierRang)
-    {
-        return Deux;
-    }
-    else
-    {
-        return R+1;
-    }
+	if(R == DernierRang)
+	{
+		return Deux;
+	}
+	else
+	{
+		return R+1;
+	}
 }
 
 /*--------------------------------------------------------------------*/
@@ -57,56 +57,56 @@ Rang RangSuivant(Rang R)
 
 Rang LeRang(Carte C)
 {
-    return C.RC;
+	return C.RC;
 }
 
 Couleur LaCouleur(Carte C)
 {
-    return C.CC;
+	return C.CC;
 }
 
 Visibilite EstCachee(Carte C)
 {
-    return C.VC == Cachee;
+	return C.VC == Cachee;
 }
 
 Visibilite EstDecouverte(Carte C)
 {
-    return C.VC == Decouverte;
+	return C.VC == Decouverte;
 }
 
 /* Comparaison de cartes */
 
 booleen RangInferieur(Carte C1, Carte C2)
 {
-    return LeRang(C1) < LeRang(C2);
+	return LeRang(C1) < LeRang(C2);
 }
 
 booleen MemeRang(Carte C1, Carte C2)
 {
-    return LeRang(C1) == LeRang(C2);
+	return LeRang(C1) == LeRang(C2);
 }
 
 booleen CouleurInferieure(Carte C1, Carte C2)
 {
-    return LaCouleur(C1) < LaCouleur(C2);
+	return LaCouleur(C1) < LaCouleur(C2);
 }
 
 booleen MemeCouleur(Carte C1, Carte C2)
 {
-    return LaCouleur(C1) == LaCouleur(C2);
+	return LaCouleur(C1) == LaCouleur(C2);
 }
 
 booleen EstCarteAvant(Carte C1, Carte C2)
 {
-if (!MemeCouleur(C1,C2))
-{
-    return CouleurInferieure(C1,C2);
-}
-else
-{
-    return RangInferieur(C1,C2);
-}
+	if (!MemeCouleur(C1,C2))
+	{
+		return CouleurInferieure(C1,C2);
+	}
+	else
+	{
+		return RangInferieur(C1,C2);
+	}
 }
 
 /* Representation des tas */
@@ -115,32 +115,32 @@ else
 
 booleen TasActif(Tas T)
 {
-return (T.RT==actif);
+	return (T.RT==actif);
 }
 
 booleen TasVide(Tas T)
 {
-    return (T.HT==0);
+	return (T.HT==0);
 }
 
 booleen TasEmpile(Tas T)
 {
-    return (T.MT==empile);
+	return (T.MT==empile);
 }
 
 booleen TasEtale(Tas T)
 {
-    return (T.MT==etale);
+	return (T.MT==etale);
 }
 
 int LaHauteur(Tas T)
 {
-    return T.HT;
+	return T.HT;
 }
 
 Localisation LaPlace(Tas T)
 {
-    return T.LT;
+	return T.LT;
 }
 
 /* Constructeurs */
@@ -152,12 +152,12 @@ Pr�-condition : l'emplacement L est disponible
 **************************************************************** */
 void CreerTasVide(Localisation L, Mode M, Tas *T)
 {
-    (*T).LT = L;
-    (*T).RT = actif;
-    (*T).MT = M;
-    (*T).HT = 0;
-    (*T).tete = NULL ;
-    (*T).queue = NULL ;
+	(*T).LT = L;
+	(*T).RT = actif;
+	(*T).MT = M;
+	(*T).HT = 0;
+	(*T).tete = NULL ;
+	(*T).queue = NULL ;
 }
 
 /* *************************************************************
@@ -168,12 +168,12 @@ Pr�-condition : le tas T est vide et actif
 **************************************************************** */
 void SupprimerTasVide(Tas *T)    /*en cours-Marco*/
 {
-    if (T->HT==0)
-    {
-        T->RT=inactif;
-        T->LT.NC=0;
-        T->LT.NL=0;
-    }
+	if (T->HT==0)
+	{
+		T->RT=inactif;
+		T->LT.NC=0;
+		T->LT.NL=0;
+	}
 }
 
 /* *************************************************************
@@ -182,45 +182,47 @@ forme en L le tas empil� T avec l'ensemble des N cartes du jeu dans
 l'ordre des cartes et faces cach�es.
 Donne leur valeur aux variables globales NbCartes et PremierRang.
 Pr�-condition : l'emplacement L est libre
-                N==52 ou N==32
+N==52 ou N==32
 **************************************************************** */
 void CreerJeuNeuf(int N, Localisation L, Tas *T){
-Rang PremierRang;
-if (N==52) {
-    PremierRang=Deux;
-}
-else if (N==32) {PremierRang=Sept;
-}
-struct adCarte *fausseQueue=(struct adCarte*)malloc(sizeof(struct adCarte)); /* creation fictif1 */
-struct adCarte *fausseTete=(struct adCarte*)malloc(sizeof(struct adCarte)); /* creation fictif2 */
-fausseTete->prec=T->tete;
-fausseTete->suiv=fausseQueue;
-fausseQueue->prec=fausseTete;
-fausseQueue->suiv=fausseTete;
-T->tete=fausseTete;
-T->HT=0;
-Couleur Co;
-Rang Ra;
-for (Co=Trefle; Co <= Pique;Co++){
-    for (Ra=PremierRang;Ra <= As;Ra++) {
-        struct adCarte *nouveauElt=(struct adCarte*)malloc(sizeof(struct adCarte));
-        nouveauElt->prec=fausseTete;
-        nouveauElt->suiv=fausseQueue;
-        fausseQueue->prec=nouveauElt;
-        fausseTete->suiv=nouveauElt;
-        nouveauElt->elt.CC=Co;
-        nouveauElt->elt.RC=Ra;
-        nouveauElt->elt.VC=Cachee;
-        T->HT++;
-        fausseTete=nouveauElt;
-    }
-}
-fausseTete=T->tete; /* on remet la fausse tete � son emplacement initial pour la liberer */
-T->tete=fausseTete->suiv;
-T->queue=fausseQueue->prec; /* la queue du Tas pointe vers le dernier element */
-T->tete->prec=NULL; T->queue->suiv=NULL; /* pas de creation de liste circulaire */
-free(fausseTete); free(fausseQueue); /* liberation fictifs */
-
+	Rang PremierRang;
+	if (N==52) {
+		PremierRang=Deux;
+	}
+	else if (N==32) {PremierRang=Sept;
+	}
+	struct adCarte *fausseQueue=(struct adCarte*)malloc(sizeof(struct adCarte)); /* creation fictif1 */
+	struct adCarte *fausseTete=(struct adCarte*)malloc(sizeof(struct adCarte)); /* creation fictif2 */
+	fausseTete->prec=T->tete;
+	fausseTete->suiv=fausseQueue;
+	fausseQueue->prec=fausseTete;
+	fausseQueue->suiv=fausseTete;
+	T->tete=fausseTete;
+	T->HT=0;
+	Couleur Co;
+	Rang Ra;
+	for (Co=Trefle; Co <= Pique;Co++){
+		for (Ra=PremierRang;Ra <= As;Ra++) {
+			struct adCarte *nouveauElt=(struct adCarte*)malloc(sizeof(struct adCarte));
+			nouveauElt->prec=fausseTete;
+			nouveauElt->suiv=fausseQueue;
+			fausseQueue->prec=nouveauElt;
+			fausseTete->suiv=nouveauElt;
+			nouveauElt->elt.CC=Co;
+			nouveauElt->elt.RC=Ra;
+			nouveauElt->elt.VC=Cachee;
+			T->HT++;
+			fausseTete=nouveauElt;
+		}
+	}
+	fausseTete=T->tete; /* on remet la fausse tete � son emplacement initial pour la liberer */
+	T->tete=fausseTete->suiv;
+	T->queue=fausseQueue->prec; /* la queue du Tas pointe vers le dernier element */
+	T->tete->prec=NULL; T->queue->suiv=NULL; /* pas de creation de liste circulaire */
+	free(fausseTete); free(fausseQueue); /* liberation fictifs */
+	T->RT=actif;
+	T->MT=empile;
+	T->LT=L;
 }
 
 
@@ -232,7 +234,7 @@ carte situee au dessus du tas
 **************************************************************** */
 Carte CarteSur(Tas T)
 {
-    return T.queue->elt;
+	return T.queue->elt;
 }
 
 /* *************************************************************
@@ -251,15 +253,15 @@ Pr�condition : i <= LaHauteur(T)
 **************************************************************** */
 Carte IemeCarte(Tas T, int i)
 {
-            struct adCarte *Visitor;
-            Visitor = T.tete ;
-            int k = 1;
-            while (k < i && Visitor->suiv != NULL)   /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
-            {
-                Visitor = Visitor->suiv;
-                k++;
-            }
-            return Visitor->elt;
+	struct adCarte *Visitor;
+	Visitor = T.tete ;
+	int k = 1;
+	while (k < i && Visitor->suiv != NULL)   /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
+	{
+		Visitor = Visitor->suiv;
+		k++;
+	}
+	return Visitor->elt;
 }
 
 /* Retournement d'une carte sur un tas */
@@ -271,17 +273,17 @@ Pr�-condition : T non vide
 **************************************************************** */
 void RetournerCarteSur(Tas *T)
 {
-    if (T->HT > 0)
-    {
-        if (!(*T).queue->elt.VC)
-        {
-            (*T).queue->elt.VC = Decouverte;
-        }
-        else
-        {
-            (*T).queue->elt.VC = Cachee;
-        }
-    }
+	if (T->HT > 0)
+	{
+		if (!(*T).queue->elt.VC)
+		{
+			(*T).queue->elt.VC = Decouverte;
+		}
+		else
+		{
+			(*T).queue->elt.VC = Cachee;
+		}
+	}
 }
 
 /* *************************************************************
@@ -291,14 +293,14 @@ Pr�-condition : T non vide
 **************************************************************** */
 void RetournerCarteSous(Tas *T)
 {
-    if (!(*T).tete->elt.VC)
-    {
-        (*T).tete->elt.VC = Decouverte;
-    }
-    else
-    {
-        (*T).tete->elt.VC = Cachee;
-    }
+	if (!(*T).tete->elt.VC)
+	{
+		(*T).tete->elt.VC = Decouverte;
+	}
+	else
+	{
+		(*T).tete->elt.VC = Cachee;
+	}
 }
 
 /* Modification d'un tas */
@@ -310,13 +312,13 @@ modification du mode d'etalement d'un tas
 **************************************************************** */
 void EmpilerTas(Tas *T)
 {
-    (*T).MT = empile;
+	(*T).MT = empile;
 
 }
 
 void EtalerTas(Tas *T)
 {
-    (*T).MT = etale;
+	(*T).MT = etale;
 }
 
 
@@ -327,29 +329,29 @@ Precondition : les deux cartes existent i,j <= LaHauteur(T)
 **************************************************************** */
 void EchangerCartes(int i, int j, Tas *T)
 {
-    /*struct adCarte *carteI = IemeCarte(*T,i);
-    struct adCarte *carteJ = IemeCarte(*T,j);
-    struct adCarte *tempI = carteI;
-    struct adCarte *tempJ = carteJ;*/
-    Carte carteI = IemeCarte(*T,i);
-    Carte carteJ = IemeCarte(*T,j);
-    struct adCarte *Visitor;
-    Visitor = T->tete ;
-    int k = 1;
-    while (k < j && Visitor->suiv != NULL)   /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
-    {
-        Visitor = Visitor->suiv;
-        k++;
-    }
-    Visitor->elt=carteI;
-    Visitor = T->tete ;
-    k = 1;
-    while (k < i && Visitor->suiv != NULL)   /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
-    {
-        Visitor = Visitor->suiv;
-        k++;
-    }
-    Visitor->elt=carteJ;
+	/*struct adCarte *carteI = IemeCarte(*T,i);
+	struct adCarte *carteJ = IemeCarte(*T,j);
+	struct adCarte *tempI = carteI;
+	struct adCarte *tempJ = carteJ;*/
+	Carte carteI = IemeCarte(*T,i);
+	Carte carteJ = IemeCarte(*T,j);
+	struct adCarte *Visitor;
+	Visitor = T->tete ;
+	int k = 1;
+	while (k < j && Visitor->suiv != NULL)   /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
+	{
+		Visitor = Visitor->suiv;
+		k++;
+	}
+	Visitor->elt=carteI;
+	Visitor = T->tete ;
+	k = 1;
+	while (k < i && Visitor->suiv != NULL)   /*Marco:while pour protection en cas de problèmes de initialisation du tas*/
+	{
+		Visitor = Visitor->suiv;
+		k++;
+	}
+	Visitor->elt=carteJ;
 }
 
 /* *************************************************************
@@ -359,19 +361,19 @@ bas le tas T
 
 void BattreTas(Tas *T)
 {
-    int i = 51;
-    int j = 51;
-    int nbfois = 0;
-    int e; int f;
-    srand(time(NULL));
+	int i = 51;
+	int j = 51;
+	int nbfois = 0;
+	int e; int f;
+	srand(time(NULL));
 
-    while (nbfois < 5000)
-    {
-        e = rand()%i + 1;
-        f = rand()%j + 1;
-        EchangerCartes( e, f, T );
-        nbfois++;
-    }
+	while (nbfois < 5000)
+	{
+		e = rand()%i + 1;
+		f = rand()%j + 1;
+		EchangerCartes( e, f, T );
+		nbfois++;
+	}
 }
 
 
@@ -381,28 +383,28 @@ retourne le tas T : la premiere devient la derniere et la visibilite est inverse
 ********************************************************************************* */
 void RetournerTas(Tas *T)
 {
-    struct adCarte* sauveTete = T->tete->suiv ;
-    struct adCarte* sauveQueue = T->queue ;
-    T->tete->elt.VC = (T->tete->elt.VC == Decouverte) ? Cachee : Decouverte;
-    T->tete->suiv = NULL ;
-    T->tete->prec = T->queue;
-    T->queue->suiv = T->tete;
-    sauveTete->prec = NULL ;
-    T->tete = sauveTete ;
-    sauveQueue = sauveQueue->suiv;
+	struct adCarte* sauveTete = T->tete->suiv ;
+	struct adCarte* sauveQueue = T->queue ;
+	T->tete->elt.VC = (T->tete->elt.VC == Decouverte) ? Cachee : Decouverte;
+	T->tete->suiv = NULL ;
+	T->tete->prec = T->queue;
+	T->queue->suiv = T->tete;
+	sauveTete->prec = NULL ;
+	T->tete = sauveTete ;
+	sauveQueue = sauveQueue->suiv;
 
-    while(T->queue->prec != NULL)
-    {
-      sauveTete = T->tete->suiv ;
-      sauveTete->elt.VC = (sauveTete->elt.VC == Decouverte) ? Cachee : Decouverte;
-      sauveTete->prec = NULL;
-      T->tete->prec = T->queue;
-      T->tete->suiv = T->queue->suiv;
-      T->queue->suiv = T->tete;
-      T->tete->suiv->prec = T->tete;
-      T->tete = sauveTete;
-    }
-    T->queue = sauveQueue;
+	while(T->queue->prec != NULL)
+	{
+		sauveTete = T->tete->suiv ;
+		sauveTete->elt.VC = (sauveTete->elt.VC == Decouverte) ? Cachee : Decouverte;
+		sauveTete->prec = NULL;
+		T->tete->prec = T->queue;
+		T->tete->suiv = T->queue->suiv;
+		T->queue->suiv = T->tete;
+		T->tete->suiv->prec = T->tete;
+		T->tete = sauveTete;
+	}
+	T->queue = sauveQueue;
 }
 
 
@@ -415,20 +417,20 @@ ajoute la carte d'adresse ac sur le tas T
 ********************************************************************************* */
 void AjouterCarteSurTas (struct adCarte *ac, Tas *T)    /*surTas = queue*/
 {
-  if (T->HT == 0) {
-    T->tete = ac;
-    T->queue = ac;
-    T->queue->suiv=NULL;
-    T->tete->prec=NULL;
-    T->HT++; /*augmentation taille tas*/
-  }
-  else {
-    ac->suiv = NULL;
-    ac->prec = T->queue;
-    T->queue->suiv=ac;
-    T->queue = ac;
-    T->HT++; /*augmentation taille tas*/
-  }
+	if (T->HT == 0) {
+		T->tete = ac;
+		T->queue = ac;
+		T->queue->suiv=NULL;
+		T->tete->prec=NULL;
+		T->HT++; /*augmentation taille tas*/
+	}
+	else {
+		ac->suiv = NULL;
+		ac->prec = T->queue;
+		T->queue->suiv=ac;
+		T->queue = ac;
+		T->HT++; /*augmentation taille tas*/
+	}
 }
 
 /* ******************************************************************************
@@ -437,20 +439,20 @@ ajoute la carte d'adresse ac sous le tas T
 ********************************************************************************* */
 void AjouterCarteSousTas (struct adCarte *ac, Tas *T)   /*sousTas = tete*/
 {
-  if (T->HT == 0) {
-    T->tete = ac;
-    T->queue = ac;
-    T->tete->suiv=NULL;
-    T->tete->prec=NULL;
-    T->HT++; /*augmentation taille tas*/
-  }
-  else {
-    ac->suiv = T->tete;
-    ac->prec = NULL;
-	T->tete->prec=ac;
-    T->tete = ac;
-    T->HT++; /*augmentation taille tas*/
-  }
+	if (T->HT == 0) {
+		T->tete = ac;
+		T->queue = ac;
+		T->tete->suiv=NULL;
+		T->tete->prec=NULL;
+		T->HT++; /*augmentation taille tas*/
+	}
+	else {
+		ac->suiv = T->tete;
+		ac->prec = NULL;
+		T->tete->prec=ac;
+		T->tete = ac;
+		T->HT++; /*augmentation taille tas*/
+	}
 }
 
 
@@ -461,14 +463,14 @@ Pr�-condition : T1 n'est pas vide, T2 est actif.
 ********************************************************************************* */
 void DeplacerHautSur(Tas *T1, Tas *T2)
 {
-    if (T1->tete != NULL && T2->RT == actif)
-    {
-        struct adCarte *temporaire=T1->queue->prec;
-        AjouterCarteSurTas(T1->queue, T2);
-        T1->queue=temporaire;
-        T1->queue->suiv=NULL;
-        T1->HT-=1;
-    }
+	if (T1->tete != NULL && T2->RT == actif)
+	{
+		struct adCarte *temporaire=T1->queue->prec;
+		AjouterCarteSurTas(T1->queue, T2);
+		T1->queue=temporaire;
+		T1->queue->suiv=NULL;
+		T1->HT-=1;
+	}
 }
 
 /* ******************************************************************************
@@ -478,14 +480,14 @@ Pr�-condition : T1 n'est pas vide, T2 est actif.
 ********************************************************************************* */
 void DeplacerHautSous(Tas *T1, Tas *T2)
 {
-    if (T1->tete != NULL && T2->RT == actif)
-    {
-        struct adCarte *temporaire=T1->queue->prec;
-        AjouterCarteSousTas(T1->queue, T2);
-        T1->queue=temporaire;
-        T1->queue->suiv=NULL;
-        T1->HT-=1; /*diminution taille tas*/
-    }
+	if (T1->tete != NULL && T2->RT == actif)
+	{
+		struct adCarte *temporaire=T1->queue->prec;
+		AjouterCarteSousTas(T1->queue, T2);
+		T1->queue=temporaire;
+		T1->queue->suiv=NULL;
+		T1->HT-=1; /*diminution taille tas*/
+	}
 }
 
 /* ******************************************************************************
@@ -495,14 +497,14 @@ Pr�-condition : T1 n'est pas vide, T2 est actif.
 ********************************************************************************* */
 void DeplacerBasSur(Tas *T1, Tas *T2)
 {
-    if (T1->tete != NULL && T2->RT == actif)
-    {
-        struct adCarte *temporaire=T1->tete->suiv;
-        AjouterCarteSurTas(T1->tete, T2);
-        T1->tete=temporaire;
-        T1->tete->prec=NULL;
-        T1->HT-=1;
-    }
+	if (T1->tete != NULL && T2->RT == actif)
+	{
+		struct adCarte *temporaire=T1->tete->suiv;
+		AjouterCarteSurTas(T1->tete, T2);
+		T1->tete=temporaire;
+		T1->tete->prec=NULL;
+		T1->HT-=1;
+	}
 }
 
 /* ******************************************************************************
@@ -512,14 +514,14 @@ Pr�-condition : T1 n'est pas vide, T2 est actif.
 ********************************************************************************* */
 void DeplacerBasSous(Tas *T1, Tas *T2)
 {
-    if (T1->tete != NULL && T2->RT == actif)
-    {
-        struct adCarte *temporaire=T1->tete->suiv;
-        AjouterCarteSousTas(T1->tete, T2);
-        T1->tete=temporaire;
-        T1->tete->prec=NULL;
-        T1->HT-=1;
-    }
+	if (T1->tete != NULL && T2->RT == actif)
+	{
+		struct adCarte *temporaire=T1->tete->suiv;
+		AjouterCarteSousTas(T1->tete, T2);
+		T1->tete=temporaire;
+		T1->tete->prec=NULL;
+		T1->HT-=1;
+	}
 }
 
 /* ******************************************************************************
@@ -529,24 +531,24 @@ Pr�-condition : T1 contient la carte et T2 est actif.
 ********************************************************************************* */
 void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 {
-    if(T2->RT == actif)
-    {
-        struct adCarte *visiteur = T1->tete;
-        while(visiteur != NULL && ((visiteur->elt.RC != R) & (visiteur->elt.CC != C)))
-        {
-            visiteur = visiteur->suiv;
-        }
-        if(visiteur == NULL)
-        {
-            printf("La carte demandée de rang %d et de couleur %d n'est pas dans le tas !", R, C);
-        }
-        else /*Carte trouvée, on l'a déplace au dessus de T2*/
-        {
-            (visiteur->prec)->suiv = visiteur->suiv;
-            (visiteur->suiv)->prec = visiteur->prec;
-            AjouterCarteSurTas(visiteur, T2);
-        }
-    }
+	if(T2->RT == actif)
+	{
+		struct adCarte *visiteur = T1->tete;
+		while(visiteur != NULL && ((visiteur->elt.RC != R) & (visiteur->elt.CC != C)))
+		{
+			visiteur = visiteur->suiv;
+		}
+		if(visiteur == NULL)
+		{
+			printf("La carte demandée de rang %d et de couleur %d n'est pas dans le tas !", R, C);
+		}
+		else /*Carte trouvée, on l'a déplace au dessus de T2*/
+		{
+			(visiteur->prec)->suiv = visiteur->suiv;
+			(visiteur->suiv)->prec = visiteur->prec;
+			AjouterCarteSurTas(visiteur, T2);
+		}
+	}
 }
 
 
@@ -562,16 +564,16 @@ ni leur mode d'�talement.
 ********************************************************************************* */
 void PoserTasSurTas(Tas *T1, Tas *T2)
 {
-    if(T1->MT == T2->MT)
-    {
-        T2->queue->suiv = T1->tete;
-        T1->tete->prec=T2->queue;
-        T2->queue=T1->queue;
-        T1->RT = actif;
-        T2->HT+=T1->HT;
-        T1->HT=0;
-        T1->tete = NULL;
-        T1->queue = NULL;
+	if(T1->MT == T2->MT)
+	{
+		T2->queue->suiv = T1->tete;
+		T1->tete->prec=T2->queue;
+		T2->queue=T1->queue;
+		T1->RT = actif;
+		T2->HT+=T1->HT;
+		T1->HT=0;
+		T1->tete = NULL;
+		T1->queue = NULL;
 
-    }
+	}
 }
