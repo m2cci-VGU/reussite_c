@@ -3,20 +3,11 @@
    d'apres les algorithmes de Pierre-Claude Scholl              */
 /*--------------------------------------------------------------*/
 
-//commit marjorie
-/* ICI JEAN MICHEL T AS VU*/
-
 #include "AfficherTas.h"
 #include "graphlib_w.h"
-//hello de la part de marco ////
-/////////////
 #include "cards.bm"
 #include "back.bm"
 #include "vide.bm"
-
-//commit master
-
-
 
 /* Tableau de correspondance ;
    indice dans le tableau card_bits <-> indice dans le tableau CodeCarte */
@@ -54,7 +45,7 @@ void CreerImage(int width, int height, char *data, XImage *ximage)
 
 void OuvrirGraphique(char nom[])
 {
-  gr_inits_w(&FenetreParDefaut, 10,10, 640, 400, nom);
+  gr_inits_w(&FenetreParDefaut, 20, 20, 1000, 1000, nom);
 }
 
 void FermerGraphique()

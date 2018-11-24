@@ -6,6 +6,7 @@
 /* Le relais des 7 */
 
 #include <stdio.h>
+#include <unistd.h>
 
 #include "R7.h"
 
@@ -22,6 +23,16 @@ Localisation LocSeriesR7[DerniereCouleur+1];
 Localisation LocTalonR7, LocRebutR7;
 
 /* Formation du tableau de jeu initial */
+
+Tas* getTalonR7 () {
+  return &TalonR7;
+}
+Tas* getRebutR7 () {
+  return &RebutR7;
+}
+Tas* getTasCouleurR7(Couleur Co) {
+  return &(LigneR7[Co]);
+}
 
 void SaisirLocTasR7()
 {
@@ -46,12 +57,12 @@ void CreerTableauInitialR7()
   SaisirLocTasR7();
   NumTourR7 = 1;
 
-  /* Création du talon avec un jeu de 52 cartes et du rebut avec un tas vide */
+  /* Crï¿½ation du talon avec un jeu de 52 cartes et du rebut avec un tas vide */
   CreerJeuNeuf(52, LocTalonR7, &TalonR7);
   BattreTas(&TalonR7);
   CreerTasVide(LocRebutR7, empile, &RebutR7);
 
-  /* Création des séries de chaque couleur et initialisation avec le sept */
+  /* Crï¿½ation des sï¿½ries de chaque couleur et initialisation avec le sept */
 
   for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
     {
@@ -78,7 +89,7 @@ void ReformerTableauInitialR7()
 
   NumTourR7 = 1;
 
-  /* Initialisation des séries de chaque couleur avec le sept */
+  /* Initialisation des sï¿½ries de chaque couleur avec le sept */
 
   for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
     {
@@ -87,7 +98,7 @@ void ReformerTableauInitialR7()
     }
 }
 
-/* Visualisation des états du jeu */
+/* Visualisation des ï¿½tats du jeu */
 
 void AfficherR7()
 {
@@ -100,7 +111,8 @@ void AfficherR7()
   for (Co=PremiereCouleur; Co<=DerniereCouleur; Co++)
     AfficherTas(LigneR7[Co], TexteCouleurR7[Co]);
 
-  AttendreCliquer();
+/* AttendreCliquer() */
+  usleep(500000);
 }
 
 /* Jouer le relais des 7 */
@@ -130,7 +142,7 @@ void JouerUnTourR7(ModeTrace MT)
 
   if (MT == AvecTrace)
     AfficherR7();
-  do	/* Jeu du talon, puis éventuellement du rebut */ {
+  do	/* Jeu du talon, puis ï¿½ventuellement du rebut */ {
       /* On sait qu'on ne peut pas jouer le rebut et que le talon n'est pas vide */
       /* Jouer le talon */
       RetournerCarteSur(&TalonR7);
@@ -140,7 +152,7 @@ void JouerUnTourR7(ModeTrace MT)
       if (MT == AvecTrace)
 	      AfficherR7();
       while (OK && !TasVide(RebutR7))	{
-	      /* On a joué le talon ou le rebut. Le rebut n'est pas vide: on joue le rebut */
+	      /* On a jouï¿½ le talon ou le rebut. Le rebut n'est pas vide: on joue le rebut */
 	      JouerTasR7(&RebutR7, &OK);
 	      if (OK && (MT == AvecTrace))
 	         AfficherR7();
@@ -151,35 +163,9 @@ void JouerUnTourR7(ModeTrace MT)
 
 int JouerUneR7(int NMaxT, ModeTrace MT)
 {
+  printf("JouerUneR7.enter\n");
   JouerUnTourR7(MT);
-  /* Jeu d'au plus NMaxT tours */
-
-  while (!(TasVide(RebutR7)) && (NumTourR7 < NMaxT))
-    {
-      RetournerTas(&RebutR7);
-      PoserTasSurTas(&RebutR7, &TalonR7);
-      JouerUnTourR7(MT);
-      NumTourR7 = NumTourR7 + 1;
-    }
-  if (TasVide(RebutR7))
-    {
-	if (MT == AvecTrace){printf("Vous avez gagné en %d tours !\n",NumTourR7);
-	}
-	else  {return NumTourR7;
-	}
-    }
-  else {
-  if (MT == AvecTrace) { printf("Vous avez perdu\n");
-	}
-	else { return 0;
-	}
-    }
-}
-
-void AnalyserUneR7(int NMaxT, ModeTrace MT, int*c) /*procedure qui a le but d'extraire le tour auquel la partie est terminée et son resultat*/
-{
-
-  JouerUnTourR7(MT);
+  printf("JouerUneR7 fin de jouer un tour\n");
   /* Jeu d'au plus NMaxT tours */
 
   while (!(TasVide(RebutR7)) && (NumTourR7 < NMaxT))
@@ -190,12 +176,12 @@ void AnalyserUneR7(int NMaxT, ModeTrace MT, int*c) /*procedure qui a le but d'ex
       NumTourR7 = NumTourR7 + 1;
     }
   if (TasVide(RebutR7)) {
-
-    *c=NumTourR7;
-    }
-  else
-    {
-    *c=0; /*convention:si perdu, c=0*/
+      printf("Vous avez gagne en %d tours !\n",NumTourR7);
+      return NumTourR7;
+  }
+  else {
+     printf("Vous avez Perdu !\n");
+     return 0; /*convention:si perdu, c=0*/
     }
 }
 
@@ -217,35 +203,34 @@ void AnalyserR7(int NP, int NMaxT) /*procedure qui stocke les resultats dans un 
    int i;
    int resultat;
    int stats[NMaxT+1];
-    int k;
+   int k;
    for (k=0;k < NMaxT+1;k++){
-   stats[k]=0;
+     stats[k]=0;
    }
-
-
   CreerTableauInitialR7();
   resultat=JouerUneR7(NMaxT, SansTrace);
   stats[resultat]+=1;
-    for (i = 1; i <= NP-1; i++)
-    {
-        ReformerTableauInitialR7();
-        resultat=JouerUneR7(NMaxT, SansTrace);
-        stats[resultat]+=1;
-    }
-    printf("\nStatistiques de ce jeu de Reussite sur %d parties, chacune avec %d tours au maximum:\n", NP, NMaxT);
-    printf("vous avez perdu %d %% des fois\n",100*stats[0]/NP);
-    i=1;int counter=stats[0];
-    while (i<NMaxT && counter<NP) {
+  for (i = 1; i <= NP-1; i++)
+  {
+      ReformerTableauInitialR7();
+      resultat=JouerUneR7(NMaxT, SansTrace);
+      stats[resultat]+=1;
+  }
+  printf("\nStatistiques de ce jeu de Reussite sur %d parties, chacune avec %d tours au maximum:\n", NP, NMaxT);
+  printf("vous avez perdu %d %% des fois\n",100*stats[0]/NP);
+  i=1;
+  int counter=stats[0];
+  while (i<NMaxT && counter<NP) {
     counter+=stats[i];
     printf("vous avez gagne %d %% des fois apres %d tours \n",100*stats[i]/NP,i);
     i++;
-    }
-    printf("\nStatistiques avancées:\n");
-    i=1; counter=stats[0];
-    while (i<NMaxT && counter<NP) {
+  }
+  printf("\nStatistiques avancï¿½es:\n");
+  i=1;
+  counter=stats[0];
+  while (i<NMaxT && counter<NP) {
     counter+=stats[i];
     printf("votre probabilite de gagner est %d %% apres %d tours \n",100*counter/NP,i);
     i++;
+  }
 }
-}
-
