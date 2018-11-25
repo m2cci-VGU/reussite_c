@@ -315,14 +315,17 @@ Pr�-condition : T non vide
 **************************************************************** */
 void RetournerCarteSous(Tas *T)
 {
-	if (!(*T).tete->elt.VC)
-	{
-		(*T).tete->elt.VC = Decouverte;
-	}
-	else
-	{
-		(*T).tete->elt.VC = Cachee;
-	}
+   if(T->HT > 0)
+   {
+	  	if (!(*T).tete->elt.VC)
+	    {
+		  (*T).tete->elt.VC = Decouverte;
+	    }
+    	else
+	    {
+	   	(*T).tete->elt.VC = Cachee;
+	    }
+    }
 }
 
 /* Modification d'un tas */
@@ -632,14 +635,26 @@ void PoserTasSurTas(Tas *T1, Tas *T2)
 {
 	if(T1->MT == T2->MT)
 	{
+		if(TasVide(*T2))
+		{
+			T2->tete = T1->tete;
+			T2->queue = T1->queue;
+			T1->RT = actif;
+			T2->HT+=T1->HT;
+			T1->HT=0;
+			T1->tete = NULL;
+			T1->queue = NULL;
+		}
+		else
+		{
 		T2->queue->suiv = T1->tete;
-		T1->tete->prec=T2->queue;
-		T2->queue=T1->queue;
+		T1->tete->prec = T2->queue;
+		T2->queue = T1->queue;
 		T1->RT = actif;
 		T2->HT+=T1->HT;
 		T1->HT=0;
 		T1->tete = NULL;
 		T1->queue = NULL;
-
+	  }
 	}
 }
