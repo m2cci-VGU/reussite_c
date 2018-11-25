@@ -567,9 +567,23 @@ void DeplacerBasSous(Tas *T1, Tas *T2)
 	}
 }
 
-void supprimerCarteDeTas(Couleur C, Rang R, Tas *adTas) {
+void printTas(Tas* adTas){
+	printf("Tas d'adresse: %d\n", adTas);
+	struct adCarte *visitor;
+	visitor = adTas->tete;
+	int i=0;
+	while(visitor!=NULL){
+		printf("\t%d: %d de %d\n",i, visitor->elt.RC, visitor->elt.CC);
+		visitor = visitor->suiv;
+		i++;
+	}
+}
+
+struct adCarte* supprimerCarteDeTas(Couleur C, Rang R, Tas *adTas) {
 	struct adCarte *prev, *visiteur, *next;
 	visiteur = adTas->tete;
+	prev = visiteur->prec;
+	next = visiteur->suiv;
 	while( visiteur != NULL ) {
 		prev = visiteur->prec;
 		next = visiteur->suiv;
@@ -586,7 +600,14 @@ void supprimerCarteDeTas(Couleur C, Rang R, Tas *adTas) {
 		if(next != NULL) {
 			next->prec = prev;
 		}
+		if(visiteur == adTas->tete){
+			adTas->tete = next;
+		} else if(visiteur == adTas->queue) {
+			adTas->queue = prev;
+		}
+		return visiteur;
 	}
+	return NULL;
 }
 /* ******************************************************************************
 void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
@@ -595,28 +616,24 @@ Pr�-condition : T1 contient la carte et T2 est actif.
 ********************************************************************************* */
 void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 {
-	Carte c = CarteSur(*T2);
+	/*
+		Carte c = CarteSur(*T2);
 		printf("Avant deplacement:\n");
 		printf("\t- h(T1)=%d h(T2)=%d\n",LaHauteur(*T1),  LaHauteur(*T2));
-		printf("\t- carte cherchee: %d de %d\n",c.RC, c.CC);
-		struct adCarte *visiteur = T1->tete;
-		while( visiteur != NULL ) {
-			printf("\t- %d de %d etudie\n", visiteur->elt.RC, visiteur->elt.CC);
-			if(visiteur->elt.RC == R && visiteur->elt.CC == C)
-				break;
-			printf("\t\t-- pas celui la\n");
-			visiteur = visiteur->suiv;
-			printf("\t- suivant=NULL: %s\n", visiteur==NULL?"oui":"non");
+		printf("\t- carte cherchee: %d de %d\n",R, C);
+		printf("\t- top(T2): %d de %d\n",c.RC, c.CC);
+		*/
+		struct adCarte* carteADeplacer = supprimerCarteDeTas(C, R, T1);
+		if(T2->RT == actif && carteADeplacer != NULL){
+			AjouterCarteSurTas(carteADeplacer, T2);
 		}
-		booleen trouve = (visiteur != NULL) ? vrai : faux;
-		printf("%d de %d trouve: %d\n", R, C, trouve);
-		if(T2->RT == actif && trouve == vrai){
-			supprimerCarteDeTas(C, R, T1);
-			AjouterCarteSurTas(visiteur, T2);
-		}
+		/*
 		c = CarteSur(*T2);
-		printf("Apres deplacement: %d\n", LaHauteur(*T2));
-		printf("Apres deplacement: %d de %d\n\n",c.RC, c.CC);
+		printf("Apres deplacement:\n");
+		printf("\t- h(T1)=%d h(T2)=%d\n",LaHauteur(*T1),  LaHauteur(*T2));
+		printf("\t- carte cherchee: %d de %d\n",R, C);
+		printf("\t- top(T2): %d de %d\n\n",c.RC, c.CC);
+		*/
 }
 
 

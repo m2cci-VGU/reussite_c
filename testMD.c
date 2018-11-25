@@ -131,7 +131,7 @@ void test2(){
 void test3(){
 	newTest("Test 3");
 	printf("Vérifier Une situation de perte de partie\n");
-/*
+
 	ajouterCarteSurTasDeDefausse(0, Trefle, As);
 	ajouterCarteSurTasDeDefausse(0, Coeur, Roi);
 	ajouterCarteSurTasDeDefausse(1, Coeur, Dame);
@@ -144,7 +144,7 @@ void test3(){
 	ajouterCarteSurTasDeCouleur(Coeur, Huit);
 	ajouterCarteSurTasDeCouleur(Pique, Sept);
 	ajouterCarteSurTasDeCouleur(Pique, Huit);
-	*/
+
 	ajouterCarteSurTasDeCouleur(Trefle, Sept);
 	ajouterCarteSurTasDeCouleur(Trefle, Huit);
 
@@ -157,7 +157,7 @@ void test3(){
 }
 
 int main() {
-	/*test1();
-	test2();*/
+	test1();
+	test2();
 	test3();
 }
