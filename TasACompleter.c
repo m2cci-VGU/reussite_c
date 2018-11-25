@@ -240,6 +240,11 @@ Carte CarteSur(Tas T)
   {
 	return T.queue->elt;
   }
+	Carte c;
+	c.CC = -1;
+	c.RC = -1;
+	c.VC = -1;
+	return c;
 }
 /* *************************************************************
 Carte CarteSous(Tas T) {
@@ -251,6 +256,11 @@ Carte CarteSous(Tas T)
   {
 		return T.tete->elt;
   }
+	Carte c;
+	c.CC = -1;
+	c.RC = -1;
+	c.VC = -1;
+	return c;
 }
 /* *************************************************************
 Carte IemeCarte(Tas T, int i)
@@ -299,17 +309,14 @@ Pr�-condition : T non vide
 **************************************************************** */
 void RetournerCarteSous(Tas *T)
 {
-   if(T->HT > 0)
-   {
-	  	if (!(*T).tete->elt.VC)
-	    {
-		  (*T).tete->elt.VC = Decouverte;
-	    }
-    	else
-	    {
-	   	(*T).tete->elt.VC = Cachee;
-	    }
-    }
+	if (!(*T).tete->elt.VC)
+	{
+		(*T).tete->elt.VC = Decouverte;
+	}
+	else
+	{
+		(*T).tete->elt.VC = Cachee;
+	}
 }
 
 /* Modification d'un tas */
@@ -580,18 +587,26 @@ Pr�-condition : T1 contient la carte et T2 est actif.
 ********************************************************************************* */
 void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 {
+	Carte c = CarteSur(*T2);
+		printf("Avant deplacement: %d\n", LaHauteur(*T2));
+		printf("Avant deplacement: %d de %d\n",c.RC, c.CC);
 		struct adCarte *visiteur = T1->tete;
 		while( visiteur != NULL ) {
+			printf("\t- %d de %d etudie\n", R, C);
 			if(visiteur->elt.RC == R && visiteur->elt.CC == C)
 				break;
+			printf("\t\-- pas celui la\n");
 			visiteur = visiteur->suiv;
 		}
 		booleen trouve = (visiteur != NULL) ? vrai : faux;
+		printf("%d de %d trouve: %d\n", R, C, trouve);
 		if(T2->RT == actif && trouve == vrai){
 			supprimerCarteDeTas(C, R, T1);
 			AjouterCarteSurTas(visiteur, T2);
 		}
-		Carte c = CarteSur(*T2);
+		c = CarteSur(*T2);
+		printf("Apres deplacement: %d\n", LaHauteur(*T2));
+		printf("Apres deplacement: %d de %d\n\n",c.RC, c.CC);
 }
 
 
@@ -610,26 +625,14 @@ void PoserTasSurTas(Tas *T1, Tas *T2)
 {
 	if(T1->MT == T2->MT)
 	{
-		if(TasVide(T2))
-		{
-			T2->tete = T1->tete;
-			T2->queue = T1->queue;
-			T1->RT = actif;
-			T2->HT+=T1->HT;
-			T1->HT=0;
-			T1->tete = NULL;
-			T1->queue = NULL;
-		}
-		else
-		{
 		T2->queue->suiv = T1->tete;
-		T1->tete->prec = T2->queue;
-		T2->queue = T1->queue;
+		T1->tete->prec=T2->queue;
+		T2->queue=T1->queue;
 		T1->RT = actif;
 		T2->HT+=T1->HT;
 		T1->HT=0;
 		T1->tete = NULL;
 		T1->queue = NULL;
-	  }
+
 	}
 }

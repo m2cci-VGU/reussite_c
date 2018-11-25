@@ -135,7 +135,13 @@ booleen TasEtale(Tas T)
 
 int LaHauteur(Tas T)
 {
-	return T.HT;
+	struct adCarte* visiteur = T.tete;
+	int taille=0;
+	while(visiteur != NULL) {
+		visiteur = visiteur->suiv;
+		taille++;
+	}
+	return taille;
 }
 
 Localisation LaPlace(Tas T)
@@ -240,6 +246,11 @@ Carte CarteSur(Tas T)
   {
 	return T.queue->elt;
   }
+	Carte c;
+	c.CC = -1;
+	c.RC = -1;
+	c.VC = -1;
+	return c;
 }
 /* *************************************************************
 Carte CarteSous(Tas T) {
@@ -251,6 +262,11 @@ Carte CarteSous(Tas T)
   {
 		return T.tete->elt;
   }
+	Carte c;
+	c.CC = -1;
+	c.RC = -1;
+	c.VC = -1;
+	return c;
 }
 /* *************************************************************
 Carte IemeCarte(Tas T, int i)
@@ -569,7 +585,6 @@ void supprimerCarteDeTas(Couleur C, Rang R, Tas *adTas) {
 		}
 	}
 }
-
 /* ******************************************************************************
 void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 enl�ve du tas T1, la carte de couleur C et de rang R et la place au dessus de T2.
@@ -577,18 +592,28 @@ Pr�-condition : T1 contient la carte et T2 est actif.
 ********************************************************************************* */
 void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 {
+	Carte c = CarteSur(*T2);
+		printf("Avant deplacement:\n");
+		printf("\t- h(T1)=%d h(T2)=%d\n",LaHauteur(*T1),  LaHauteur(*T2));
+		printf("\t- carte cherchee: %d de %d\n",c.RC, c.CC);
 		struct adCarte *visiteur = T1->tete;
 		while( visiteur != NULL ) {
+			printf("\t- %d de %d etudie\n", visiteur->elt.RC, visiteur->elt.CC);
 			if(visiteur->elt.RC == R && visiteur->elt.CC == C)
 				break;
+			printf("\t\t-- pas celui la\n");
 			visiteur = visiteur->suiv;
+			printf("\t- suivant=NULL: %s\n", visiteur==NULL?"oui":"non");
 		}
 		booleen trouve = (visiteur != NULL) ? vrai : faux;
+		printf("%d de %d trouve: %d\n", R, C, trouve);
 		if(T2->RT == actif && trouve == vrai){
 			supprimerCarteDeTas(C, R, T1);
 			AjouterCarteSurTas(visiteur, T2);
 		}
-		Carte c = CarteSur(*T2);
+		c = CarteSur(*T2);
+		printf("Apres deplacement: %d\n", LaHauteur(*T2));
+		printf("Apres deplacement: %d de %d\n\n",c.RC, c.CC);
 }
 
 

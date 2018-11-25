@@ -117,12 +117,8 @@ void test2(){
 	ajouterCarteSurTasDeDefausse(0, Trefle, Dame);
 	ajouterCarteSurTasDeDefausse(0, Trefle, Dix);
 	ajouterCarteSurTasDeDefausse(1, Trefle, Roi);
-	Tas* adTas = ListeAdresseTasDefausse[1];
-	Carte c = CarteSur(*adTas);
 	ajouterCarteSurTasDeDefausse(1, Trefle, Valet);
-	c = CarteSur(*adTas);
 	ajouterCarteSurTasDeDefausse(1, Trefle, Neuf);
-	c = CarteSur(*adTas);
 	ajouterCarteSurTasDeDefausse(2, Trefle, Huit);
 
 	ajouterCarteSurTalon(Trefle, Sept);
@@ -133,9 +129,9 @@ void test2(){
 }
 
 void test3(){
-
-	newTest("Test 2");
+	newTest("Test 3");
 	printf("Vérifier Une situation de perte de partie\n");
+/*
 	ajouterCarteSurTasDeDefausse(0, Trefle, As);
 	ajouterCarteSurTasDeDefausse(0, Coeur, Roi);
 	ajouterCarteSurTasDeDefausse(1, Coeur, Dame);
@@ -148,10 +144,12 @@ void test3(){
 	ajouterCarteSurTasDeCouleur(Coeur, Huit);
 	ajouterCarteSurTasDeCouleur(Pique, Sept);
 	ajouterCarteSurTasDeCouleur(Pique, Huit);
+	*/
 	ajouterCarteSurTasDeCouleur(Trefle, Sept);
 	ajouterCarteSurTasDeCouleur(Trefle, Huit);
 
 	ajouterCarteSurTalon(Pique, As);
+
 
 	runTest();
 	endTest();
@@ -159,7 +157,7 @@ void test3(){
 }
 
 int main() {
-	test1();
-	test2();
+	/*test1();
+	test2();*/
 	test3();
 }
