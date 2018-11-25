@@ -40,17 +40,16 @@ int main(void)
     {
       if (CJ == R7)
       {
-          printf("Choix du nombre de tours maximum: \n");
+          printf("En combien de tour(s) souhaitez-vous jouer une partie : \n");
           scanf("%d", &NBMAXT);
       }
       else
       {
           NBMAXT = 3;
       }
-
       if (CJ == MD)
       {
-      printf("Combien de stock voulez-vous (minimum 1, maximum 8)?");
+      printf("Combien de stock voulez-vous (minimum 1, maximum 8) ?\n");
       scanf("%d", &NBSTOCK);
           if (NBSTOCK>8){
           NBSTOCK=8;
@@ -59,7 +58,6 @@ int main(void)
           NBSTOCK=1;
           }
       }
-
         switch (CJ)
         {
         case AIDE :
@@ -80,7 +78,6 @@ int main(void)
                 }
                 SaisirCommande (&Commande) ;
             }
-            printf (TexteAuRevoir) ;
             break;
 
         case MD :
@@ -98,11 +95,10 @@ int main(void)
                 }
                 SaisirCommande (&Commande) ;
             }
-            printf (TexteAuRevoir) ;
             break;
         }
         SaisirJeu(&CJ);
     }
-
+    printf (TexteAuRevoir) ;
     return 0;
 }

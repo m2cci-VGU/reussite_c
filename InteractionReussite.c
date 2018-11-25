@@ -20,7 +20,7 @@
 #define         TexteNbAAnalyser         "Choisissez le nombre de parties a analyser : "
 
 #define         nbMaxEssais              5
-#define         Invite                   "Choisissez votre mode de jeu  (? pour obtenir de l'aide) : "
+#define         Invite                   "Choisissez votre mode de jeu  (? pour obtenir de l'aide) :\n"
 #define         TexteSimulation          '1'
 #define         TexteAnalyse             '2'
 #define         TexteRetour              'R'
@@ -65,8 +65,8 @@ void	LireCar (char	*c)
 void EcrireMenuChoixJeu ()
 {
     printf ("Tapez \n") ;
-    printf (" 1 pour jouer aux relais des 7(R7), \n") ;
-    printf (" 2 pour jouer à Montée-Descente, \n");
+    printf (" 1 pour jouer aux relais des 7 (R7), \n") ;
+    printf (" 2 pour jouer à Montée-Descente (MD), \n");
     printf (" F pour Fin, \n");
     printf (" ? pour Aide.\n");
 }
@@ -90,6 +90,7 @@ void SaisirJeu (CodeJeu *CJ)
     printf ("Quel est votre choix de jeu parmi les réussites ci-dessous ?\n") ;
     EcrireMenuChoixJeu ();
     LireCar (&codeJ) ;
+    codeJ = toupper(codeJ);
     nbEssais = 0 ;
 
     while ((nbEssais < nbMaxEssais) && (! EstTexteCommandeJeu(codeJ)))
@@ -98,6 +99,7 @@ void SaisirJeu (CodeJeu *CJ)
         {
             EcrireMenuChoixJeu() ;
             LireCar (&codeJ) ;
+            codeJ = toupper(codeJ);
         }
         else
         {
@@ -107,6 +109,7 @@ void SaisirJeu (CodeJeu *CJ)
             {
                 printf ("Quel est votre choix de jeu ?\t") ;
                 LireCar (&codeJ) ;
+                codeJ = toupper(codeJ);
             }
         }
     }
@@ -163,6 +166,7 @@ void SaisirCommande (CodeCommande *CC)
     printf (Invite) ;
 
     LireCar (&C) ;
+    C = toupper(C);
     nbEssais = 0 ;
     while ((nbEssais < nbMaxEssais) && (! EstTexteCommandeMode(C)))
     {
@@ -170,15 +174,17 @@ void SaisirCommande (CodeCommande *CC)
         {
             EcrireMenuChoixMode();
             LireCar (&C) ;
+            C = toupper(C);
         }
         else
         {
-            printf ("Commande incorrecte.");
+            printf ("Commande incorrecte !\n");
             nbEssais++ ;
             if (nbEssais < nbMaxEssais)
             {
                 printf (Invite) ;
                 LireCar (&C) ;
+                C = toupper(C);
             }
         }
     }
