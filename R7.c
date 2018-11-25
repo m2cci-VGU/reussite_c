@@ -222,16 +222,16 @@ void AnalyserR7(int NP, int NMaxT) /*procedure qui stocke les resultats dans un 
   printf("\nStatistiques de ce jeu de Reussite sur %d parties, chacune avec %d tours au maximum:\n", NP, NMaxT);
   printf("vous avez perdu %d %% des fois\n",100*stats[0]/NP);
   i=1;
-  int counter=stats[0];
-  while (i<NMaxT && counter<NP) {
+  int counter=0;
+  while (i<=NMaxT && counter<=NP) {
     counter+=stats[i];
     printf("vous avez gagne %d %% des fois apres %d tours \n",100*stats[i]/NP,i);
     i++;
   }
   printf("\nStatistiques avanc�es:\n");
   i=1;
-  counter=stats[0];
-  while (i<NMaxT && counter<NP) {
+  counter=0;
+  while (i<=NMaxT && counter<=(NP-stats[0])) {
     counter+=stats[i];
     printf("votre probabilite de gagner est %d %% apres %d tours \n",100*counter/NP,i);
     i++;
