@@ -560,16 +560,18 @@ Pr�-condition : T1 contient la carte et T2 est actif.
 ********************************************************************************* */
 void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 {
-
-	struct adCarte *visiteur = T1->tete;
-	while(visiteur != NULL && (visiteur->elt.RC != R) && (visiteur->elt.CC != C))
-	{
-		visiteur = visiteur->suiv;
-	}
-	booleen trouve = (visiteur != NULL) ? vrai : faux;
-	if(T2->RT == actif && trouve == vrai)
-		AjouterCarteSurTas(visiteur, T2);
+		struct adCarte *visiteur = T1->tete;
+		while( visiteur != NULL ) {
+			if(visiteur->elt.RC == R && visiteur->elt.CC == C)
+				break;
+			visiteur = visiteur->suiv;
+		}
+		booleen trouve = (visiteur != NULL) ? vrai : faux;
+		if(T2->RT == actif && trouve == vrai){
+			AjouterCarteSurTas(visiteur, T2);
+		}
 }
+
 
 
 /* ******************************************************************************
