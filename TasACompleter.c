@@ -299,14 +299,17 @@ Pr�-condition : T non vide
 **************************************************************** */
 void RetournerCarteSous(Tas *T)
 {
-	if (!(*T).tete->elt.VC)
-	{
-		(*T).tete->elt.VC = Decouverte;
-	}
-	else
-	{
-		(*T).tete->elt.VC = Cachee;
-	}
+   if(T->HT > 0)
+   {
+	  	if (!(*T).tete->elt.VC)
+	    {
+		  (*T).tete->elt.VC = Decouverte;
+	    }
+    	else
+	    {
+	   	(*T).tete->elt.VC = Cachee;
+	    }
+    }
 }
 
 /* Modification d'un tas */
