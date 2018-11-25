@@ -249,7 +249,7 @@ Carte CarteSous(Tas T)
 {
   if(T.HT > 0)
   {
-	return T.tete->elt;
+		return T.tete->elt;
   }
 }
 /* *************************************************************
@@ -557,42 +557,15 @@ Pr�-condition : T1 contient la carte et T2 est actif.
 ********************************************************************************* */
 void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 {
+
 	struct adCarte *visiteur = T1->tete;
-	int trouve=0 ;
 	while(visiteur != NULL && (visiteur->elt.RC != R) && (visiteur->elt.CC != C))
 	{
 		visiteur = visiteur->suiv;
 	}
-	if (visiteur == NULL)
-		 {
-		 trouve = 0;
-	   }
-	else
-		 {
-	   trouve = 1
-     }
-
-	if(T2->RT == actif && trouve == 1)
-	{
-		visiteur = T1->tete;
-		while(visiteur != NULL && (visiteur->elt.RC != R) && (visiteur->elt.CC != C))
-		{
-			visiteur = visiteur->suiv;
-		}
-		if(visiteur == NULL || visiteur->elt.RC != R || visiteur->elt.CC != C)
-		{
-			exit(0);
-		}
-		else
-		{
-			visiteur->prec->suiv = visiteur->suiv;
-			visiteur->suiv->prec = visiteur->prec;
-			visiteur->prec = NULL;
-			visiteur->suiv = NULL;
-			AjouterCarteSurTas(visiteur, T2);
-			T1->HT -= 1;
-		}
-	}
+	booleen trouve = (visiteur != NULL) ? vrai : faux;
+	if(T2->RT == actif && trouve == vrai)
+		AjouterCarteSurTas(visiteur, T2);
 }
 
 
