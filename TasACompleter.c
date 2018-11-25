@@ -557,13 +557,13 @@ Pr�-condition : T1 contient la carte et T2 est actif.
 ********************************************************************************* */
 void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 {
-	struct adCarte *visiteur = T1->tete;
+		struct adCarte *visiteur = T1->tete;
 	int trouve=0 ;
 	while(visiteur != NULL && (visiteur->elt.RC != R) && (visiteur->elt.CC != C))
 	{
 		visiteur = visiteur->suiv;
 	}
-	if (visiteur == NULL)
+	if (visiteur == NULL ||(visiteur->elt.RC != R) || (visiteur->elt.CC != C)) 
 		 {
 		 trouve = 0;
 	   }
@@ -579,7 +579,7 @@ void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 		{
 			visiteur = visiteur->suiv;
 		}
-		if(visiteur == NULL || visiteur->elt.RC != R || visiteur->elt.CC != C)
+		if(visiteur != NULL && visiteur->elt.RC == R && visiteur->elt.CC == C)
 		{
 			exit(0);
 		}
@@ -594,7 +594,6 @@ void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 		}
 	}
 }
-
 
 
 /* ******************************************************************************
