@@ -6,10 +6,11 @@ modifie par F. Carrier, juillet 2012
 --> tas representes par des listes chainees
 ----------------------------------------------------------------*/
 
-#include "Tas.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include "Tas.h"
+#include "Alea.h"
 
 /*-----------------------------------*/
 /* Specifications des objets de base */
@@ -386,18 +387,12 @@ bas le tas T
 
 void BattreTas(Tas *T)
 {
-	int i = 51;
-	int j = 51;
-	int nbfois = 0;
-	int e; int f;
-	srand(time(NULL));
+	int nbCarte, i;
 
-	while (nbfois < 5000)
-	{
-		e = rand()%i + 1;
-		f = rand()%j + 1;
-		EchangerCartes( e, f, T );
-		nbfois++;
+	nbCarte = LaHauteur(*T);
+
+	for(i=0; i<5000; i++) {
+		EchangerCartes( UnEntier(nbCarte), UnEntier(nbCarte), T );
 	}
 }
 
