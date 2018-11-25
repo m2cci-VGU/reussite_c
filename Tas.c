@@ -403,9 +403,15 @@ retourne le tas T : la premiere devient la derniere et la visibilite est inverse
 ********************************************************************************* */
 void RetournerTas(Tas *T)
 {
+	struct adCarte* visiteur = T->tete;
+	while (visiteur != NULL)
+	{
+	visiteur->elt.VC = (visiteur->elt.VC == Decouverte) ? Cachee : Decouverte;
+	visiteur = visiteur->suiv ;
+	}
+	
 	struct adCarte* sauveTete = T->tete->suiv ;
 	struct adCarte* sauveQueue = T->queue ;
-	T->tete->elt.VC = (T->tete->elt.VC == Decouverte) ? Cachee : Decouverte;
 	T->tete->suiv = NULL ;
 	T->tete->prec = T->queue;
 	T->queue->suiv = T->tete;
@@ -416,7 +422,6 @@ void RetournerTas(Tas *T)
 	while(T->queue->prec != NULL)
 	{
 		sauveTete = T->tete->suiv ;
-		sauveTete->elt.VC = (sauveTete->elt.VC == Decouverte) ? Cachee : Decouverte;
 		sauveTete->prec = NULL;
 		T->tete->prec = T->queue;
 		T->tete->suiv = T->queue->suiv;
