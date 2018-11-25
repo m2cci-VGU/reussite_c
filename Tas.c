@@ -610,7 +610,7 @@ void PoserTasSurTas(Tas *T1, Tas *T2)
 {
 	if(T1->MT == T2->MT)
 	{
-		if(TasVide(T2))
+		if(TasVide(*T2))
 		{
 			T2->tete = T1->tete;
 			T2->queue = T1->queue;
