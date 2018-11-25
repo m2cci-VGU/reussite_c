@@ -12,7 +12,7 @@ void initTestDeck() {
 	Localisation LocDeck;
 	LocDeck.NC = 42;
 	LocDeck.NL = 42;
-	CreerJeuNeuf(52, LocDeck, &deck);
+	CreerJeuNeuf(32, LocDeck, &deck);
 }
 void initTas(Tas* adTas) {
 	SupprimerTasVide(adTas);
@@ -73,6 +73,7 @@ void ajouterCarteSurTasDeCouleur(Couleur couleur, Rang rang) {
 }
 void ajouterCarteSurTasDeDefausse(int i, Couleur couleur, Rang rang) {
 	Tas* adDest = ListeAdresseTasDefausse[i];
+
 	DeplacerCarteSur(couleur, rang, &deck, adDest);
 	RetournerCarteSur(adDest);
 }
@@ -111,12 +112,17 @@ void test1() {
 void test2(){
 	newTest("Test 2");
 	printf("Vérifier la remontée des cartes du stock vers la ligne de couleur\n");
+
 	ajouterCarteSurTasDeDefausse(0, Trefle, As);
 	ajouterCarteSurTasDeDefausse(0, Trefle, Dame);
 	ajouterCarteSurTasDeDefausse(0, Trefle, Dix);
 	ajouterCarteSurTasDeDefausse(1, Trefle, Roi);
+	Tas* adTas = ListeAdresseTasDefausse[1];
+	Carte c = CarteSur(*adTas);
 	ajouterCarteSurTasDeDefausse(1, Trefle, Valet);
+	c = CarteSur(*adTas);
 	ajouterCarteSurTasDeDefausse(1, Trefle, Neuf);
+	c = CarteSur(*adTas);
 	ajouterCarteSurTasDeDefausse(2, Trefle, Huit);
 
 	ajouterCarteSurTalon(Trefle, Sept);

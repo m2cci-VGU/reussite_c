@@ -428,15 +428,14 @@ void AjouterCarteSurTas (struct adCarte *ac, Tas *T)    /*surTas = queue*/
 		T->queue = ac;
 		T->queue->suiv=NULL;
 		T->tete->prec=NULL;
-		T->HT++; /*augmentation taille tas*/
 	}
 	else {
 		ac->suiv = NULL;
 		ac->prec = T->queue;
 		T->queue->suiv=ac;
 		T->queue = ac;
-		T->HT++; /*augmentation taille tas*/
 	}
+	T->HT++; /*augmentation taille tas*/
 }
 
 /* ******************************************************************************
@@ -445,20 +444,19 @@ ajoute la carte d'adresse ac sous le tas T
 ********************************************************************************* */
 void AjouterCarteSousTas (struct adCarte *ac, Tas *T)   /*sousTas = tete*/
 {
-	if (T->HT == 0) {
+	if (TasVide(*T)) {
 		T->tete = ac;
 		T->queue = ac;
 		T->tete->suiv=NULL;
 		T->tete->prec=NULL;
-		T->HT++; /*augmentation taille tas*/
 	}
 	else {
 		ac->suiv = T->tete;
 		ac->prec = NULL;
 		T->tete->prec=ac;
 		T->tete = ac;
-		T->HT++; /*augmentation taille tas*/
 	}
+	T->HT++; /*augmentation taille tas*/
 }
 
 
@@ -550,6 +548,28 @@ void DeplacerBasSous(Tas *T1, Tas *T2)
 	}
 }
 
+void supprimerCarteDeTas(Couleur C, Rang R, Tas *adTas) {
+	struct adCarte *prev, *visiteur, *next;
+	visiteur = adTas->tete;
+	while( visiteur != NULL ) {
+		prev = visiteur->prec;
+		next = visiteur->suiv;
+		if(visiteur->elt.RC == R && visiteur->elt.CC == C) {
+			break;
+		}
+		visiteur = visiteur->suiv;
+	}
+	if(visiteur != NULL) {
+		adTas->HT--;
+		if(prev != NULL) {
+			prev->suiv=next;
+		}
+		if(next != NULL) {
+			next->prec = prev;
+		}
+	}
+}
+
 /* ******************************************************************************
 void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 enl�ve du tas T1, la carte de couleur C et de rang R et la place au dessus de T2.
@@ -565,8 +585,10 @@ void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 		}
 		booleen trouve = (visiteur != NULL) ? vrai : faux;
 		if(T2->RT == actif && trouve == vrai){
+			supprimerCarteDeTas(C, R, T1);
 			AjouterCarteSurTas(visiteur, T2);
 		}
+		Carte c = CarteSur(*T2);
 }
 
 
