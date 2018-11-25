@@ -569,7 +569,7 @@ void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 	   }
 	else
 		 {
-	   trouve = 1;
+	   trouve = 1
      }
 
 	if(T2->RT == actif && trouve == 1)
