@@ -40,7 +40,7 @@ Rang RangSuivant(Rang R)
 {
 	if(R == DernierRang)
 	{
-		return Deux;
+		return PremierRang;
 	}
 	else
 	{
