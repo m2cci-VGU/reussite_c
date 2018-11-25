@@ -236,18 +236,22 @@ carte situee au dessus du tas
 **************************************************************** */
 Carte CarteSur(Tas T)
 {
+  if(T.HT > 0)
+  {
 	return T.queue->elt;
+  }
 }
-
 /* *************************************************************
 Carte CarteSous(Tas T) {
 carte situee au dessous du tas
 **************************************************************** */
 Carte CarteSous(Tas T)
 {
+  if(T.HT > 0)
+  {
 	return T.tete->elt;
+  }
 }
-
 /* *************************************************************
 Carte IemeCarte(Tas T, int i)
 ieme carte dans T (de bas en haut).
@@ -559,13 +563,13 @@ void DeplacerCarteSur(Couleur C, Rang R, Tas *T1, Tas *T2)
 	{
 		visiteur = visiteur->suiv;
 	}
-	if (visiteur->elt.RC != R || visiteur->elt.CC != R)
+	if (visiteur == NULL)
 		 {
 		 trouve = 0;
 	   }
 	else
 		 {
-	   trouve = (visiteur == NULL)? 0 : 1;
+	   trouve = 1
      }
 
 	if(T2->RT == actif && trouve == 1)
